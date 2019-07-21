@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher", "RevokeMsgPatcher\RevokeMsgPatcher.csproj", "{977BF781-CED8-4389-9404-0FA08FDF21DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{977BF781-CED8-4389-9404-0FA08FDF21DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977BF781-CED8-4389-9404-0FA08FDF21DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977BF781-CED8-4389-9404-0FA08FDF21DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977BF781-CED8-4389-9404-0FA08FDF21DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56DAEA8C-77F7-4E55-A7AF-CE9F23F2C1A6}
+	EndGlobalSection
+EndGlobal
