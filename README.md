@@ -1,18 +1,33 @@
 
 <p align="center">
-	<a><img src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/logo.jpg"/></a>
+	<a><img width="100px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/logo.jpg"/></a>
 </p>
 <p align="center">
 	<a href="https://www.microsoft.com/download/details.aspx?id=30653">
 		<img src="https://img.shields.io/badge/platform-windows-lightgrey.svg?style=flat-square"/>
 	</a>
 	<a href="https://github.com/huiyadanli/RevokeMsgPatcher/releases">
-		<img src="https://img.shields.io/github/downloads/huiyadanli/PasteEx/total.svg?style=flat-squares"/>
+		<img src="https://img.shields.io/github/downloads/huiyadanli/RevokeMsgPatcher/total.svg?style=flat-squares"/>
 	</a>
 	<a href="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher">
 		<img src="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher.svg"/>
 	</a>
+	<a href="https://ci.appveyor.com/project/huiyadanli/RevokeMsgPatcher">
+		<img src="https://img.shields.io/appveyor/ci/huiyadanli/RevokeMsgPatcher.svg?style=flat-square"/>
+	</a>
 </p>
+
+# 微信防撤回补丁
+Windows 下PC版微信防撤回补丁
+
+<img src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
+
+支持最新版本：2.6.8.52
+
+支持历史版本：2.6.6.28、2.6.7.32、2.6.7.40、2.6.7.57、2.6.8.37、2.6.8.51
+
+下载地址：
+[:zap:点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.1/RevokeMsgPatcher.v0.1.zip)
 
 ## 截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
@@ -27,6 +42,8 @@
 如果你想得到本软件最新版本的推送，请点击 Watch -> Release only
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/watch_release.png)
 
+## Thanks
+[wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
 
 ## License
 GPLv3
