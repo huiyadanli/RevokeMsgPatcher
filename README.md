@@ -1,6 +1,6 @@
 
 <p align="center">
-	<a><img width="100px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/logo.jpg"/></a>
+	<a><img width="380px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/logo.jpg"/></a>
 </p>
 <p align="center">
 	<a href="https://www.microsoft.com/download/details.aspx?id=30653">
@@ -18,9 +18,9 @@
 </p>
 
 # 微信防撤回补丁
-Windows 下PC版微信防撤回补丁
+适用于 Windows 下PC版微信的防撤回补丁。
 
-<img src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
+<img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
 支持最新版本：2.6.8.52
 
