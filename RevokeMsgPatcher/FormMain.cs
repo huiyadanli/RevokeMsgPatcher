@@ -18,6 +18,13 @@ namespace RevokeMsgPatcher
                 patcher.IntallPath = txtPath.Text;
                 btnRestore.Enabled = File.Exists(patcher.BakPath);
             }
+            // 标题加上版本号
+            string currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            if (currentVersion.Length > 3)
+            {
+                currentVersion = " v" + currentVersion.Substring(0, 3);
+            }
+            this.Text += currentVersion;
         }
 
         private void btnPatch_Click(object sender, EventArgs e)
