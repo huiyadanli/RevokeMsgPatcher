@@ -1,5 +1,18 @@
-# 微信防撤回补丁
-微信防撤回
+
+<p align="center">
+	<a><img src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/logo.jpg"/></a>
+</p>
+<p align="center">
+	<a href="https://www.microsoft.com/download/details.aspx?id=30653">
+		<img src="https://img.shields.io/badge/platform-windows-lightgrey.svg?style=flat-square"/>
+	</a>
+	<a href="https://github.com/huiyadanli/RevokeMsgPatcher/releases">
+		<img src="https://img.shields.io/github/downloads/huiyadanli/PasteEx/total.svg?style=flat-squares"/>
+	</a>
+	<a href="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher">
+		<img src="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher.svg"/>
+	</a>
+</p>
 
 ## 截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
@@ -17,3 +30,5 @@
 
 ## License
 GPLv3
+
+![](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/give_a_star.png)
