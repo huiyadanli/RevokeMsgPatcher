@@ -34,10 +34,14 @@
 
 ## 使用方法
 
+**请以管理员身份运行本程序，由于修改了微信的 `WeChatWin.dll` 文件，杀毒软件可能会弹出警告，放行即可**
+
 环境要求：
 
 * Windows 7 或更高版本。
 * [.NET Framework 4.5](https://www.microsoft.com/zh-cn/download/details.aspx?id=30653) 或更高版本。
+
+
 
 如果你想得到本软件最新版本的推送，请点击 Watch -> Release only
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/watch_release.png)
