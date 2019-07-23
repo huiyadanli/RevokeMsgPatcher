@@ -17,7 +17,7 @@
 	</a>
 </p>
 
-# 微信防撤回补丁
+# :eyes:微信防撤回补丁
 适用于 Windows 下PC版微信的防撤回补丁。
 
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
@@ -29,10 +29,10 @@
 下载地址：
 [:zap:点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.1/RevokeMsgPatcher.v0.1.zip)
 
-## 截图
+## :camera:截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
 
-## 使用方法
+## :book:使用方法
 
 **请以管理员身份运行本程序，由于修改了微信的 `WeChatWin.dll` 文件，杀毒软件可能会弹出警告，放行即可**
 
@@ -46,10 +46,10 @@
 如果你想得到本软件最新版本的推送，请点击 Watch -> Release only
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/watch_release.png)
 
-## Thanks
+## :heart:Thanks
 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
 
-## License
+## :pencil2:License
 GPLv3
 
 ![](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/give_a_star.png)
