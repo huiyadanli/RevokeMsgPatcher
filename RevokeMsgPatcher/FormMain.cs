@@ -67,7 +67,7 @@ namespace RevokeMsgPatcher
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + " 请以管理员权限启动本程序，并确认微信处于关闭状态。");
             }
             btnPatch.Enabled = true;
         }
