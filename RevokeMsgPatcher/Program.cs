@@ -17,9 +17,9 @@ namespace RevokeMsgPatcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //Application.Run(new FormMain());
-            //return;
-
+#if DEBUG
+            Application.Run(new FormMain());
+#else
             //当前用户是管理员的时候，直接启动应用程序
             //如果不是管理员，则使用启动对象启动程序，以确保使用管理员身份运行
             //获得当前登录的Windows用户标示
@@ -51,6 +51,8 @@ namespace RevokeMsgPatcher
                 //退出
                 Application.Exit();
             }
+
+#endif
         }
     }
 }
