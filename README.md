@@ -22,12 +22,12 @@
 
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
-支持最新版本：2.6.8.52
+支持最新版本：2.6.8.65
 
-支持历史版本：2.6.6.28、2.6.7.32、2.6.7.40、2.6.7.57、2.6.8.37、2.6.8.51
+支持历史版本：2.6.6.28、2.6.7.32、2.6.7.40、2.6.7.57、2.6.8.37、2.6.8.51、2.6.8.52
 
 下载地址：
-[:zap:点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.2/RevokeMsgPatcher.v0.2.zip)
+[:zap:点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.3/RevokeMsgPatcher.v0.3.zip)
 
 ## :camera:截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
