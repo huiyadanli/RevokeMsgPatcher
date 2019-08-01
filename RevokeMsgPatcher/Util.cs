@@ -17,25 +17,32 @@ namespace RevokeMsgPatcher
         public static string AutoFindInstallPath()
         {
             // 微信的注册表路径
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall\WeChat");
-            object installLocation = key.GetValue("InstallLocation");
-            key.Close();
-            if (installLocation == null || string.IsNullOrEmpty(installLocation.ToString()) || !IsWechatInstallPath(installLocation.ToString()))
+            try
             {
-                // 从默认安装目录查找
-                string[] drives = Environment.GetLogicalDrives(); //获取当前计算机逻辑磁盘名称列表
-                foreach (string d in drives)
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall\WeChat");
+                object installLocation = key.GetValue("InstallLocation");
+                key.Close();
+                if (installLocation == null || string.IsNullOrEmpty(installLocation.ToString()) || !IsWechatInstallPath(installLocation.ToString()))
                 {
-                    string assertPath = Path.Combine(d, @"Program Files (x86)\Tencent\WeChat");
-                    if (IsWechatInstallPath(assertPath))
+                    // 从默认安装目录查找
+                    string[] drives = Environment.GetLogicalDrives(); //获取当前计算机逻辑磁盘名称列表
+                    foreach (string d in drives)
                     {
-                        return assertPath;
+                        string assertPath = Path.Combine(d, @"Program Files (x86)\Tencent\WeChat");
+                        if (IsWechatInstallPath(assertPath))
+                        {
+                            return assertPath;
+                        }
                     }
                 }
+                else
+                {
+                    return installLocation.ToString();
+                }
             }
-            else
+            catch(Exception e)
             {
-                return installLocation.ToString();
+                Console.WriteLine(e.Message);
             }
             return null;
         }
