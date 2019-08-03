@@ -1,5 +1,4 @@
 ﻿using RevokeMsgPatcher.Model;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +8,6 @@ namespace RevokeMsgPatcher
 {
     public class Patcher
     {
-
         private string intallPath;
         public string IntallPath
         {
@@ -40,10 +38,18 @@ namespace RevokeMsgPatcher
         private List<TargetFile> targetFiles;
         private TargetFile currentFile;
 
+        public List<TargetFile> TargetFiles { get => targetFiles; }
+
         public Patcher()
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             targetFiles = serializer.Deserialize<List<TargetFile>>(Properties.Resources.PatchJson);
+        }
+
+        public void SetNewPatchJson(string json)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            targetFiles = serializer.Deserialize<List<TargetFile>>(json);
         }
 
         public string JudgeVersion()
@@ -63,7 +69,6 @@ namespace RevokeMsgPatcher
                     return t.Version;
                 }
             }
-
             return null;
         }
 

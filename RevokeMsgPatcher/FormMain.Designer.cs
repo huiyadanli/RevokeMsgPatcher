@@ -36,6 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnRestore = new System.Windows.Forms.Button();
+            this.lblUpdatePachJson = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label2
@@ -109,11 +110,23 @@
             this.btnRestore.UseVisualStyleBackColor = true;
             this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
             // 
+            // lblUpdatePachJson
+            // 
+            this.lblUpdatePachJson.AutoSize = true;
+            this.lblUpdatePachJson.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblUpdatePachJson.Location = new System.Drawing.Point(198, 44);
+            this.lblUpdatePachJson.Name = "lblUpdatePachJson";
+            this.lblUpdatePachJson.Size = new System.Drawing.Size(131, 12);
+            this.lblUpdatePachJson.TabIndex = 9;
+            this.lblUpdatePachJson.Text = "获取最新补丁信息中...";
+            this.lblUpdatePachJson.Click += new System.EventHandler(this.lblUpdatePachJson_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 69);
+            this.Controls.Add(this.lblUpdatePachJson);
             this.Controls.Add(this.btnRestore);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
@@ -125,6 +138,7 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "微信防撤回补丁";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,6 +152,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button btnRestore;
+        private System.Windows.Forms.Label lblUpdatePachJson;
     }
 }
 

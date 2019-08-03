@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RevokeMsgPatcher
@@ -124,6 +126,37 @@ namespace RevokeMsgPatcher
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher");
+        }
+
+        private async void FormMain_Load(object sender, EventArgs e)
+        {
+            // 异步获取最新的补丁信息
+            Task<string> t = new Task<string>(() =>
+            {
+                return new WebClient().DownloadString("https://huiyadanli.coding.me/i/patch.json");
+            });
+            t.Start();
+            string json = await t;
+            if(string.IsNullOrEmpty(json))
+            {
+                lblUpdatePachJson.Text = "获取失败";
+
+            } else
+            {
+                patcher.SetNewPatchJson(json);
+                lblUpdatePachJson.Text = "获取成功";
+            }
+
+        }
+
+        private void lblUpdatePachJson_Click(object sender, EventArgs e)
+        {
+            string versions = "";
+            patcher.TargetFiles.ForEach(t =>
+            {
+                versions += t.Version + Environment.NewLine;
+            });
+            MessageBox.Show("当前所支持的微信版本:" + Environment.NewLine + versions);
         }
     }
 }
