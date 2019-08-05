@@ -32,7 +32,7 @@
 ## :camera:截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
 
-## :book:使用方法
+## 🔨使用方法
 
 **请以管理员身份运行本程序，由于修改了微信的 `WeChatWin.dll` 文件，杀毒软件可能会弹出警告，放行即可。**
 
@@ -51,7 +51,7 @@
 ## :heart:Thanks
 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
 
-## :pencil2:License
+## 📃License
 GPLv3
 
 ![](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/give_a_star.png)
