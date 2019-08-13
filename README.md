@@ -22,7 +22,11 @@
 
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
-支持最新版本：2.6.8.65
+支持最新测试版本：2.7.0.65
+
+支持最新稳定版本：2.6.8.65
+
+（2.6.8.68由于无法获得该版本的安装包，暂不支持，如果你有对应版本的安装文件可以在[#2](https://github.com/huiyadanli/RevokeMsgPatcher/issues/4)回复）
 
 支持历史版本：2.6.6.28、2.6.7.32、2.6.7.40、2.6.7.57、2.6.8.37、2.6.8.51、2.6.8.52
 
