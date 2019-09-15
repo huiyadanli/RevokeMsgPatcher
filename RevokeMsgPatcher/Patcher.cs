@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Web.Script.Serialization;
+using File = System.IO.File;
 
 namespace RevokeMsgPatcher
 {
