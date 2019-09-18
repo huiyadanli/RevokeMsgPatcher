@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RevokeMsgPatcher.Utils;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -157,6 +158,11 @@ namespace RevokeMsgPatcher
                 versions += t.Version + Environment.NewLine;
             });
             MessageBox.Show("当前所支持的微信版本:" + Environment.NewLine + versions);
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            PathUtil.DisplayAllProgram();
         }
     }
 }

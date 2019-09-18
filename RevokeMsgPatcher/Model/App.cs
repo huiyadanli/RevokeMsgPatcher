@@ -10,6 +10,8 @@ namespace RevokeMsgPatcher.Model
     {
         public string Name { get; set; }
 
-        public List<Version> Versions { get; set; }
+        public string[] ModifyFilePaths { get; set; }
+
+        public List<BinaryFile> ModifyFileInfos { get; set; }
     }
 }

@@ -60,10 +60,18 @@
     <Compile Include="Model\BinaryFile.cs" />
     <Compile Include="Model\TargetFile.cs" />
     <Compile Include="Model\Version.cs" />
+    <Compile Include="Modifier\AppModifier.cs" />
+    <Compile Include="Modifier\FileHexEditor.cs" />
+    <Compile Include="Modifier\QQModifier.cs" />
+    <Compile Include="Modifier\TIMModifier.cs" />
+    <Compile Include="Modifier\WechatModifier.cs" />
     <Compile Include="Patcher.cs" />
+    <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="Utils\HexEditUtil.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
