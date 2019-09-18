@@ -57,8 +57,9 @@
     </Compile>
     <Compile Include="Model\App.cs" />
     <Compile Include="Model\Change.cs" />
-    <Compile Include="Model\BinaryFile.cs" />
+    <Compile Include="Model\ModifyInfo.cs" />
     <Compile Include="Model\TargetFile.cs" />
+    <Compile Include="Model\TargetInfo.cs" />
     <Compile Include="Model\Version.cs" />
     <Compile Include="Modifier\AppModifier.cs" />
     <Compile Include="Modifier\FileHexEditor.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Modifier\TIMModifier.cs" />
     <Compile Include="Modifier\WechatModifier.cs" />
     <Compile Include="Patcher.cs" />
+    <Compile Include="Utils\FileUtil.cs" />
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
-﻿using RevokeMsgPatcher.Utils;
+﻿using RevokeMsgPatcher.Modifier;
+using RevokeMsgPatcher.Utils;
 using System;
 using System.IO;
 using System.Net;
@@ -9,18 +10,12 @@ namespace RevokeMsgPatcher
 {
     public partial class FormMain : Form
     {
-        Patcher patcher = null;
+        WechatModifier wechatModifier = new WechatModifier();
 
         public FormMain()
         {
             InitializeComponent();
-            patcher = new Patcher();
-            txtPath.Text = Util.AutoFindInstallPath();
-            if (!string.IsNullOrEmpty(txtPath.Text))
-            {
-                patcher.IntallPath = txtPath.Text;
-                btnRestore.Enabled = File.Exists(patcher.BakPath);
-            }
+
             // 标题加上版本号
             string currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             if (currentVersion.Length > 3)
@@ -28,44 +23,41 @@ namespace RevokeMsgPatcher
                 currentVersion = " v" + currentVersion.Substring(0, 3);
             }
             this.Text += currentVersion;
+
+            // 自动获取应用安装路径
+            txtPath.Text = wechatModifier.FindInstallPath();
+            // 显示是否能够备份还原
+            if (!string.IsNullOrEmpty(txtPath.Text))
+            {
+                wechatModifier.InitEditors(txtPath.Text);
+                btnRestore.Enabled = wechatModifier.BackupExists();
+            }
+
         }
 
         private void btnPatch_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtPath.Text) || !Util.IsWechatInstallPath(txtPath.Text))
+            if (string.IsNullOrEmpty(txtPath.Text) || !wechatModifier.IsAllFilesExist(txtPath.Text))
             {
                 MessageBox.Show("请选择微信安装路径!");
                 return;
             }
-            patcher.IntallPath = txtPath.Text;
-
+            // a.重新初始化编辑器
+            wechatModifier.InitEditors(txtPath.Text);
+            btnPatch.Enabled = false;
+            // b.计算SHA1，验证文件完整性，寻找对应的补丁信息
             try
             {
-                btnPatch.Enabled = false;
-                string version = patcher.JudgeVersion();
-                if (!string.IsNullOrEmpty(version))
-                {
-                    if (version == "done")
-                    {
-                        MessageBox.Show("已经安装过防撤回补丁了");
-                        btnPatch.Enabled = true;
-                        return;
-                    }
-
-                    if (patcher.Patch())
-                    {
-                        MessageBox.Show("成功安装防撤回补丁！原 WeChatWin.dll 文件已经备份到 " + patcher.BakPath + " ，如果有问题可以手动覆盖恢复");
-                    }
-                    else
-                    {
-                        MessageBox.Show("防撤回补丁安装失败！");
-                    }
-                    btnRestore.Enabled = File.Exists(patcher.BakPath);
-                }
-                else
-                {
-                    MessageBox.Show("当前微信版本不被支持：" + Util.GetFileVersion(patcher.DllPath));
-                }
+                wechatModifier.ValidateAndFindModifyInfo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            // c.打补丁
+            try
+            {
+                wechatModifier.Patch();
             }
             catch (Exception ex)
             {
@@ -79,8 +71,8 @@ namespace RevokeMsgPatcher
         {
             if (!string.IsNullOrEmpty(txtPath.Text))
             {
-                patcher.IntallPath = txtPath.Text;
-                btnRestore.Enabled = File.Exists(patcher.BakPath);
+                wechatModifier.InitEditors(txtPath.Text);
+                btnRestore.Enabled = wechatModifier.BackupExists();
             }
         }
 
@@ -90,7 +82,7 @@ namespace RevokeMsgPatcher
             dialog.Description = "请选择微信安装路径";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                if (string.IsNullOrEmpty(dialog.SelectedPath) || !Util.IsWechatInstallPath(dialog.SelectedPath))
+                if (string.IsNullOrEmpty(dialog.SelectedPath) || !wechatModifier.IsAllFilesExist(dialog.SelectedPath))
                 {
                     MessageBox.Show("无法找到微信关键文件，请选择正确的微信安装路径!");
                 }
@@ -106,22 +98,14 @@ namespace RevokeMsgPatcher
             btnRestore.Enabled = false;
             try
             {
-                if (File.Exists(patcher.BakPath))
-                {
-                    File.Copy(patcher.BakPath, patcher.DllPath, true);
-                    MessageBox.Show("还原成功");
-                }
-                else
-                {
-                    MessageBox.Show("备份文件不存在");
-                }
+                wechatModifier.Restore();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 MessageBox.Show(ex.Message);
             }
-            btnRestore.Enabled = File.Exists(patcher.BakPath);
+            btnRestore.Enabled = wechatModifier.BackupExists();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -144,7 +128,7 @@ namespace RevokeMsgPatcher
 
             } else
             {
-                patcher.SetNewPatchJson(json);
+                //patcher.SetNewPatchJson(json);
                 lblUpdatePachJson.Text = "获取成功";
             }
 
@@ -153,10 +137,10 @@ namespace RevokeMsgPatcher
         private void lblUpdatePachJson_Click(object sender, EventArgs e)
         {
             string versions = "";
-            patcher.TargetFiles.ForEach(t =>
-            {
-                versions += t.Version + Environment.NewLine;
-            });
+            //patcher.TargetFiles.ForEach(t =>
+            //{
+            //    versions += t.Version + Environment.NewLine;
+            //});
             MessageBox.Show("当前所支持的微信版本:" + Environment.NewLine + versions);
         }
 

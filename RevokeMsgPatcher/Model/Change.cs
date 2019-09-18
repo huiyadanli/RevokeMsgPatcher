@@ -10,6 +10,14 @@ namespace RevokeMsgPatcher.Model
     {
         public long Position { get; set; }
 
-        public byte Content { get; set; }
+        public byte[] Content { get; set; }
+
+        public Change Clone()
+        {
+            Change o = new Change();
+            o.Position = Position;
+            o.Content = Content;
+            return o;
+        }
     }
 }

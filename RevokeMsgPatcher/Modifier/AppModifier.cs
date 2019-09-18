@@ -8,41 +8,52 @@ using System.Threading.Tasks;
 
 namespace RevokeMsgPatcher.Modifier
 {
+    /// <summary>
+    /// 1. 自动获取安装目录（已验证） 或者手动填写安装目录
+    /// 2. 验证安装目录 验证要修改的 dll 是否存在
+    /// 3. 判断所有 dll 是否符合防撤回要求
+    /// 4. 备份所有 dll  // *.h.bak
+    /// 5. 根据每个 dll 匹配的 修改信息 循环修改
+    /// </summary>
     public abstract class AppModifier
     {
-        private App config;
+        protected App config;
 
-        private List<FileHexEditor> editors;
+        protected List<FileHexEditor> editors;
 
-        // 1. 获取安装目录
-        // 2. 验证安装目录 通过 BinaryFiles
-        // 3. 判断所有 BinaryFiles 是否符合防撤回要求
-        // 4. 备份所有 BinaryFiles  // *.h.bak
-        // 5. 对每个 BinaryFile 中的 Changes 循环修改（修改前要测试它的读写性质,是否被程序占用等）
-
-        // 获取版本号
-        // 通过SHA1判断是否可以进行16进制编辑 先判断版本号 再判断SHA1    根据不同结果返回不同的提示
-
-        // ?多文件的备份回退 // 暂定有一个备份文件就点亮按钮
+        public string InstallPath { get; set; }
 
         public abstract string FindInstallPath();
 
-        //public abstract bool ValidateInstallPath();
+        //public abstract bool ValidateAndInitialize(string installPath);
 
-        public abstract bool GetVersion();
+        /// <summary>
+        /// 获取版本号
+        /// </summary>
+        /// <returns></returns>
+        public abstract string GetVersion();
 
-        public bool IsAllBinaryFilesExist(string installPath)
+        /// <summary>
+        /// 判断APP安装路径内是否都存在要修改的文件
+        /// </summary>
+        /// <param name="installPath">APP安装路径</param>
+        /// <returns></returns>
+        public bool IsAllFilesExist(string installPath)
         {
-            int success = 0;
-            foreach(string relativePath in config.ModifyFilePaths)
+            if(string.IsNullOrEmpty(installPath))
             {
-                string filePath = Path.Combine(installPath, relativePath);
-                if(File.Exists(filePath))
+                return false;
+            }
+            int success = 0;
+            foreach (TargetInfo info in config.FileTargetInfos.Values)
+            {
+                string filePath = Path.Combine(installPath, info.RelativePath);
+                if (File.Exists(filePath))
                 {
                     success++;
                 }
             }
-            if(success == config.ModifyFilePaths.Length)
+            if (success == config.FileTargetInfos.Count)
             {
                 return true;
             }
@@ -52,5 +63,132 @@ namespace RevokeMsgPatcher.Modifier
             }
         }
 
+        /// <summary>
+        /// a.初始化修改器
+        /// </summary>
+        /// <param name="installPath">APP安装路径</param>
+        public void InitEditors(string installPath)
+        {
+            // 初始化文件修改器
+            editors = new List<FileHexEditor>();
+            foreach (TargetInfo info in config.FileTargetInfos.Values)
+            {
+                FileHexEditor editor = new FileHexEditor(installPath, info);
+                editors.Add(editor);
+            }
+
+        }
+
+        /// <summary>
+        /// b.验证文件完整性，寻找对应的补丁信息
+        /// </summary>
+        public void ValidateAndFindModifyInfo()
+        {
+            // 寻找对应文件版本与SHA1的修改信息
+            foreach (FileHexEditor editor in editors) // 多种文件
+            {
+                // 通过SHA1和文件版本判断是否可以打补丁 根据不同结果返回不同的提示
+                ModifyInfo matchingSHA1Before = null, matchingSHA1After = null, matchingVersion = null;
+                foreach (ModifyInfo modifyInfo in config.FileModifyInfos[editor.FileName]) // 多个版本信息
+                {
+                    if (modifyInfo.Name == editor.FileName) // 保险用的无用判断
+                    {
+                        if (editor.FileSHA1 == modifyInfo.SHA1After)
+                        {
+                            matchingSHA1After = modifyInfo;
+                        }
+                        else if (editor.FileSHA1 == modifyInfo.SHA1Before)
+                        {
+                            matchingSHA1Before = modifyInfo;
+                        }
+
+                        if (editor.FileVersion == modifyInfo.Version)
+                        {
+                            matchingVersion = modifyInfo;
+                        }
+                    }
+                    // 补丁前SHA1匹配上，肯定是正确的dll
+                    if (matchingSHA1Before != null)
+                    {
+                        editor.FileModifyInfo = modifyInfo.Clone();
+                        continue;
+                    }
+                    // 补丁后SHA1匹配上，肯定已经打过补丁
+                    if (matchingSHA1After != null)
+                    {
+                        throw new Exception($"你已经安装过此补丁，文件路径：{editor.FilePath}");
+                    }
+                    // 全部不匹配，说明不支持
+                    if (matchingSHA1Before == null && matchingSHA1After == null && matchingVersion == null)
+                    {
+                        throw new Exception($"不支持此版本：{editor.FileVersion}，文件路径：{editor.FilePath}");
+                    }
+                    // SHA1不匹配，版本匹配，可能dll已经被其他补丁程序修改过
+                    if ((matchingSHA1Before == null && matchingSHA1After == null) && matchingVersion != null)
+                    {
+                        throw new Exception($"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序。文件路径：{editor.FilePath}");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// c.根据补丁信息，安装补丁
+        /// </summary>
+        /// <returns></returns>
+        public bool Patch()
+        {
+            // 首先验证文件修改器是否没问题
+            foreach (FileHexEditor editor in editors)
+            {
+                if (editor.FileModifyInfo == null)
+                {
+                    throw new Exception("补丁安装失败，原因：文件修改器初始化失败！");
+                }
+            }
+            // 再备份所有文件
+            foreach (FileHexEditor editor in editors)
+            {
+                editor.Backup();
+            }
+            // 打补丁！
+            foreach (FileHexEditor editor in editors)
+            {
+                bool success = editor.Patch();
+                if (!success)
+                {
+                    editor.Restore();
+                }
+            }
+            return true;
+        }
+
+        public bool BackupExists()
+        {
+            foreach (FileHexEditor editor in editors)
+            {
+                if(!File.Exists(editor.FileBakPath))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool Restore()
+        {
+            if (BackupExists())
+            {
+                foreach (FileHexEditor editor in editors)
+                {
+                    editor.Restore();
+                }
+                return true;
+            }
+            else
+            {
+                throw new Exception("备份文件不存在，还原失败！");
+            }
+        }
     }
 }
