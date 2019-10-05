@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using RevokeMsgPatcher.Model;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -41,7 +43,7 @@ namespace RevokeMsgPatcher.Utils
         /// <summary>
         /// 修改文件指定位置的字节
         /// </summary>
-        /// <param name="path">WeChatWin.dll 的路径</param>
+        /// <param name="path">文件对象的路径</param>
         /// <param name="position">偏移位置</param>
         /// <param name="after">修改后的值</param>
         /// <returns></returns>
@@ -54,6 +56,23 @@ namespace RevokeMsgPatcher.Utils
             }
             return true;
 
+        }
+
+        /// <summary>
+        /// 修改文件多个指定位置的多个字节
+        /// </summary>
+        /// <param name="path">文件对象的路径</param>
+        /// <param name="changes">需要修改的位置和内容</param>
+        public static void EditMultiHex(string path, List<Change> changes)
+        {
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite))
+            {
+                foreach (Change change in changes)
+                {
+                    stream.Seek(change.Position, SeekOrigin.Begin);
+                    stream.Write(change.Content, 0, change.Content.Length);
+                }
+            }
         }
     }
 }

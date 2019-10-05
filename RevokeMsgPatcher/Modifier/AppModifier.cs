@@ -19,10 +19,16 @@ namespace RevokeMsgPatcher.Modifier
     {
         protected App config;
 
+        public App Config { set { config = value; } }
+
         protected List<FileHexEditor> editors;
 
         public string InstallPath { get; set; }
 
+        /// <summary>
+        /// 自动搜索应用安装路径
+        /// </summary>
+        /// <returns>应用安装路径</returns>
         public abstract string FindInstallPath();
 
         //public abstract bool ValidateAndInitialize(string installPath);
@@ -40,7 +46,7 @@ namespace RevokeMsgPatcher.Modifier
         /// <returns></returns>
         public bool IsAllFilesExist(string installPath)
         {
-            if(string.IsNullOrEmpty(installPath))
+            if (string.IsNullOrEmpty(installPath))
             {
                 return false;
             }
@@ -107,27 +113,28 @@ namespace RevokeMsgPatcher.Modifier
                             matchingVersion = modifyInfo;
                         }
                     }
-                    // 补丁前SHA1匹配上，肯定是正确的dll
-                    if (matchingSHA1Before != null)
-                    {
-                        editor.FileModifyInfo = modifyInfo.Clone();
-                        continue;
-                    }
-                    // 补丁后SHA1匹配上，肯定已经打过补丁
-                    if (matchingSHA1After != null)
-                    {
-                        throw new Exception($"你已经安装过此补丁，文件路径：{editor.FilePath}");
-                    }
-                    // 全部不匹配，说明不支持
-                    if (matchingSHA1Before == null && matchingSHA1After == null && matchingVersion == null)
-                    {
-                        throw new Exception($"不支持此版本：{editor.FileVersion}，文件路径：{editor.FilePath}");
-                    }
-                    // SHA1不匹配，版本匹配，可能dll已经被其他补丁程序修改过
-                    if ((matchingSHA1Before == null && matchingSHA1After == null) && matchingVersion != null)
-                    {
-                        throw new Exception($"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序。文件路径：{editor.FilePath}");
-                    }
+                }
+
+                // 补丁前SHA1匹配上，肯定是正确的dll
+                if (matchingSHA1Before != null)
+                {
+                    editor.FileModifyInfo = matchingSHA1Before;
+                    continue;
+                }
+                // 补丁后SHA1匹配上，肯定已经打过补丁
+                if (matchingSHA1After != null)
+                {
+                    throw new Exception($"你已经安装过此补丁，文件路径：{editor.FilePath}");
+                }
+                // 全部不匹配，说明不支持
+                if (matchingSHA1Before == null && matchingSHA1After == null && matchingVersion == null)
+                {
+                    throw new Exception($"不支持此版本：{editor.FileVersion}，文件路径：{editor.FilePath}");
+                }
+                // SHA1不匹配，版本匹配，可能dll已经被其他补丁程序修改过
+                if ((matchingSHA1Before == null && matchingSHA1After == null) && matchingVersion != null)
+                {
+                    throw new Exception($"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序。文件路径：{editor.FilePath}");
                 }
             }
         }
@@ -152,13 +159,27 @@ namespace RevokeMsgPatcher.Modifier
                 editor.Backup();
             }
             // 打补丁！
-            foreach (FileHexEditor editor in editors)
+            List<FileHexEditor> done = new List<FileHexEditor>(); // 已经打上补丁的
+            try
             {
-                bool success = editor.Patch();
-                if (!success)
+                foreach (FileHexEditor editor in editors)
+                {
+                    bool success = editor.Patch();
+                    if (!success)
+                    {
+                        editor.Restore();
+                    }
+                    done.Add(editor);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 恢复所有已经打上补丁的文件
+                foreach (FileHexEditor editor in done)
                 {
                     editor.Restore();
                 }
+                throw ex;
             }
             return true;
         }
@@ -167,7 +188,7 @@ namespace RevokeMsgPatcher.Modifier
         {
             foreach (FileHexEditor editor in editors)
             {
-                if(!File.Exists(editor.FileBakPath))
+                if (!File.Exists(editor.FileBakPath))
                 {
                     return false;
                 }

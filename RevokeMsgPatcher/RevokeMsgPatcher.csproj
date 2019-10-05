@@ -56,6 +56,7 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\App.cs" />
+    <Compile Include="Model\Bag.cs" />
     <Compile Include="Model\Change.cs" />
     <Compile Include="Model\ModifyInfo.cs" />
     <Compile Include="Model\TargetFile.cs" />
@@ -71,9 +72,8 @@
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test.cs" />
+    <Compile Include="JsonData.cs" />
     <Compile Include="Util.cs" />
-    <Compile Include="Utils\HexEditUtil.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

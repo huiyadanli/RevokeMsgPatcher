@@ -1,14 +1,16 @@
-﻿using RevokeMsgPatcher.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Utils;
 
 namespace RevokeMsgPatcher.Modifier
 {
     class WechatModifier : AppModifier
     {
+
+        public WechatModifier(App config)
+        {
+            this.config = config;
+        }
+
         /// <summary>
         /// 自动寻找获取微信安装路径
         /// </summary>

@@ -39,6 +39,10 @@ namespace RevokeMsgPatcher.Utils
             try
             {
                 RegistryKey key = Registry.LocalMachine.OpenSubKey($@"Software\Microsoft\Windows\CurrentVersion\Uninstall\{uninstallKeyName}");
+                if (key == null)
+                {
+                    return null;
+                }
                 object installLocation = key.GetValue("InstallLocation");
                 key.Close();
                 if (installLocation != null && !string.IsNullOrEmpty(installLocation.ToString()))
@@ -66,7 +70,7 @@ namespace RevokeMsgPatcher.Utils
             foreach (string d in drives)
             {
                 string path = Path.Combine(d, $@"Program Files (x86)\{relativePath}");
-                if(Directory.Exists(path))
+                if (Directory.Exists(path))
                 {
                     list.Add(path);
                 }

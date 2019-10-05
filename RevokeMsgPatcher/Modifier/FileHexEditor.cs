@@ -62,6 +62,7 @@ namespace RevokeMsgPatcher.Modifier
 
         public bool Patch()
         {
+            FileUtil.EditMultiHex(FilePath, FileModifyInfo.Changes);
             return true;
         }
 
