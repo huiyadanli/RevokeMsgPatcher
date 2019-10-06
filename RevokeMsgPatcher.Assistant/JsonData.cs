@@ -118,12 +118,12 @@ namespace RevokeMsgPatcher
                                     new Change
                                     {
                                         Position = 0x0005009F,
-                                        Content = new byte[] { 0xEB, 0x90, 0x90, 0x90, 0x90 }
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
                                     },
                                     new Change
                                     {
                                         Position = 0x000502BC,
-                                        Content = new byte[] { 0xEB, 0x90, 0x90, 0x90, 0x90 }
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
                                     },
                                     new Change
                                     {
@@ -171,12 +171,12 @@ namespace RevokeMsgPatcher
                                     new Change
                                     {
                                         Position = 0x0004D78A,
-                                        Content = new byte[] { 0xEB, 0x90, 0x90, 0x90, 0x90 }
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
                                     },
                                     new Change
                                     {
                                         Position = 0x0004D9A7,
-                                        Content = new byte[] { 0xEB, 0x90, 0x90, 0x90, 0x90 }
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
                                     },
                                     new Change
                                     {
