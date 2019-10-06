@@ -1,6 +1,6 @@
 
 <p align="center">
-	<a><img width="380px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/logo.jpg"/></a>
+	<a><img width="380px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/logo.png"/></a>
 </p>
 <p align="center">
 	<a href="https://www.microsoft.com/download/details.aspx?id=30653">
