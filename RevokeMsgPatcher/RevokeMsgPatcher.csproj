@@ -66,6 +66,8 @@
     <Compile Include="Modifier\TIMModifier.cs" />
     <Compile Include="Modifier\WechatModifier.cs" />
     <Compile Include="Utils\FileUtil.cs" />
+    <Compile Include="Utils\GAHelper.cs" />
+    <Compile Include="Utils\HttpUtil.cs" />
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

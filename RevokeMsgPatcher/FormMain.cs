@@ -22,7 +22,9 @@ namespace RevokeMsgPatcher
 
         private string thisVersion;
         private bool needUpdate = false;
-        
+
+        private GAHelper ga = new GAHelper(); // Google Analytics 记录
+
         public void InitModifier()
         {
             // 从配置文件中读取配置
@@ -59,6 +61,7 @@ namespace RevokeMsgPatcher
             InitModifier();
             InitControls();
 
+            ga.RequestPageView("/main", "进入主界面");
         }
 
         private void InitControls()
@@ -81,6 +84,10 @@ namespace RevokeMsgPatcher
                 MessageBox.Show("请选择正确的安装路径!");
                 return;
             }
+
+            // 记录点了什么应用的防撤回
+            ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch", "点击防撤回");
+
             EnableAllButton(false);
             // a.重新初始化编辑器
             modifier.InitEditors(txtPath.Text);
@@ -91,6 +98,7 @@ namespace RevokeMsgPatcher
             }
             catch (Exception ex)
             {
+                ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch/sha1/ex", ex.Message);
                 MessageBox.Show(ex.Message);
                 EnableAllButton(true);
                 btnRestore.Enabled = modifier.BackupExists();
@@ -100,6 +108,7 @@ namespace RevokeMsgPatcher
             try
             {
                 modifier.Patch();
+                ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch/succ", "防撤回成功");
                 MessageBox.Show("补丁安装成功！");
                 EnableAllButton(true);
                 btnRestore.Enabled = modifier.BackupExists();
@@ -107,10 +116,12 @@ namespace RevokeMsgPatcher
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch/ex", ex.Message);
                 MessageBox.Show(ex.Message + " 请以管理员权限启动本程序，并确认微信处于关闭状态。");
                 EnableAllButton(true);
                 btnRestore.Enabled = modifier.BackupExists();
             }
+
         }
 
         private void txtPath_TextChanged(object sender, EventArgs e)
@@ -169,30 +180,7 @@ namespace RevokeMsgPatcher
         private async void FormMain_Load(object sender, EventArgs e)
         {
             // 异步获取最新的补丁信息
-            Task<string> t = new Task<string>(() =>
-            {
-                string downStr = null;
-                WebClient wc = new WebClient();
-                try
-                {
-                    downStr = wc.DownloadString("https://huiyadanli.coding.me/i/revokemsg/05.json");
-                }
-                catch (Exception ex1)
-                {
-                    Console.WriteLine(ex1.Message);
-                    try
-                    {
-                        downStr = wc.DownloadString("https://www.huiyadan.com/i/revokemsg/05.json");
-                    }
-                    catch (Exception ex2)
-                    {
-                        Console.WriteLine(ex2.Message);
-                    }
-                }
-                return downStr;
-            });
-            t.Start();
-            string json = await t;
+            string json = await GetPathJsonAsync();
             if (string.IsNullOrEmpty(json))
             {
                 lblUpdatePachJson.Text = "[ 获取失败 ]";
@@ -228,14 +216,36 @@ namespace RevokeMsgPatcher
             }
         }
 
+        private async Task<string> GetPathJsonAsync()
+        {
+            string downStr = null;
+            try
+            {
+                downStr = await HttpUtil.Client.GetStringAsync("https://huiyadanli.coding.me/i/revokemsg/05.json");
+            }
+            catch (Exception ex1)
+            {
+                Console.WriteLine(ex1.Message);
+                try
+                {
+                    downStr = await HttpUtil.Client.GetStringAsync("https://www.huiyadan.com/i/revokemsg/05.json");
+                }
+                catch (Exception ex2)
+                {
+                    Console.WriteLine(ex2.Message);
+                }
+            }
+            return downStr;
+        }
+
         private void lblUpdatePachJson_Click(object sender, EventArgs e)
         {
             string tips = "";
-            if(needUpdate)
+            if (needUpdate)
             {
                 tips += "【当前存在最新版本，点击确定进入软件主页下载最新版本。】" + Environment.NewLine + Environment.NewLine;
             }
-            tips += "支持以下版本" +Environment.NewLine;
+            tips += "支持以下版本" + Environment.NewLine;
             tips += " ➯ 微信：" + wechatModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQ：" + qqModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ TIM：" + timModifier.Config.GetSupportVersionStr() + Environment.NewLine;
@@ -249,6 +259,7 @@ namespace RevokeMsgPatcher
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
         {
+            ga.RequestPageView(GetCheckedRadioButtonNameEn() + "_switch");
             EnableAllButton(false);
             RadioButton radioButton = sender as RadioButton;
             // 切换使用不同的防撤回对象
@@ -273,6 +284,23 @@ namespace RevokeMsgPatcher
                 modifier.InitEditors(txtPath.Text);
                 btnRestore.Enabled = modifier.BackupExists();
             }
+        }
+
+        private string GetCheckedRadioButtonNameEn()
+        {
+            if (rbtWechat.Checked)
+            {
+                return "wechat";
+            }
+            else if (rbtQQ.Checked)
+            {
+                return "qq";
+            }
+            else if (rbtTIM.Checked)
+            {
+                return "tim";
+            }
+            return "none";
         }
 
         private void EnableAllButton(bool state)
