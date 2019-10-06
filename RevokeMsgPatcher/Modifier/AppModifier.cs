@@ -19,7 +19,7 @@ namespace RevokeMsgPatcher.Modifier
     {
         protected App config;
 
-        public App Config { set { config = value; } }
+        public App Config { set { config = value; } get { return config; } }
 
         protected List<FileHexEditor> editors;
 

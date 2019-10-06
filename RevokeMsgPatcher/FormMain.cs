@@ -6,21 +6,33 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace RevokeMsgPatcher
 {
     public partial class FormMain : Form
     {
-        AppModifier modifier = null;
+        // 当前使用的修改者
+        private AppModifier modifier = null;
 
+        private WechatModifier wechatModifier = null;
+        private QQModifier qqModifier = null;
+        private TIMModifier timModifier = null;
+
+        private string thisVersion;
+        private bool needUpdate = false;
+        
         public void InitModifier()
         {
-            Bag bag = new JsonData().Bag();
+            // 从配置文件中读取配置
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            Bag bag = serializer.Deserialize<Bag>(Properties.Resources.PatchJson);
 
-            WechatModifier wechatModifier = new WechatModifier(bag.Apps["Wechat"]);
-            QQModifier qqModifier = new QQModifier(bag.Apps["QQ"]);
-            TIMModifier timModifier = new TIMModifier(bag.Apps["TIM"]);
+            // 初始化每个应用对应的修改者
+            wechatModifier = new WechatModifier(bag.Apps["Wechat"]);
+            qqModifier = new QQModifier(bag.Apps["QQ"]);
+            timModifier = new TIMModifier(bag.Apps["TIM"]);
 
             rbtWechat.Tag = wechatModifier;
             rbtQQ.Tag = qqModifier;
@@ -39,7 +51,8 @@ namespace RevokeMsgPatcher
             string currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             if (currentVersion.Length > 3)
             {
-                currentVersion = " v" + currentVersion.Substring(0, 3);
+                thisVersion = currentVersion.Substring(0, 3);
+                currentVersion = " v" + thisVersion;
             }
             this.Text += currentVersion;
 
@@ -158,7 +171,25 @@ namespace RevokeMsgPatcher
             // 异步获取最新的补丁信息
             Task<string> t = new Task<string>(() =>
             {
-                return new WebClient().DownloadString("https://huiyadanli.coding.me/i/patch.json");
+                string downStr = null;
+                WebClient wc = new WebClient();
+                try
+                {
+                    downStr = wc.DownloadString("https://huiyadanli.coding.me/i/revokemsg/05.json");
+                }
+                catch (Exception ex1)
+                {
+                    Console.WriteLine(ex1.Message);
+                    try
+                    {
+                        downStr = wc.DownloadString("https://www.huiyadan.com/i/revokemsg/05.json");
+                    }
+                    catch (Exception ex2)
+                    {
+                        Console.WriteLine(ex2.Message);
+                    }
+                }
+                return downStr;
             });
             t.Start();
             string json = await t;
@@ -169,19 +200,51 @@ namespace RevokeMsgPatcher
             }
             else
             {
-                //patcher.SetNewPatchJson(json);
-                lblUpdatePachJson.Text = "[ 获取成功 ]";
+                try
+                {
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    Bag bag = serializer.Deserialize<Bag>(json);
+
+                    wechatModifier.Config = bag.Apps["Wechat"];
+                    qqModifier.Config = bag.Apps["QQ"];
+                    timModifier.Config = bag.Apps["TIM"];
+
+                    if (Convert.ToDecimal(bag.LatestVersion) > Convert.ToDecimal(thisVersion))
+                    {
+                        needUpdate = true;
+                        lblUpdatePachJson.Text = $"[ 请到软件主页下载最新版本 {bag.LatestVersion} ]";
+                    }
+                    else
+                    {
+                        needUpdate = false;
+                        lblUpdatePachJson.Text = "[ 获取成功 ]";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    lblUpdatePachJson.Text = "[ 更换新配置时异常 ]";
+                }
             }
         }
 
         private void lblUpdatePachJson_Click(object sender, EventArgs e)
         {
-            string versions = "";
-            //patcher.TargetFiles.ForEach(t =>
-            //{
-            //    versions += t.Version + Environment.NewLine;
-            //});
-            MessageBox.Show("当前所支持的微信版本:" + Environment.NewLine + versions);
+            string tips = "";
+            if(needUpdate)
+            {
+                tips += "【当前存在最新版本，点击确定进入软件主页下载最新版本。】" + Environment.NewLine + Environment.NewLine;
+            }
+            tips += "支持以下版本" +Environment.NewLine;
+            tips += " ➯ 微信：" + wechatModifier.Config.GetSupportVersionStr() + Environment.NewLine;
+            tips += " ➯ QQ：" + qqModifier.Config.GetSupportVersionStr() + Environment.NewLine;
+            tips += " ➯ TIM：" + timModifier.Config.GetSupportVersionStr() + Environment.NewLine;
+
+            DialogResult dr = MessageBox.Show(tips, "当前支持防撤回的版本", MessageBoxButtons.OKCancel);
+            if (dr == DialogResult.OK && needUpdate)
+            {
+                System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/releases");
+            }
         }
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)

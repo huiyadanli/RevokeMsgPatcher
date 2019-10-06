@@ -116,9 +116,9 @@
             // lblUpdatePachJson
             // 
             this.lblUpdatePachJson.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblUpdatePachJson.Location = new System.Drawing.Point(312, 89);
+            this.lblUpdatePachJson.Location = new System.Drawing.Point(166, 89);
             this.lblUpdatePachJson.Name = "lblUpdatePachJson";
-            this.lblUpdatePachJson.Size = new System.Drawing.Size(162, 12);
+            this.lblUpdatePachJson.Size = new System.Drawing.Size(308, 12);
             this.lblUpdatePachJson.TabIndex = 9;
             this.lblUpdatePachJson.Text = "[ 获取最新补丁信息中... ]";
             this.lblUpdatePachJson.TextAlign = System.Drawing.ContentAlignment.TopRight;
