@@ -188,6 +188,7 @@ namespace RevokeMsgPatcher
         {
             EnableAllButton(false);
             RadioButton radioButton = sender as RadioButton;
+            // 切换使用不同的防撤回对象
             if (rbtWechat.Checked)
             {
                 modifier = (WechatModifier)rbtWechat.Tag;

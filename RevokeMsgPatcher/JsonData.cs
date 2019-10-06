@@ -162,23 +162,23 @@ namespace RevokeMsgPatcher
                             {
                                 Name = "IM.dll",
                                 Version = "2.3.2.21173",
-                                SHA1Before = "c6632339fbe675312a70ae4620e70699c258cd36",
-                                SHA1After = "e9ddc5cc681950796fc8fe4c55f580428c890b51",
+                                SHA1Before = "ecf3e69f3fb100ffe2fee095ffded591b9781024",
+                                SHA1After = "0514d1304e7ac46b4d33386ec3313888f5ae7171",
                                 Changes = new List<Change>
                                 {
                                     new Change
                                     {
-                                        Position = 0x0005009F,
+                                        Position = 0x0004D78A,
                                         Content = new byte[] { 0xEB, 0x90, 0x90, 0x90, 0x90 }
                                     },
                                     new Change
                                     {
-                                        Position = 0x000502BC,
+                                        Position = 0x0004D9A7,
                                         Content = new byte[] { 0xEB, 0x90, 0x90, 0x90, 0x90 }
                                     },
                                     new Change
                                     {
-                                        Position = 0x0005046C,
+                                        Position = 0x0004DB57,
                                         Content = new byte[] { 0xEB, 0x08, 0x90, 0x90, 0x90, 0x90 }
                                     }
                                 }
