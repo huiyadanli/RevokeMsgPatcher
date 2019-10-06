@@ -259,7 +259,7 @@ namespace RevokeMsgPatcher
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
         {
-            ga.RequestPageView(GetCheckedRadioButtonNameEn() + "_switch");
+            ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/switch", "切换标签页");
             EnableAllButton(false);
             RadioButton radioButton = sender as RadioButton;
             // 切换使用不同的防撤回对象

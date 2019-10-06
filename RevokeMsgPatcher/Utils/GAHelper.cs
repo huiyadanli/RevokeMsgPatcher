@@ -39,24 +39,32 @@ namespace RevokeMsgPatcher.Utils
 
         public async Task RequestPageViewAsync(string page, string title = null)
         {
-            if (!page.StartsWith("/"))
+            try
             {
-                page = "/" + page;
+                if (!page.StartsWith("/"))
+                {
+                    page = "/" + page;
+                }
+                // 请求参数
+                var values = new Dictionary<string, string>
+                {
+                    { "v", "1" }, // 当前必填1
+                    { "tid", tid },
+                    { "cid", cid },
+                    { "ua", UserAgent },
+                    { "t", "pageview" },
+                    { "sr", sr },
+                    { "dp", page },
+                    { "dt", title },
+                };
+                var content = new FormUrlEncodedContent(values);
+                var response = await client.PostAsync(GAUrl, content);
             }
-            // 请求参数
-            var values = new Dictionary<string, string>
+            catch (Exception ex)
             {
-                { "v", "1" }, // 当前必填1
-                { "tid", tid },
-                { "cid", cid },
-                { "ua", UserAgent },
-                { "t", "pageview" },
-                { "sr", sr },
-                { "dp", page },
-                { "dt", title },
-            };
-            var content = new FormUrlEncodedContent(values);
-            var response = await client.PostAsync(GAUrl, content);
+
+                Console.WriteLine("GAHelper:" + ex.Message);
+            }
         }
 
         public void RequestPageView(string page, string title = null)
