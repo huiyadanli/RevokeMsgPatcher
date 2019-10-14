@@ -66,6 +66,25 @@ namespace RevokeMsgPatcher
                         {
                             new ModifyInfo {
                                 Name="WeChatWin.dll",
+                                Version="2.7.1.74",
+                                SHA1Before="b1eaf7edc074a88be5d0f89230436cc2084d24d2",
+                                SHA1After="eb3d74ccd87a09059a005f4972861898fc3de463",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position =0x00262389,
+                                        Content =new byte[] { 0xEB }
+                                    },
+                                    new Change
+                                    {
+                                        Position =0x00795550,
+                                        Content =new byte[] { 0xC3 }
+                                    }
+                                }
+                            },
+                            new ModifyInfo {
+                                Name="WeChatWin.dll",
                                 Version="2.7.1.65",
                                 SHA1Before="8346b97d264725da924d240c6eb77df3e693385e",
                                 SHA1After="42bab2c9c79ef4f2088c00ea6d817973e14a5e6e",
@@ -107,6 +126,31 @@ namespace RevokeMsgPatcher
                         "IM.dll",
                         new List<ModifyInfo>
                         {
+                            new ModifyInfo
+                            {
+                                Name = "IM.dll",
+                                Version = "9.1.8.26211",
+                                SHA1Before = "a950d3cf5e8925f7775624271105ef78d9c5cb57",
+                                SHA1After = "dffc1cb87b91e6467e13c935611f2f7fd76b9a8d",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position = 0x000524EF,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x0005270C,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x000528BC,
+                                        Content = new byte[] { 0xEB, 0x08, 0x90, 0x90, 0x90, 0x90 }
+                                    }
+                                }
+                            },
                             new ModifyInfo
                             {
                                 Name = "IM.dll",
