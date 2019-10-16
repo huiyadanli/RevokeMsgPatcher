@@ -67,7 +67,7 @@
 ## :heart:Thanks
 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
 
-## 📃License
+## 📄License
 GPLv3
 
 ![](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/give_a_star.png)
