@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessException.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +67,7 @@
     <Compile Include="Modifier\QQModifier.cs" />
     <Compile Include="Modifier\TIMModifier.cs" />
     <Compile Include="Modifier\WechatModifier.cs" />
+    <Compile Include="Utils\Device.cs" />
     <Compile Include="Utils\FileUtil.cs" />
     <Compile Include="Utils\GAHelper.cs" />
     <Compile Include="Utils\HttpUtil.cs" />

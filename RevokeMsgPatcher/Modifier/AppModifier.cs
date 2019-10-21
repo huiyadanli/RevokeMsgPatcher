@@ -124,17 +124,17 @@ namespace RevokeMsgPatcher.Modifier
                 // 补丁后SHA1匹配上，肯定已经打过补丁
                 if (matchingSHA1After != null)
                 {
-                    throw new Exception($"你已经安装过此补丁，文件路径：{editor.FilePath}");
+                    throw new BusinessException("installed", $"你已经安装过此补丁，文件路径：{editor.FilePath}");
                 }
                 // 全部不匹配，说明不支持
                 if (matchingSHA1Before == null && matchingSHA1After == null && matchingVersion == null)
                 {
-                    throw new Exception($"不支持此版本：{editor.FileVersion}，文件路径：{editor.FilePath}");
+                    throw new BusinessException("not_support", $"不支持此版本：{editor.FileVersion}，文件路径：{editor.FilePath}");
                 }
                 // SHA1不匹配，版本匹配，可能dll已经被其他补丁程序修改过
                 if ((matchingSHA1Before == null && matchingSHA1After == null) && matchingVersion != null)
                 {
-                    throw new Exception($"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序。文件路径：{editor.FilePath}");
+                    throw new BusinessException("maybe_modified", $"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序。文件路径：{editor.FilePath}");
                 }
             }
         }

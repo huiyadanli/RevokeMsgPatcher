@@ -25,7 +25,7 @@ namespace RevokeMsgPatcher.Utils
         // 根据实际使用分析账号设置
         private const string tid = "UA-80358493-2"; // GA Tracking ID / Property ID.
 
-        private static readonly string cid = Guid.NewGuid().ToString(); // Anonymous Client ID.
+        private static readonly string cid = Device.Value(); // Anonymous Client ID. // Guid.NewGuid().ToString()
 
         // 屏幕分辨率(可选)
         private static readonly string sr = Screen.PrimaryScreen.Bounds.Width + "x" + Screen.PrimaryScreen.Bounds.Height;

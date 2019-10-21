@@ -116,6 +116,7 @@
             // lblUpdatePachJson
             // 
             this.lblUpdatePachJson.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblUpdatePachJson.ForeColor = System.Drawing.SystemColors.Highlight;
             this.lblUpdatePachJson.Location = new System.Drawing.Point(166, 89);
             this.lblUpdatePachJson.Name = "lblUpdatePachJson";
             this.lblUpdatePachJson.Size = new System.Drawing.Size(308, 12);

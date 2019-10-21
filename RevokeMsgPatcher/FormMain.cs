@@ -61,7 +61,7 @@ namespace RevokeMsgPatcher
             InitModifier();
             InitControls();
 
-            ga.RequestPageView("/main", "进入主界面");
+            ga.RequestPageView($"/main/{thisVersion}", $"进入{thisVersion}版本主界面");
         }
 
         private void InitControls()
@@ -86,7 +86,9 @@ namespace RevokeMsgPatcher
             }
 
             // 记录点了什么应用的防撤回
-            ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch", "点击防撤回");
+            string enName = GetCheckedRadioButtonNameEn(); // 应用英文名
+            string version = modifier.GetVersion(); // 应用版本
+            ga.RequestPageView($"{enName}/{version}/patch", "点击防撤回");
 
             EnableAllButton(false);
             // a.重新初始化编辑器
@@ -96,28 +98,44 @@ namespace RevokeMsgPatcher
             {
                 modifier.ValidateAndFindModifyInfo();
             }
+            catch (BusinessException ex)
+            {
+                ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.ErrorCode}", ex.Message);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch (IOException ex)
+            {
+                ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.HResult.ToString("x4")}", ex.Message);
+                MessageBox.Show(ex.Message + " 请以管理员权限启动本程序，并确认当前应用（微信/QQ/TIM）处于关闭状态。");
+                return;
+            }
             catch (Exception ex)
             {
-                ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch/sha1/ex", ex.Message);
+                ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.HResult.ToString("x4")}", ex.Message);
                 MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
                 EnableAllButton(true);
                 btnRestore.Enabled = modifier.BackupExists();
-                return;
             }
             // c.打补丁
             try
             {
                 modifier.Patch();
-                ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch/succ", "防撤回成功");
+                ga.RequestPageView($"{enName}/{version}/patch/succ", "防撤回成功");
                 MessageBox.Show("补丁安装成功！");
-                EnableAllButton(true);
-                btnRestore.Enabled = modifier.BackupExists();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/patch/ex", ex.Message);
-                MessageBox.Show(ex.Message + " 请以管理员权限启动本程序，并确认微信处于关闭状态。");
+                ga.RequestPageView($"{enName}/{version}/patch/ex/{ex.HResult.ToString("x4")}", ex.Message);
+                MessageBox.Show(ex.Message + " 请以管理员权限启动本程序，并确认当前应用（微信/QQ/TIM）处于关闭状态。");
+            }
+            finally
+            {
                 EnableAllButton(true);
                 btnRestore.Enabled = modifier.BackupExists();
             }
@@ -183,7 +201,7 @@ namespace RevokeMsgPatcher
             string json = await GetPathJsonAsync();
             if (string.IsNullOrEmpty(json))
             {
-                lblUpdatePachJson.Text = "[ 获取失败 ]";
+                lblUpdatePachJson.Text = "[ 获取最新补丁信息失败 ]";
 
             }
             else
@@ -205,7 +223,7 @@ namespace RevokeMsgPatcher
                     else
                     {
                         needUpdate = false;
-                        lblUpdatePachJson.Text = "[ 获取成功 ]";
+                        lblUpdatePachJson.Text = "[ 获取成功，点击查看更多信息 ]";
                     }
                 }
                 catch (Exception ex)
@@ -259,7 +277,6 @@ namespace RevokeMsgPatcher
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
         {
-            ga.RequestPageView(GetCheckedRadioButtonNameEn() + "/switch", "切换标签页");
             EnableAllButton(false);
             RadioButton radioButton = sender as RadioButton;
             // 切换使用不同的防撤回对象
@@ -277,6 +294,7 @@ namespace RevokeMsgPatcher
             }
             txtPath.Text = modifier.FindInstallPath();
             lblVersion.Text = modifier.GetVersion();
+            ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
             EnableAllButton(true);
             // 显示是否能够备份还原
             if (!string.IsNullOrEmpty(txtPath.Text))
