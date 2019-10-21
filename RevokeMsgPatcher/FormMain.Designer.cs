@@ -57,6 +57,7 @@
             // 
             // btnPatch
             // 
+            this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPatch.Location = new System.Drawing.Point(372, 56);
             this.btnPatch.Name = "btnPatch";
             this.btnPatch.Size = new System.Drawing.Size(102, 23);
@@ -67,6 +68,8 @@
             // 
             // txtPath
             // 
+            this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPath.Location = new System.Drawing.Point(82, 29);
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(352, 21);
@@ -75,6 +78,7 @@
             // 
             // btnChoosePath
             // 
+            this.btnChoosePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChoosePath.Location = new System.Drawing.Point(440, 27);
             this.btnChoosePath.Name = "btnChoosePath";
             this.btnChoosePath.Size = new System.Drawing.Size(34, 23);
@@ -105,6 +109,7 @@
             // 
             // btnRestore
             // 
+            this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRestore.Location = new System.Drawing.Point(264, 56);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(102, 23);
@@ -115,6 +120,7 @@
             // 
             // lblUpdatePachJson
             // 
+            this.lblUpdatePachJson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUpdatePachJson.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblUpdatePachJson.ForeColor = System.Drawing.SystemColors.Highlight;
             this.lblUpdatePachJson.Location = new System.Drawing.Point(166, 89);
@@ -216,6 +222,7 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(506, 149);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "微信/QQ/TIM防撤回补丁";
