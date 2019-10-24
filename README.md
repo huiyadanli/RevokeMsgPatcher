@@ -25,6 +25,8 @@
 下载地址：
 [:zap:点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.5/RevokeMsgPatcher.v0.5.zip)
 
+[❓常见问题](https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+
 
 最新版本支持如下（微信从 2.7.1.74 版本开始支持多开）：
 
@@ -61,30 +63,11 @@
 
 5. 点击防撤回。界面可能会出现一段时间的无响应，耐心等待即可。
 
-## ❓常见问题解答 FAQ
-
-1. 防撤回时，360/杀毒软件 弹出警告怎么回事？
-    * 由于修改了微信的 `WeChatWin.dll` 文件、QQ/TIM的 `IM.dll` 文件，杀毒软件可能会弹出警告，放行即可。
-
-2. 点击防撤回后出现提示：“文件 xxxx 正由另一进程使用，因此该进程无法访问此文件。” 或者 “The process cannot access the file 'xxx' because it is being used by another process.”
-    * 请先关闭微信/QQ/TIM，再进行防撤回。
-
-3. 为什么明明程序支持这个版本，点击防撤回的时候却提示版本不支持。
-    * 程序自带的补丁信息并不是最新的，需要动态从网上获取最新补丁信息。请耐心等待右下角获取补丁信息的提示变成“获取成功”，点击这行字可以查看当前支持防撤回的版本信息，如果其中显示支持你当前需要防撤回的版本。可以[提Issue](https://github.com/huiyadanli/RevokeMsgPatcher/issues)给我
-
-4. 能否添加防撤回提示？
-    * 由于本程序只提供编辑二进制文件的功能，所以无法支持防撤回提示等更多扩展功能。
-
 ## :heart:Thanks
-
-感谢以下repo提供的微信反撤回数据
 
 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
 
 ## 📄License
-
-使用本程序源码时请遵守 GPLv3 许可。
-
-本程序的本质是一个十六进制编辑器，使用的修改数据集收集自网络。
+GPLv3
 
 ![](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/give_a_star.png)
