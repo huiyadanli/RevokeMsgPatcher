@@ -23,12 +23,14 @@
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
 下载地址：
-[:zap:点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.5/RevokeMsgPatcher.v0.5.zip)
+* [⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.5/RevokeMsgPatcher.v0.5.zip)
+* [☁备用下载-蓝奏云](https://www.lanzous.com/i6y8abe)
+* [☁备用下载-百度云](https://pan.baidu.com/s/1C2avrFYqBbliqUrPa-ylww) 提取码：tmgf
 
-[✅支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)
-
-[❓常见问题](https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
-
+相关文档：
+* [✅支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)
+* [❓ 常见问题](https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+* [📖查看完整文档](https://github.com/huiyadanli/RevokeMsgPatcher/wiki)
 
 ## :camera:截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
