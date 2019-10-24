@@ -66,7 +66,7 @@
 1. 防撤回时，360/杀毒软件 弹出警告怎么回事？
     * 由于修改了微信的 `WeChatWin.dll` 文件、QQ/TIM的 `IM.dll` 文件，杀毒软件可能会弹出警告，放行即可。
 
-2. 点击防撤回后出现提示：“文件 xxxx 正由另一进程使用，因此该进程无法访问此文件。”
+2. 点击防撤回后出现提示：“文件 xxxx 正由另一进程使用，因此该进程无法访问此文件。” 或者 “The process cannot access the file 'xxx' because it is being used by another process.”
     * 请先关闭微信/QQ/TIM，再进行防撤回。
 
 3. 为什么明明程序支持这个版本，点击防撤回的时候却提示版本不支持。
