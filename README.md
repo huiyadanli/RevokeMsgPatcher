@@ -7,7 +7,7 @@
 		<img src="https://img.shields.io/badge/platform-windows-lightgrey.svg?style=flat-square"/>
 	</a>
 	<a href="https://github.com/huiyadanli/RevokeMsgPatcher/releases">
-		<img src="https://img.shields.io/github/downloads/huiyadanli/RevokeMsgPatcher/total.svg?style=flat-squares"/>
+		<img src="https://img.shields.io/github/downloads/huiyadanli/RevokeMsgPatcher/total.svg?style=flat-square"/>
 	</a>
 	<a href="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher">
 		<img src="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher.svg"/>
