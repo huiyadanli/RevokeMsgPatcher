@@ -28,7 +28,7 @@
 [☁备用下载-百度云](https://pan.baidu.com/s/1C2avrFYqBbliqUrPa-ylww) 提取码：tmgf
 
 相关文档：
-**[✅支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)** | 
+**[✔支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)** | 
 [❓常见问题](https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98) | 
 [📖查看完整文档](https://github.com/huiyadanli/RevokeMsgPatcher/wiki)
 
