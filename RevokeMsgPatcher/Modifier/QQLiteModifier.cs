@@ -3,9 +3,9 @@ using RevokeMsgPatcher.Utils;
 
 namespace RevokeMsgPatcher.Modifier
 {
-    class QQModifier : AppModifier
+    class QQLiteModifier : AppModifier
     {
-        public QQModifier(App config)
+        public QQLiteModifier(App config)
         {
             this.config = config;
         }
@@ -16,10 +16,10 @@ namespace RevokeMsgPatcher.Modifier
         /// <returns></returns>
         public override string FindInstallPath()
         {
-            string installPath = PathUtil.FindInstallPathFromRegistry("{052CFB79-9D62-42E3-8A15-DE66C2C97C3E}");
+            string installPath = PathUtil.FindInstallPathFromRegistry("QQLite");
             if (!IsAllFilesExist(installPath))
             {
-                foreach (string defaultPath in PathUtil.GetDefaultInstallPaths(@"Tencent\QQ"))
+                foreach (string defaultPath in PathUtil.GetDefaultInstallPaths(@"Tencent\QQLite"))
                 {
                     if (IsAllFilesExist(defaultPath))
                     {

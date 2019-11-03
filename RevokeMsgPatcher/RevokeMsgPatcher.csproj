@@ -64,6 +64,7 @@
     <Compile Include="Model\TargetInfo.cs" />
     <Compile Include="Modifier\AppModifier.cs" />
     <Compile Include="Modifier\FileHexEditor.cs" />
+    <Compile Include="Modifier\QQLiteModifier.cs" />
     <Compile Include="Modifier\QQModifier.cs" />
     <Compile Include="Modifier\TIMModifier.cs" />
     <Compile Include="Modifier\WechatModifier.cs" />

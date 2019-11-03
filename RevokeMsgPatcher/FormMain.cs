@@ -19,6 +19,7 @@ namespace RevokeMsgPatcher
         private WechatModifier wechatModifier = null;
         private QQModifier qqModifier = null;
         private TIMModifier timModifier = null;
+        private QQLiteModifier qqLiteModifier = null;
 
         private string thisVersion;
         private bool needUpdate = false;
@@ -35,10 +36,12 @@ namespace RevokeMsgPatcher
             wechatModifier = new WechatModifier(bag.Apps["Wechat"]);
             qqModifier = new QQModifier(bag.Apps["QQ"]);
             timModifier = new TIMModifier(bag.Apps["TIM"]);
+            qqLiteModifier = new QQLiteModifier(bag.Apps["QQLite"]);
 
             rbtWechat.Tag = wechatModifier;
             rbtQQ.Tag = qqModifier;
             rbtTIM.Tag = timModifier;
+            rbtQQLite.Tag = qqLiteModifier;
 
             // 默认微信
             rbtWechat.Enabled = true;
@@ -68,11 +71,12 @@ namespace RevokeMsgPatcher
         {
             // 自动获取应用安装路径
             txtPath.Text = modifier.FindInstallPath();
-            lblVersion.Text = modifier.GetVersion();
+            btnRestore.Enabled = false;
             // 显示是否能够备份还原
             if (!string.IsNullOrEmpty(txtPath.Text))
             {
                 modifier.InitEditors(txtPath.Text);
+                lblVersion.Text = modifier.GetVersion();
                 btnRestore.Enabled = modifier.BackupExists();
             }
         }
@@ -169,6 +173,14 @@ namespace RevokeMsgPatcher
                 else
                 {
                     txtPath.Text = dialog.SelectedPath;
+                    btnRestore.Enabled = false;
+                    // 显示是否能够备份还原
+                    if (!string.IsNullOrEmpty(txtPath.Text))
+                    {
+                        modifier.InitEditors(txtPath.Text);
+                        lblVersion.Text = modifier.GetVersion();
+                        btnRestore.Enabled = modifier.BackupExists();
+                    }
                 }
             }
         }
@@ -214,6 +226,7 @@ namespace RevokeMsgPatcher
                     wechatModifier.Config = bag.Apps["Wechat"];
                     qqModifier.Config = bag.Apps["QQ"];
                     timModifier.Config = bag.Apps["TIM"];
+                    qqLiteModifier.Config = bag.Apps["QQLite"];
 
                     if (Convert.ToDecimal(bag.LatestVersion) > Convert.ToDecimal(thisVersion))
                     {
@@ -266,6 +279,7 @@ namespace RevokeMsgPatcher
             tips += "支持以下版本" + Environment.NewLine;
             tips += " ➯ 微信：" + wechatModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQ：" + qqModifier.Config.GetSupportVersionStr() + Environment.NewLine;
+            tips += " ➯ QQ轻聊版：" + qqLiteModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ TIM：" + timModifier.Config.GetSupportVersionStr() + Environment.NewLine;
 
             DialogResult dr = MessageBox.Show(tips, "当前支持防撤回的版本", MessageBoxButtons.OKCancel);
@@ -292,14 +306,20 @@ namespace RevokeMsgPatcher
             {
                 modifier = (TIMModifier)rbtTIM.Tag;
             }
+            else if (rbtQQLite.Checked)
+            {
+                modifier = (QQLiteModifier)rbtQQLite.Tag;
+            }
             txtPath.Text = modifier.FindInstallPath();
-            lblVersion.Text = modifier.GetVersion();
             ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
             EnableAllButton(true);
+            lblVersion.Text = "";
+            btnRestore.Enabled = false;
             // 显示是否能够备份还原
             if (!string.IsNullOrEmpty(txtPath.Text))
             {
                 modifier.InitEditors(txtPath.Text);
+                lblVersion.Text = modifier.GetVersion();
                 btnRestore.Enabled = modifier.BackupExists();
             }
         }
@@ -317,6 +337,10 @@ namespace RevokeMsgPatcher
             else if (rbtTIM.Checked)
             {
                 return "tim";
+            }
+            else if (rbtQQLite.Checked)
+            {
+                return "qqlite";
             }
             return "none";
         }

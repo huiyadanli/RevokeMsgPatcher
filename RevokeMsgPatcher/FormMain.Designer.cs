@@ -44,6 +44,7 @@
             this.rbtTIM = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.panelMask = new System.Windows.Forms.Panel();
+            this.rbtQQLite = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // lblPathTag
@@ -136,9 +137,8 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.Location = new System.Drawing.Point(83, 61);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(35, 12);
+            this.lblVersion.Size = new System.Drawing.Size(0, 12);
             this.lblVersion.TabIndex = 10;
-            this.lblVersion.Text = "0.0.1";
             // 
             // lblVersionTag
             // 
@@ -201,11 +201,22 @@
             this.panelMask.TabIndex = 17;
             this.panelMask.Visible = false;
             // 
+            // rbtQQLite
+            // 
+            this.rbtQQLite.AutoSize = true;
+            this.rbtQQLite.Location = new System.Drawing.Point(235, 7);
+            this.rbtQQLite.Name = "rbtQQLite";
+            this.rbtQQLite.Size = new System.Drawing.Size(71, 16);
+            this.rbtQQLite.TabIndex = 18;
+            this.rbtQQLite.Text = "QQ轻聊版";
+            this.rbtQQLite.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(490, 110);
+            this.Controls.Add(this.rbtQQLite);
             this.Controls.Add(this.lblUpdatePachJson);
             this.Controls.Add(this.panelMask);
             this.Controls.Add(this.lblVersion);
@@ -248,6 +259,7 @@
         private System.Windows.Forms.RadioButton rbtTIM;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panelMask;
+        private System.Windows.Forms.RadioButton rbtQQLite;
     }
 }
 

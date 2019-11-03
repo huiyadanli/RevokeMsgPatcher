@@ -15,7 +15,7 @@ namespace RevokeMsgPatcher
             return new Bag
             {
                 Apps = AppConfig(),
-                LatestVersion = "0.5",
+                LatestVersion = "0.6",
                 Notice = "公告"
             };
         }
@@ -32,7 +32,8 @@ namespace RevokeMsgPatcher
             {
                 { "Wechat" , Wechat() },
                 { "QQ" , QQ() },
-                { "TIM" , TIM() }
+                { "TIM" , TIM() },
+                { "QQLite" , QQLite() }
             };
         }
 
@@ -339,6 +340,74 @@ namespace RevokeMsgPatcher
                                     {
                                         Position = 0x0004DB57,
                                         Content = new byte[] { 0xEB, 0x08, 0x90, 0x90, 0x90, 0x90 }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        public App QQLite()
+        {
+            return new App
+            {
+                Name = "QQLite",
+                FileTargetInfos = new Dictionary<string, TargetInfo>
+                {
+                    {
+                        "IM.dll",
+                        new TargetInfo
+                        {
+                            Name = "IM.dll",
+                            RelativePath = @"Bin\IM.dll"
+                        }
+                    }
+                },
+                FileModifyInfos = new Dictionary<string, List<ModifyInfo>>
+                {
+                    {
+                        "IM.dll",
+                        new List<ModifyInfo>
+                        {
+                            new ModifyInfo
+                            {
+                                Name = "IM.dll",
+                                Version = "7.9.14314.0",
+                                SHA1Before = "2e97d7671963fa148a1beeda6ce4964314310593",
+                                SHA1After = "723c008fb53435ead20fa6f2e951c9a4a8ff46da",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position = 0x00024505,
+                                        Content = new byte[] { 0xEB, 0x02, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x000248B9,
+                                        Content = new byte[] { 0xEB, 0x02, 0x90, 0x90 }
+                                    }
+                                }
+                            },
+                            new ModifyInfo
+                            {
+                                Name = "IM.dll",
+                                Version = "7.9.14308.0",
+                                SHA1Before = "b8a7a873178706b97be11c25f13bcf09e9e578a2",
+                                SHA1After = "c5bf533c7af6996b42d1fb2a0fb3f26dfd52f8bf",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position = 0x00024505,
+                                        Content = new byte[] { 0xEB, 0x02, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x000248B9,
+                                        Content = new byte[] { 0xEB, 0x02, 0x90, 0x90 }
                                     }
                                 }
                             }
