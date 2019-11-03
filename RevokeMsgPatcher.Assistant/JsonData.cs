@@ -167,6 +167,56 @@ namespace RevokeMsgPatcher
                             new ModifyInfo
                             {
                                 Name = "IM.dll",
+                                Version = "9.2.0.26389",
+                                SHA1Before = "6f8855fb80acfa456f8f69989fe949308fe4d154",
+                                SHA1After = "f6b8e05a178b9b10ba17c597fa0a44b7a2a966a8",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position = 0x000571C8,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x000573E5,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x00057595,
+                                        Content = new byte[] { 0xEB, 0x08, 0x90, 0x90, 0x90, 0x90 }
+                                    }
+                                }
+                            },
+                            new ModifyInfo
+                            {
+                                Name = "IM.dll",
+                                Version = "9.1.9.26361",
+                                SHA1Before = "022d3433d13d07a354c38816f61cb0b7ac60d3fd",
+                                SHA1After = "873a57c1fb51cdd099c8cb7108b5ab5cb4459557",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position = 0x000567DE,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x000569FB,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x00056BAB,
+                                        Content = new byte[] { 0xEB, 0x08, 0x90, 0x90, 0x90, 0x90 }
+                                    }
+                                }
+                            },
+                            new ModifyInfo
+                            {
+                                Name = "IM.dll",
                                 Version = "9.1.9.26346",
                                 SHA1Before = "895eb70f707b8222e6460c91492b1281e525059b",
                                 SHA1After = "0bb83990e2b5b5f23b7b43249941ff638201af54",
