@@ -231,7 +231,7 @@ namespace RevokeMsgPatcher
                     if (Convert.ToDecimal(bag.LatestVersion) > Convert.ToDecimal(thisVersion))
                     {
                         needUpdate = true;
-                        lblUpdatePachJson.Text = $"[ 请到软件主页下载最新版本 {bag.LatestVersion} ]";
+                        lblUpdatePachJson.Text = $"[ 存在最新版本 {bag.LatestVersion} ]";
                     }
                     else
                     {
