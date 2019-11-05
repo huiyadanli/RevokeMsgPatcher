@@ -17,7 +17,7 @@
 	</a>
 </p>
 
-# :eyes:微信/QQ/TIM防撤回补丁
+# 👀微信/QQ/TIM防撤回补丁
 适用于 Windows 下 PC 版微信/QQ/TIM的防撤回补丁。
 
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
@@ -37,7 +37,7 @@
 [📕QQ](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/QQ%E6%88%96TIM%E9%98%B2%E6%92%A4%E5%9B%9E%E6%95%99%E7%A8%8B) |
 [📘TIM](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/QQ%E6%88%96TIM%E9%98%B2%E6%92%A4%E5%9B%9E%E6%95%99%E7%A8%8B)
 
-## :camera:截图
+## 📷截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
 
 ## 🔨使用方法
@@ -55,7 +55,7 @@
 
 5. 点击防撤回。界面可能会出现一段时间的无响应，请耐心等待。**由于修改了微信的 WeChatWin.dll 文件、QQ/TIM的 IM.dll 文件，杀毒软件可能会弹出警告，放行即可。**
 
-## :heart:Thanks
+## ❤️Thanks
 
 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
 
