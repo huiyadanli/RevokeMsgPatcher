@@ -42,10 +42,10 @@
 
 ## 🔨使用方法
 
-1. 环境要求，你的系统需要满足以下条件：
+1. 首先，你的系统需要满足以下条件：
 
-    * Windows 7 或更高版本。
-    * [.NET Framework 4.5](https://www.microsoft.com/zh-cn/download/details.aspx?id=30653) 或更高版本。
+    * Windows 7 或更高版本，**不支持XP**。
+    * [.NET Framework 4.5](https://www.microsoft.com/zh-cn/download/details.aspx?id=30653) 或更高版本。**低于此版本在打开程序时可能无反应，或者直接报错**。
 
 2. 使用本程序前，先关闭微信/QQ/TIM。
 
@@ -53,7 +53,7 @@
 
 4. 选择微信/QQ/TIM的安装路径。如果你用的安装版的微信/QQ/TIM，正常情况下本程序会自动从注册表中获取安装路径，绿色版需要手动选择路径。
 
-5. 点击防撤回。界面可能会出现一段时间的无响应，耐心等待即可。
+5. 点击防撤回。界面可能会出现一段时间的无响应，请耐心等待。**由于修改了微信的 WeChatWin.dll 文件、QQ/TIM的 IM.dll 文件，杀毒软件可能会弹出警告，放行即可。**
 
 ## :heart:Thanks
 
