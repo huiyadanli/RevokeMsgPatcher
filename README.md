@@ -17,7 +17,7 @@
 	</a>
 </p>
 
-# :eyes:微信/QQ/TIM防撤回补丁
+# 👀微信/QQ/TIM防撤回补丁
 适用于 Windows 下 PC 版微信/QQ/TIM的防撤回补丁。
 
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
@@ -37,15 +37,15 @@
 [📕QQ](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/QQ%E6%88%96TIM%E9%98%B2%E6%92%A4%E5%9B%9E%E6%95%99%E7%A8%8B) |
 [📘TIM](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/QQ%E6%88%96TIM%E9%98%B2%E6%92%A4%E5%9B%9E%E6%95%99%E7%A8%8B)
 
-## :camera:截图
+## 📷截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
 
 ## 🔨使用方法
 
-1. 环境要求，你的系统需要满足以下条件：
+1. 首先，你的系统需要满足以下条件：
 
-    * Windows 7 或更高版本。
-    * [.NET Framework 4.5](https://www.microsoft.com/zh-cn/download/details.aspx?id=30653) 或更高版本。
+    * Windows 7 或更高版本，**不支持XP**。
+    * [.NET Framework 4.5](https://www.microsoft.com/zh-cn/download/details.aspx?id=30653) 或更高版本。**低于此版本在打开程序时可能无反应，或者直接报错**。
 
 2. 使用本程序前，先关闭微信/QQ/TIM。
 
@@ -53,9 +53,9 @@
 
 4. 选择微信/QQ/TIM的安装路径。如果你用的安装版的微信/QQ/TIM，正常情况下本程序会自动从注册表中获取安装路径，绿色版需要手动选择路径。
 
-5. 点击防撤回。界面可能会出现一段时间的无响应，耐心等待即可。
+5. 点击防撤回。界面可能会出现一段时间的无响应，请耐心等待。**由于修改了微信的 WeChatWin.dll 文件、QQ/TIM的 IM.dll 文件，杀毒软件可能会弹出警告，放行即可。**
 
-## :heart:Thanks
+## ❤️Thanks
 
 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
 
