@@ -188,6 +188,31 @@ namespace RevokeMsgPatcher
                             {
                                 Name = "IM.dll",
                                 Version = "9.2.0.26389",
+                                SHA1Before = "c1935ca6347b0c2a7e6108a7f8ee0643d39deb66",
+                                SHA1After = "42811188a7e7b346a6a3c1066936b98c747acaf6",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position = 0x00056602,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x0005681F,
+                                        Content = new byte[] { 0xEB, 0x09, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x000569CF,
+                                        Content = new byte[] { 0xEB, 0x08, 0x90, 0x90, 0x90, 0x90 }
+                                    }
+                                }
+                            },
+                            new ModifyInfo
+                            {
+                                Name = "IM.dll",
+                                Version = "9.2.0.26389",
                                 SHA1Before = "6f8855fb80acfa456f8f69989fe949308fe4d154",
                                 SHA1After = "f6b8e05a178b9b10ba17c597fa0a44b7a2a966a8",
                                 Changes = new List<Change>
@@ -306,6 +331,31 @@ namespace RevokeMsgPatcher
                                     {
                                         Position = 0x0005046C,
                                         Content = new byte[] { 0xEB, 0x08, 0x90, 0x90, 0x90, 0x90 }
+                                    }
+                                }
+                            },
+                            new ModifyInfo
+                            {
+                                Name = "IM.dll",
+                                Version = "9.0.4.23786",
+                                SHA1Before = "69a714f4eadb09f1453f6f022d4adbcd801cfab8",
+                                SHA1After = "b48e77a924076b3ebdffc4af514c868c551d2bca",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position = 0x0004DB71,
+                                        Content = new byte[] { 0xEB, 0x07, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x0004DD8E,
+                                        Content = new byte[] { 0xEB, 0x07, 0x90, 0x90, 0x90 }
+                                    },
+                                    new Change
+                                    {
+                                        Position = 0x0004DF93,
+                                        Content = new byte[] { 0xEB, 0x07, 0x90, 0x90, 0x90 }
                                     }
                                 }
                             }
