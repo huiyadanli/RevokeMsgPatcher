@@ -16,7 +16,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "0.6",
-                Notice = "公告"
+                Notice = ""
             };
         }
 

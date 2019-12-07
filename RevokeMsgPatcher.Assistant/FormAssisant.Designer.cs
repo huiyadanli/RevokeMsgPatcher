@@ -28,21 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.txtInfo = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // FormMain
+            // txtInfo
+            // 
+            this.txtInfo.Location = new System.Drawing.Point(12, 12);
+            this.txtInfo.Multiline = true;
+            this.txtInfo.Name = "txtInfo";
+            this.txtInfo.Size = new System.Drawing.Size(484, 238);
+            this.txtInfo.TabIndex = 0;
+            // 
+            // FormAssisant
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(508, 262);
-            this.Name = "FormMain";
+            this.Controls.Add(this.txtInfo);
+            this.Name = "FormAssisant";
             this.Text = "冷血无情的助手界面";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox txtInfo;
     }
 }
 
