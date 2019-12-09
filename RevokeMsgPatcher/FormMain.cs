@@ -288,7 +288,6 @@ namespace RevokeMsgPatcher
                 modifier = (QQLiteModifier)rbtQQLite.Tag;
             }
             txtPath.Text = modifier.FindInstallPath();
-            ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
             EnableAllButton(true);
             lblVersion.Text = "";
             btnRestore.Enabled = false;
@@ -299,6 +298,7 @@ namespace RevokeMsgPatcher
                 lblVersion.Text = modifier.GetVersion();
                 btnRestore.Enabled = modifier.BackupExists();
             }
+            ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
         }
 
         private string GetCheckedRadioButtonNameEn()
