@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher", "RevokeMsgPatcher\RevokeMsgPatcher.csproj", "{977BF781-CED8-4389-9404-0FA08FDF21DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher.Assistant", "RevokeMsgPatcher.Assistant\RevokeMsgPatcher.Assistant.csproj", "{6992004F-17E6-45BF-8D72-180A31E9C23C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher.MultiInstance", "RevokeMsgPatcher.MultiInstance\RevokeMsgPatcher.MultiInstance.csproj", "{73043CA8-AF54-4591-9174-40FB6E0A3D36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{977BF781-CED8-4389-9404-0FA08FDF21DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{977BF781-CED8-4389-9404-0FA08FDF21DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{977BF781-CED8-4389-9404-0FA08FDF21DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6992004F-17E6-45BF-8D72-180A31E9C23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6992004F-17E6-45BF-8D72-180A31E9C23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6992004F-17E6-45BF-8D72-180A31E9C23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6992004F-17E6-45BF-8D72-180A31E9C23C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73043CA8-AF54-4591-9174-40FB6E0A3D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73043CA8-AF54-4591-9174-40FB6E0A3D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73043CA8-AF54-4591-9174-40FB6E0A3D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73043CA8-AF54-4591-9174-40FB6E0A3D36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

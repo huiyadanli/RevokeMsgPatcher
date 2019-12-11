@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{977BF781-CED8-4389-9404-0FA08FDF21DF}</ProjectGuid>
+    <ProjectGuid>{73043CA8-AF54-4591-9174-40FB6E0A3D36}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>RevokeMsgPatcher</RootNamespace>
-    <AssemblyName>RevokeMsgPatcher</AssemblyName>
+    <RootNamespace>RevokeMsgPatcher.MultiInstance</RootNamespace>
+    <AssemblyName>RevokeMsgPatcher.MultiInstance</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,14 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,33 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessException.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="FormMultiInstance.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <Compile Include="FormMultiInstance.Designer.cs">
+      <DependentUpon>FormMultiInstance.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\App.cs" />
-    <Compile Include="Model\Bag.cs" />
-    <Compile Include="Model\Change.cs" />
-    <Compile Include="Model\ModifyInfo.cs" />
-    <Compile Include="Model\TargetInfo.cs" />
-    <Compile Include="Modifier\AppModifier.cs" />
-    <Compile Include="Modifier\FileHexEditor.cs" />
-    <Compile Include="Modifier\QQLiteModifier.cs" />
-    <Compile Include="Modifier\QQModifier.cs" />
-    <Compile Include="Modifier\TIMModifier.cs" />
-    <Compile Include="Modifier\WechatModifier.cs" />
-    <Compile Include="Utils\Device.cs" />
-    <Compile Include="Utils\FileUtil.cs" />
-    <Compile Include="Utils\GAHelper.cs" />
-    <Compile Include="Utils\HttpUtil.cs" />
-    <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <EmbeddedResource Include="FormMultiInstance.resx">
+      <DependentUpon>FormMultiInstance.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,7 +64,6 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -100,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

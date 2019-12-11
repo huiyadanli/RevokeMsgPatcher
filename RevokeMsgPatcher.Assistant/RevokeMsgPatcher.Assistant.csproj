@@ -4,13 +4,28 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{977BF781-CED8-4389-9404-0FA08FDF21DF}</ProjectGuid>
+    <ProjectGuid>{6992004F-17E6-45BF-8D72-180A31E9C23C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>RevokeMsgPatcher</RootNamespace>
-    <AssemblyName>RevokeMsgPatcher</AssemblyName>
+    <RootNamespace>RevokeMsgPatcher.Assistant</RootNamespace>
+    <AssemblyName>RevokeMsgPatcher.Assistant</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,13 +46,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,33 +61,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessException.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="FormAssisant.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <Compile Include="FormAssisant.Designer.cs">
+      <DependentUpon>FormAssisant.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\App.cs" />
-    <Compile Include="Model\Bag.cs" />
-    <Compile Include="Model\Change.cs" />
-    <Compile Include="Model\ModifyInfo.cs" />
-    <Compile Include="Model\TargetInfo.cs" />
-    <Compile Include="Modifier\AppModifier.cs" />
-    <Compile Include="Modifier\FileHexEditor.cs" />
-    <Compile Include="Modifier\QQLiteModifier.cs" />
-    <Compile Include="Modifier\QQModifier.cs" />
-    <Compile Include="Modifier\TIMModifier.cs" />
-    <Compile Include="Modifier\WechatModifier.cs" />
-    <Compile Include="Utils\Device.cs" />
-    <Compile Include="Utils\FileUtil.cs" />
-    <Compile Include="Utils\GAHelper.cs" />
-    <Compile Include="Utils\HttpUtil.cs" />
-    <Compile Include="Utils\PathUtil.cs" />
+    <Compile Include="JsonData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <EmbeddedResource Include="FormAssisant.resx">
+      <DependentUpon>FormAssisant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,8 +81,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Data\0.6\patch.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -102,7 +97,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.ico" />
+    <ProjectReference Include="..\RevokeMsgPatcher\RevokeMsgPatcher.csproj">
+      <Project>{977bf781-ced8-4389-9404-0fa08fdf21df}</Project>
+      <Name>RevokeMsgPatcher</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

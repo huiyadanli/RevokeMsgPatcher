@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("RevokeMsgPatcher")]
-[assembly: AssemblyDescription("微信防撤回补丁")]
+[assembly: AssemblyTitle("RevokeMsgPatcher.Assistant")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("huiyadanli")]
-[assembly: AssemblyProduct("RevokeMsgPatcher")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("RevokeMsgPatcher.Assistant")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("977bf781-ced8-4389-9404-0fa08fdf21df")]
+[assembly: Guid("6992004f-17e6-45bf-8d72-180a31e9c23c")]
 
 // 程序集的版本信息由下列四个值组成: 
 //
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
-//[assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.6")]
-[assembly: AssemblyFileVersion("0.6")]
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
