@@ -47,25 +47,21 @@ namespace RevokeMsgPatcher.MultiInstance
         {
             if (File.Exists(txtPath.Text))
             {
-                // 检测微信进程是否存在
-                Process[] ps = Process.GetProcessesByName("WeChat");
-                if (ps.Length > 0)
-                {
-                    DialogResult result = MessageBox.Show("当前存在运行中的微信进程，请先关闭当前微信才能使用该功能。点击【确定】强制关闭当前所有微信进程并进行多开，点击【取消】不做任何处理。", "当前存在运行中的微信进程", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                    if (result == DialogResult.OK)
-                    {
-                        foreach (Process p in ps)
-                            p.Kill();
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
+                Process[] processes = Process.GetProcessesByName("WeChat");
+                ProcessUtil.CloseMutexHandle(processes);
                 // 启动多个实例
                 for (int i = 0; i < startNum.Value; i++)
                 {
-                    Process.Start(txtPath.Text);
+                    //var t = new Task(() =>
+                    //{
+                    //    Process newInstance = Process.Start(txtPath.Text);
+                    //    newInstance.WaitForInputIdle();
+                    //    ProcessUtil.CloseMutexHandle(newInstance);
+                    //});
+                    //t.Start();
+                    Process newInstance = Process.Start(txtPath.Text);
+                    //newInstance.WaitForInputIdle();
+                    //ProcessUtil.CloseMutexHandle(newInstance);
                 }
             }
         }
@@ -106,6 +102,17 @@ namespace RevokeMsgPatcher.MultiInstance
                 Console.WriteLine(e.Message);
             }
             return null;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Process[] processes = Process.GetProcessesByName("WeChat");
+            ProcessUtil.CloseMutexHandle(processes);
+        }
+
+        private void mutexHandleCloseTimer_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }

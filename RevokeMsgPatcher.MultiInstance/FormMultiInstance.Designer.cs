@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.lblPathTag = new System.Windows.Forms.Label();
             this.btnChoosePath = new System.Windows.Forms.Button();
@@ -38,6 +39,8 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.mutexHandleCloseTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.startNum)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,7 +97,7 @@
             0,
             0});
             this.startNum.Minimum = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -102,7 +105,7 @@
             this.startNum.Size = new System.Drawing.Size(55, 21);
             this.startNum.TabIndex = 12;
             this.startNum.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -146,11 +149,26 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "注意：\r\n1. 使用本程序多开前不能存在正在运行的微信进程。\r\n2. 多开的成功率取决于你的机器性能，不保证每次都能成功";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(369, 190);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // mutexHandleCloseTimer
+            // 
+            this.mutexHandleCloseTimer.Tick += new System.EventHandler(this.mutexHandleCloseTimer_Tick);
+            // 
             // FormMultiInstance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(472, 133);
+            this.ClientSize = new System.Drawing.Size(472, 259);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label3);
@@ -181,6 +199,8 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer mutexHandleCloseTimer;
     }
 }
 
