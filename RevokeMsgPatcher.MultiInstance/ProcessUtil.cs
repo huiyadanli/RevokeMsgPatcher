@@ -140,7 +140,7 @@ namespace RevokeMsgPatcher.MultiInstance
             return aHandles;
         }
 
-        public static void FindAndCloseWeChatMutexHandle(SYSTEM_HANDLE_INFORMATION systemHandleInformation, Process process)
+        public static bool FindAndCloseWeChatMutexHandle(SYSTEM_HANDLE_INFORMATION systemHandleInformation, Process process)
         {
             IntPtr ipHandle = IntPtr.Zero;
             IntPtr openProcessHandle = IntPtr.Zero;
@@ -152,7 +152,7 @@ namespace RevokeMsgPatcher.MultiInstance
                 // 通过 DuplicateHandle 访问句柄
                 if (!DuplicateHandle(openProcessHandle, new IntPtr(systemHandleInformation.Handle), GetCurrentProcess(), out ipHandle, 0, false, DUPLICATE_SAME_ACCESS))
                 {
-                    return;
+                    return false;
                 }
 
                 int nLength = 0;
@@ -165,7 +165,7 @@ namespace RevokeMsgPatcher.MultiInstance
                     if (nLength == 0)
                     {
                         Console.WriteLine("Length returned at zero!");
-                        return;
+                        return false;
                     }
                     hObjectName = Marshal.AllocHGlobal(nLength);
                 }
@@ -184,6 +184,7 @@ namespace RevokeMsgPatcher.MultiInstance
                         if (DuplicateHandle(openProcessHandle, new IntPtr(systemHandleInformation.Handle), GetCurrentProcess(), out mHandle, 0, false, DUPLICATE_CLOSE_SOURCE))
                         {
                             CloseHandle(mHandle);
+                            return true;
                         }
                     }
                 }
@@ -198,6 +199,7 @@ namespace RevokeMsgPatcher.MultiInstance
                 CloseHandle(ipHandle);
                 CloseHandle(openProcessHandle);
             }
+            return false;
         }
 
         /// <summary>
@@ -213,17 +215,22 @@ namespace RevokeMsgPatcher.MultiInstance
             }
         }
 
-        public static void CloseMutexHandle(Process process)
+        public static bool CloseMutexHandle(Process process)
         {
+            bool existMutexHandle = false;
             List<SYSTEM_HANDLE_INFORMATION> aHandles = GetHandles(process);
             foreach (SYSTEM_HANDLE_INFORMATION handle in aHandles)
             {
                 // Mutant 类型的句柄
                 if (handle.ObjectType == OBJECT_TYPE_MUTANT)
                 {
-                    FindAndCloseWeChatMutexHandle(handle, process);
+                    if (FindAndCloseWeChatMutexHandle(handle, process))
+                    {
+                        existMutexHandle = true;
+                    }
                 }
             }
+            return existMutexHandle;
         }
     }
 }

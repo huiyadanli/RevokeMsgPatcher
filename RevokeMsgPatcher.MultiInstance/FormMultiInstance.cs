@@ -18,52 +18,6 @@ namespace RevokeMsgPatcher.MultiInstance
         public FormMultiInstance()
         {
             InitializeComponent();
-            string installFolder = FindInstallPathFromRegistry("Wechat");
-            if (!string.IsNullOrEmpty(installFolder))
-            {
-                string wechatPath = Path.Combine(installFolder, "WeChat.exe");
-                if (File.Exists(wechatPath))
-                {
-                    txtPath.Text = wechatPath;
-                }
-            }
-        }
-
-        private void btnChoosePath_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Title = "请选择微信启动主程序",
-                Filter = "微信主程序|WeChat.exe"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                txtPath.Text = dialog.FileName;
-            }
-        }
-
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            if (File.Exists(txtPath.Text))
-            {
-                Process[] processes = Process.GetProcessesByName("WeChat");
-                ProcessUtil.CloseMutexHandle(processes);
-                // 启动多个实例
-                for (int i = 0; i < startNum.Value; i++)
-                {
-                    //var t = new Task(() =>
-                    //{
-                    //    Process newInstance = Process.Start(txtPath.Text);
-                    //    newInstance.WaitForInputIdle();
-                    //    ProcessUtil.CloseMutexHandle(newInstance);
-                    //});
-                    //t.Start();
-                    Process newInstance = Process.Start(txtPath.Text);
-                    //newInstance.WaitForInputIdle();
-                    //ProcessUtil.CloseMutexHandle(newInstance);
-                }
-            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -71,48 +25,89 @@ namespace RevokeMsgPatcher.MultiInstance
             Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher");
         }
 
-        /// <summary>
-        /// 从注册表中寻找安装路径
-        /// </summary>
-        /// <param name="uninstallKeyName">
-        /// 安装信息的注册表键名
-        /// 微信：WeChat
-        /// QQ：{052CFB79-9D62-42E3-8A15-DE66C2C97C3E} 
-        /// TIM：TIM
-        /// </param>
-        /// <returns>安装路径</returns>
-        public static string FindInstallPathFromRegistry(string uninstallKeyName)
+        private void btnStartTimer_Click(object sender, EventArgs e)
         {
-            try
-            {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey($@"Software\Microsoft\Windows\CurrentVersion\Uninstall\{uninstallKeyName}");
-                if (key == null)
-                {
-                    return null;
-                }
-                object installLocation = key.GetValue("InstallLocation");
-                key.Close();
-                if (installLocation != null && !string.IsNullOrEmpty(installLocation.ToString()))
-                {
-                    return installLocation.ToString();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return null;
+            mutexHandleCloseTimer.Start();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnStopTimer_Click(object sender, EventArgs e)
+        {
+            mutexHandleCloseTimer.Stop();
+        }
+
+        private List<WechatProcess> wechatProcesses = new List<WechatProcess>();
+
+        private void mutexHandleCloseTimer_Tick(object sender, EventArgs e)
+        {
+            Process[] processes = Process.GetProcessesByName("WeChat");
+            Console.WriteLine("WeChat进程数：" + processes.Length);
+            // 添加新进程
+            foreach (Process p in processes)
+            {
+                int i = 0;
+                for (i = 0; i < wechatProcesses.Count; i++)
+                {
+                    WechatProcess wechatProcess = wechatProcesses[i];
+                    if (wechatProcess.Proc.Id == p.Id)
+                    {
+                        break;
+                    }
+                }
+                if (i == wechatProcesses.Count)
+                {
+                    wechatProcesses.Add(new WechatProcess(p));
+                }
+            }
+            // 关闭所有存在互斥句柄的进程
+            int num = 0;
+            for (int i = wechatProcesses.Count - 1; i >= 0; i--)
+            {
+                WechatProcess wechatProcess = wechatProcesses[i];
+                if (!wechatProcess.MutexClosed)
+                {
+                    wechatProcess.MutexClosed = ProcessUtil.CloseMutexHandle(wechatProcess.Proc);
+                    Console.WriteLine("进程：" + wechatProcess.Proc.Id + ",关闭互斥句柄：" + wechatProcess.MutexClosed);
+                }
+                else
+                {
+                    if (wechatProcess.Proc.HasExited)
+                    {
+                        // 移除不存在的线程
+                        wechatProcesses.RemoveAt(i);
+                    }
+                    else
+                    {
+                        num++;
+                    }
+
+                }
+            }
+            lblProcNum.Text = num.ToString();
+        }
+
+        private void btnKillAll_Click(object sender, EventArgs e)
+        {
+            Process[] processes = Process.GetProcessesByName("WeChat");
+            if (processes.Length > 0)
+            {
+                foreach (Process p in processes)
+                {
+                    p.Kill();
+                }
+                MessageBox.Show("已经关闭所有微信进程，共" + processes.Length + "个", "提示");
+            }
+            else
+            {
+                MessageBox.Show("当前无微信进程", "提示");
+            }
+        }
+
+        private void btnCloseAllMutex_Click(object sender, EventArgs e)
         {
             Process[] processes = Process.GetProcessesByName("WeChat");
             ProcessUtil.CloseMutexHandle(processes);
         }
 
-        private void mutexHandleCloseTimer_Tick(object sender, EventArgs e)
-        {
 
-        }
     }
 }
