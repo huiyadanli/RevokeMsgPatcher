@@ -1,14 +1,6 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RevokeMsgPatcher.MultiInstance
@@ -28,11 +20,15 @@ namespace RevokeMsgPatcher.MultiInstance
         private void btnStartTimer_Click(object sender, EventArgs e)
         {
             mutexHandleCloseTimer.Start();
+            btnStartTimer.Enabled = false;
+            btnStopTimer.Enabled = true;
         }
 
         private void btnStopTimer_Click(object sender, EventArgs e)
         {
             mutexHandleCloseTimer.Stop();
+            btnStartTimer.Enabled = true;
+            btnStopTimer.Enabled = false;
         }
 
         private List<WechatProcess> wechatProcesses = new List<WechatProcess>();
@@ -82,7 +78,7 @@ namespace RevokeMsgPatcher.MultiInstance
 
                 }
             }
-            lblProcNum.Text = num.ToString();
+            lblProcNum.Text = "当前微信数量：" + num.ToString();
         }
 
         private void btnKillAll_Click(object sender, EventArgs e)
@@ -108,6 +104,14 @@ namespace RevokeMsgPatcher.MultiInstance
             ProcessUtil.CloseMutexHandle(processes);
         }
 
+        private void lblHowToUse_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher");
+        }
 
+        private void FormMultiInstance_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mutexHandleCloseTimer.Stop();
+        }
     }
 }
