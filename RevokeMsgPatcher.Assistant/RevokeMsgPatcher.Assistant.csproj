@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="JsonData.cs" />
     <Compile Include="Matcher\BoyerMooreMatcher.cs" />
+    <Compile Include="Matcher\FuzzyMatcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormAssisant.resx">
@@ -98,17 +99,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RevokeMsgPatcher\RevokeMsgPatcher.csproj">
-      <Project>{977bf781-ced8-4389-9404-0fa08fdf21df}</Project>
-      <Name>RevokeMsgPatcher</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RevokeMsgPatcher\RevokeMsgPatcher.csproj">
+      <Project>{977bf781-ced8-4389-9404-0fa08fdf21df}</Project>
+      <Name>RevokeMsgPatcher</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
