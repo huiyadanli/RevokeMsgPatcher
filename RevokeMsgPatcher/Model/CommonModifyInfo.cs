@@ -7,25 +7,22 @@ using System.Threading.Tasks;
 
 namespace RevokeMsgPatcher.Model
 {
-    public class ModifyInfo
+    public class CommonModifyInfo
     {
         public string Name { get; set; }
 
-        public string Version { get; set; }
+        public string StartVersion { get; set; }
 
-        public string SHA1Before { get; set; }
-
-        public string SHA1After { get; set; }
+        public string EndVersion { get; set; }
 
         public List<Change> Changes { get; set; }
 
-        public ModifyInfo Clone()
+        public CommonModifyInfo Clone()
         {
-            ModifyInfo o = new ModifyInfo();
+            CommonModifyInfo o = new CommonModifyInfo();
             o.Name = Name;
-            o.Version = Version;
-            o.SHA1Before = SHA1Before;
-            o.SHA1After = SHA1After;
+            o.StartVersion = StartVersion;
+            o.EndVersion = EndVersion;
             List<Change> cs = new List<Change>();
             foreach(Change c in Changes)
             {

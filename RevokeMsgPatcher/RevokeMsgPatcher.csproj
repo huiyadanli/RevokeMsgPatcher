@@ -60,6 +60,7 @@
     <Compile Include="Model\App.cs" />
     <Compile Include="Model\Bag.cs" />
     <Compile Include="Model\Change.cs" />
+    <Compile Include="Model\CommonModifyInfo.cs" />
     <Compile Include="Model\ModifyInfo.cs" />
     <Compile Include="Model\TargetInfo.cs" />
     <Compile Include="Modifier\AppModifier.cs" />

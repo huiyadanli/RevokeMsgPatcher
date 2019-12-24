@@ -14,6 +14,11 @@ namespace RevokeMsgPatcher.Model
 
         public Dictionary<string, List<ModifyInfo>> FileModifyInfos { get; set; }
 
+        /// <summary>
+        /// 通用的修改特征
+        /// </summary>
+        public Dictionary<string, List<ModifyInfo>> FileCommonModifyInfos { get; set; }
+
         public HashSet<string> GetSupportVersions()
         {
             // 使用 HashSet 防重

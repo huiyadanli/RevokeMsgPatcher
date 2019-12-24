@@ -5,15 +5,14 @@ using System.Linq;
 namespace RevokeMsgPatcher.Assistant.Matcher
 {
     /// <summary>
-    /// 对16进制数据进行模糊查找
-    /// 通配符的方式
+    /// 对16进制数据进行通配符查找
     /// </summary>
     public class FuzzyMatcher
     {
         public const byte wildcard = 0x3F; // 通配符
 
         /// <summary>
-        /// 模糊匹配所有
+        /// 通配符匹配所有符合查找串的位置
         /// </summary>
         /// <param name="content">被查找对象</param>
         /// <param name="pattern">查找串</param>
@@ -37,15 +36,44 @@ namespace RevokeMsgPatcher.Assistant.Matcher
                         res.Add(index);
                     }
                 }
-                if (res.Count > 0)
+                return res.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// 通配符匹配所有符合查找串的位置，并排除已经替换的情况
+        /// </summary>
+        /// <param name="content">被查找对象</param>
+        /// <param name="searchBytes">查找串</param>
+        /// <param name="replaceBytes">替换串</param>
+        /// <returns></returns>
+        public static int[] MatchNotReplaced(byte[] content, byte[] searchBytes, byte[] replaceBytes)
+        {
+            byte[] head = GetHead(searchBytes);
+            int[] indexs = BoyerMooreMatcher.MatchAll(content, head);
+            // 头串和查找串相同则直接返回，不同则继续判断是否符合查询串
+            List<int> res = new List<int>();
+            if (head.Length != searchBytes.Length)
+            {
+                foreach (int index in indexs)
                 {
-                    return res.ToArray();
+                    if (IsEqual(content, index, searchBytes))
+                    {
+                        res.Add(index);
+                    }
                 }
-                else
+                indexs = res.ToArray();
+            }
+            // 判断是否与替换串相同
+            res = new List<int>();
+            foreach (int index in indexs)
+            {
+                if (!IsEqual(content, index, replaceBytes))
                 {
-                    return null;
+                    res.Add(index);
                 }
             }
+            return res.ToArray();
         }
 
         /// <summary>
