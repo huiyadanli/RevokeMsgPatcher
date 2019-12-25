@@ -15,7 +15,7 @@ namespace RevokeMsgPatcher.Model
 
         public string EndVersion { get; set; }
 
-        public List<Change> Changes { get; set; }
+        public List<ReplacePattern> ReplacePatterns { get; set; }
 
         public CommonModifyInfo Clone()
         {
@@ -23,12 +23,12 @@ namespace RevokeMsgPatcher.Model
             o.Name = Name;
             o.StartVersion = StartVersion;
             o.EndVersion = EndVersion;
-            List<Change> cs = new List<Change>();
-            foreach(Change c in Changes)
+            List<ReplacePattern> cs = new List<ReplacePattern>();
+            foreach(ReplacePattern c in ReplacePatterns)
             {
                 cs.Add(c.Clone());
             }
-            o.Changes = cs;
+            o.ReplacePatterns = cs;
             return o;
         }
     }

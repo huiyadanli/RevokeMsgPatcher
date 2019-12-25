@@ -62,6 +62,7 @@
     <Compile Include="Model\Change.cs" />
     <Compile Include="Model\CommonModifyInfo.cs" />
     <Compile Include="Model\ModifyInfo.cs" />
+    <Compile Include="Model\ReplacePattern.cs" />
     <Compile Include="Model\TargetInfo.cs" />
     <Compile Include="Modifier\AppModifier.cs" />
     <Compile Include="Modifier\FileHexEditor.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Modifier\QQModifier.cs" />
     <Compile Include="Modifier\TIMModifier.cs" />
     <Compile Include="Modifier\WechatModifier.cs" />
+    <Compile Include="Utils\ByteUtil.cs" />
     <Compile Include="Utils\Device.cs" />
     <Compile Include="Utils\FileUtil.cs" />
     <Compile Include="Utils\GAHelper.cs" />
