@@ -12,6 +12,17 @@ namespace RevokeMsgPatcher.Model
 
         public byte[] Content { get; set; }
 
+        public Change()
+        {
+
+        }
+
+        public Change(long position, byte[] content)
+        {
+            Position = position;
+            Content = content;
+        }
+
         public Change Clone()
         {
             Change o = new Change();

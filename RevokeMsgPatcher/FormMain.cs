@@ -1,4 +1,5 @@
 ﻿using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Model.Enum;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
 using System;
@@ -95,18 +96,38 @@ namespace RevokeMsgPatcher
             ga.RequestPageView($"{enName}/{version}/patch", "点击防撤回");
 
             EnableAllButton(false);
+            PatchType type = PatchType.Accurate; // 两种打补丁的方式：精准（指定位置替换）、通用（特征码替换）
             // a.重新初始化编辑器
             modifier.InitEditors(txtPath.Text);
-            // b.计算SHA1，验证文件完整性，寻找对应的补丁信息
+            // b.计算SHA1，验证文件完整性，寻找对应的补丁信息（精确版本、通用特征码两种补丁信息）
             try
             {
                 modifier.ValidateAndFindModifyInfo();
             }
             catch (BusinessException ex)
             {
-                ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.ErrorCode}", ex.Message);
-                MessageBox.Show(ex.Message);
-                return;
+                if ((ex.ErrorCode == "not_support" || ex.ErrorCode == "maybe_modified") && modifier.EditorsHasCommonModifyInfos())
+                {
+                    // 存在特征码修改替换信息的情况下，发起一次询问
+                    DialogResult useCommonPatch =
+                        MessageBox.Show("尝试使用精准匹配补丁程序时发生错误：【" +
+                        ex.Message + "】，不过该版本支持使用特征码替换补丁程序，当前建议继续尝试防撤回！是否继续尝试防撤回？",
+                        "是否使用特征码补丁", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (useCommonPatch == DialogResult.OK)
+                    {
+                        type = PatchType.Common;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.ErrorCode}", ex.Message);
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
             }
             catch (IOException ex)
             {
@@ -128,7 +149,7 @@ namespace RevokeMsgPatcher
             // c.打补丁
             try
             {
-                modifier.Patch();
+                modifier.Patch(type);
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "防撤回成功");
                 MessageBox.Show("补丁安装成功！");
             }

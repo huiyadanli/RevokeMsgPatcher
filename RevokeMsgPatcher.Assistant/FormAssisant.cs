@@ -93,7 +93,7 @@ namespace RevokeMsgPatcher.Assistant
 
             if (changeOffsets.Count == 0)
             {
-                throw new Exception("查询串与替换串完全相同！请联系作者确认远端补丁信息的正确性。");
+                throw new Exception("查询串与替换串完全相同！请确认补丁信息的正确性。");
             }
 
             List<Change> changes = new List<Change>();

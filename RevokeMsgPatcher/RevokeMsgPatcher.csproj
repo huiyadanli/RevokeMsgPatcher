@@ -63,6 +63,7 @@
     <Compile Include="Model\Bag.cs" />
     <Compile Include="Model\Change.cs" />
     <Compile Include="Model\CommonModifyInfo.cs" />
+    <Compile Include="Model\Enum\PatchType.cs" />
     <Compile Include="Model\ModifyInfo.cs" />
     <Compile Include="Model\ReplacePattern.cs" />
     <Compile Include="Model\TargetInfo.cs" />

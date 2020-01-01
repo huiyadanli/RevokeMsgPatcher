@@ -1,4 +1,6 @@
-﻿using RevokeMsgPatcher.Model;
+﻿using RevokeMsgPatcher.Matcher;
+using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Model.Enum;
 using RevokeMsgPatcher.Utils;
 using System;
 using System.Collections.Generic;
@@ -53,7 +55,7 @@ namespace RevokeMsgPatcher.Modifier
         public ModifyInfo FileModifyInfo { get; set; }
 
         /// <summary>
-        /// 通过比对版本范围得到的通用查找替换的修改信息
+        /// 通过比对版本范围得到的通用查找替换的修改信息（特征码替换信息）
         /// </summary>
         public CommonModifyInfo FileCommonModifyInfo { get; set; }
 
@@ -76,14 +78,90 @@ namespace RevokeMsgPatcher.Modifier
 
         /// <summary>
         /// 打补丁
-        /// 优先使用特定的补丁信息（存在对应SHA1信息）
-        /// 不存在补丁信息，使用通用版本替换方法
         /// </summary>
+        /// <param name="type">两种打补丁的方式：精准（指定位置替换）、通用（特征码替换）</param>
         /// <returns></returns>
-        public bool Patch()
+        public bool Patch(PatchType type)
+        {
+            if (type == PatchType.Accurate)
+            {
+                AccuratePatch();
+
+            }
+            else
+            {
+                CommonPatch();
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 精准（指定位置替换）
+        /// </summary>
+        public void AccuratePatch()
         {
             FileUtil.EditMultiHex(FilePath, FileModifyInfo.Changes);
-            return true;
+        }
+
+        /// <summary>
+        /// 通用（特征码替换）
+        /// </summary>
+        public void CommonPatch()
+        {
+            if (FileCommonModifyInfo == null)
+            {
+                throw new Exception("特征码替换：缺失对应特征码信息");
+            }
+            // 1. 拷贝一份临时文件
+            File.Copy(FilePath, fileReplacedPath, true);
+            // 2. 读取整个临时文件
+            byte[] fileByteArray = File.ReadAllBytes(fileReplacedPath);
+            // 3. 循环查找所有未替换的替换点
+            int needReplaceNum = 0;
+            List<Change> changes = new List<Change>();
+            foreach (ReplacePattern pattern in FileCommonModifyInfo.ReplacePatterns)
+            {
+                int[] indexs = FuzzyMatcher.MatchNotReplaced(fileByteArray, pattern.Search, pattern.Replace);
+                if (indexs.Length == 1)
+                {
+                    needReplaceNum++;
+                    changes.Add(new Change(indexs[0], pattern.Replace));
+                }
+            }
+            // 判断是否可以使用特征码替换的方式
+            if (needReplaceNum == 0)
+            {
+                // 查找所有替换点
+                int matchNum = 0;
+                foreach (ReplacePattern pattern in FileCommonModifyInfo.ReplacePatterns)
+                {
+                    int[] indexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Search);
+                    if (indexs.Length == 1)
+                    {
+                        matchNum++;
+                    }
+                }
+                if (matchNum == FileCommonModifyInfo.ReplacePatterns.Count)
+                {
+                    throw new Exception("特征码替换：当前应用已经防撤回");
+                }
+                else
+                {
+                    throw new Exception("特征码替换：没有搜索到撤回的相关特征");
+                }
+            }
+            else if (needReplaceNum == FileCommonModifyInfo.ReplacePatterns.Count)
+            {
+                // 正常情况下每个替换点都能找到
+                // 3. 替换所有未替换的替换点
+                FileUtil.EditMultiHex(fileReplacedPath, changes);
+                // 4. 覆盖特征码替换后的文件
+                File.Copy(fileReplacedPath, FilePath, true);
+            }
+            else
+            {
+                throw new Exception("特征码替换：可替换的特征数不正确");
+            }
         }
 
         /// <summary>
