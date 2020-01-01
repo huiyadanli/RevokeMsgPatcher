@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace RevokeMsgPatcher.Modifier
 {
@@ -347,7 +348,24 @@ namespace RevokeMsgPatcher.Modifier
             {
                 foreach (FileHexEditor editor in editors)
                 {
-                    editor.Restore();
+                    string currVersion = editor.FileVersion;
+                    string bakVersion = editor.BackupFileVersion;
+                    if (currVersion != bakVersion)
+                    {
+                        DialogResult dr = MessageBox.Show(
+                            $"当前文件：{editor.FilePath}，版本：{currVersion}；" + Environment.NewLine +
+                            $"备份文件：{editor.FileBakPath}，版本：{bakVersion}；" + Environment.NewLine +
+                            $"两者版本不一致，是否继续还原？",
+                            "提示 ", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                        if (dr == DialogResult.OK)
+                        {
+                            editor.Restore();
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
                 }
                 return true;
             }

@@ -5,9 +5,6 @@ using RevokeMsgPatcher.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RevokeMsgPatcher.Modifier
 {
@@ -31,6 +28,14 @@ namespace RevokeMsgPatcher.Modifier
                     version = FileUtil.GetFileVersion(FilePath);
                 }
                 return version;
+            }
+        }
+
+        public string BackupFileVersion
+        {
+            get
+            {
+                return  FileUtil.GetFileVersion(FileBakPath);
             }
         }
 
@@ -143,11 +148,11 @@ namespace RevokeMsgPatcher.Modifier
                 }
                 if (matchNum == FileCommonModifyInfo.ReplacePatterns.Count)
                 {
-                    throw new Exception("特征码替换：当前应用已经防撤回");
+                    throw new BusinessException("already_replace", "特征码替换：当前应用已经防撤回");
                 }
                 else
                 {
-                    throw new Exception("特征码替换：没有搜索到撤回的相关特征");
+                    throw new BusinessException("not_found_to_replace", "特征码替换：没有搜索到撤回的相关特征");
                 }
             }
             else if (needReplaceNum == FileCommonModifyInfo.ReplacePatterns.Count)
@@ -160,7 +165,7 @@ namespace RevokeMsgPatcher.Modifier
             }
             else
             {
-                throw new Exception("特征码替换：可替换的特征数不正确");
+                throw new BusinessException("found_num_err", "特征码替换：可替换的特征数不正确");
             }
         }
 

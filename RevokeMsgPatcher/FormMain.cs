@@ -3,10 +3,7 @@ using RevokeMsgPatcher.Model.Enum;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
@@ -108,24 +105,15 @@ namespace RevokeMsgPatcher
             {
                 if ((ex.ErrorCode == "not_support" || ex.ErrorCode == "maybe_modified") && modifier.EditorsHasCommonModifyInfos())
                 {
-                    // 存在特征码修改替换信息的情况下，发起一次询问
-                    DialogResult useCommonPatch =
-                        MessageBox.Show("尝试使用精准匹配补丁程序时发生错误：【" +
-                        ex.Message + "】，不过该版本支持使用特征码替换补丁程序，当前建议继续尝试防撤回！是否继续尝试防撤回？",
-                        "是否使用特征码补丁", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                    if (useCommonPatch == DialogResult.OK)
-                    {
-                        type = PatchType.Common;
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    // 存在特征码修改替换信息的情况下，尝试使用特征码替换
+                    type = PatchType.Common;
                 }
                 else
                 {
                     ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.ErrorCode}", ex.Message);
                     MessageBox.Show(ex.Message);
+                    EnableAllButton(true);
+                    btnRestore.Enabled = modifier.BackupExists();
                     return;
                 }
             }
@@ -133,25 +121,31 @@ namespace RevokeMsgPatcher
             {
                 ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.HResult.ToString("x4")}", ex.Message);
                 MessageBox.Show(ex.Message + " 请以管理员权限启动本程序，并确认当前应用（微信/QQ/TIM）处于关闭状态。");
+                EnableAllButton(true);
+                btnRestore.Enabled = modifier.BackupExists();
                 return;
             }
             catch (Exception ex)
             {
                 ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.HResult.ToString("x4")}", ex.Message);
                 MessageBox.Show(ex.Message);
-                return;
-            }
-            finally
-            {
                 EnableAllButton(true);
                 btnRestore.Enabled = modifier.BackupExists();
+                return;
             }
+
             // c.打补丁
             try
             {
                 modifier.Patch(type);
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "防撤回成功");
                 MessageBox.Show("补丁安装成功！");
+            }
+            catch (BusinessException ex)
+            {
+                Console.WriteLine(ex.Message);
+                ga.RequestPageView($"{enName}/{version}/patch/ex/{ex.ErrorCode}", ex.Message);
+                MessageBox.Show(ex.Message);
             }
             catch (Exception ex)
             {
@@ -211,8 +205,11 @@ namespace RevokeMsgPatcher
             EnableAllButton(false);
             try
             {
-                modifier.Restore();
-                MessageBox.Show("还原成功！");
+                bool succ = modifier.Restore();
+                if (succ)
+                {
+                    MessageBox.Show("还原成功！");
+                }
             }
             catch (Exception ex)
             {
