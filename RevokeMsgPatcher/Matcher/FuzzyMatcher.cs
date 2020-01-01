@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RevokeMsgPatcher.Assistant.Matcher
+namespace RevokeMsgPatcher.Matcher
 {
     /// <summary>
     /// 对16进制数据进行通配符查找

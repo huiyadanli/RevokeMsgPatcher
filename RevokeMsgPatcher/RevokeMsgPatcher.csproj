@@ -57,6 +57,8 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Matcher\BoyerMooreMatcher.cs" />
+    <Compile Include="Matcher\FuzzyMatcher.cs" />
     <Compile Include="Model\App.cs" />
     <Compile Include="Model\Bag.cs" />
     <Compile Include="Model\Change.cs" />

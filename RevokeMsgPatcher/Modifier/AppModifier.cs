@@ -70,6 +70,40 @@ namespace RevokeMsgPatcher.Modifier
         }
 
         /// <summary>
+        /// 判断版本是否处于版本范围，特殊版本的可以重载此方法
+        /// </summary>
+        /// <param name="version">当前版本</param>
+        /// <param name="start">起始版本</param>
+        /// <param name="end">结束版本,为空为不限制</param>
+        /// <returns></returns>
+        public bool IsInVersionRange(string version, string start, string end)
+        {
+            try
+            {
+                int v = Convert.ToInt32(version.Replace(".", ""));
+                int s = Convert.ToInt32(start.Replace(".", ""));
+                int e = 0;
+                if (string.IsNullOrEmpty(end))
+                {
+                    e = int.MaxValue;
+                }
+                else
+                {
+                    e = Convert.ToInt32(end.Replace(".", ""));
+                }
+                if (v >= s && v <= e)
+                {
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("判断版本范围时出错：" + e.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
         /// a.初始化修改器
         /// </summary>
         /// <param name="installPath">APP安装路径</param>
@@ -112,6 +146,17 @@ namespace RevokeMsgPatcher.Modifier
                         {
                             matchingVersion = modifyInfo;
                         }
+                    }
+                }
+
+                // 多个版本范围，匹配通用的补丁替换方式
+                foreach (CommonModifyInfo commonModifyInfo in config.FileCommonModifyInfos[editor.FileName])
+                {
+                    // editor.FileVersion 在 StartVersion 和 EndVersion 之间
+                    if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
+                    {
+                        editor.FileCommonModifyInfo = commonModifyInfo;
+                        break;
                     }
                 }
 
