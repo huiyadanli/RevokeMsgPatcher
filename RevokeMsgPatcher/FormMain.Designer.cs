@@ -43,14 +43,26 @@
             this.rbtQQ = new System.Windows.Forms.RadioButton();
             this.rbtTIM = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
-            this.panelMask = new System.Windows.Forms.Panel();
             this.rbtQQLite = new System.Windows.Forms.RadioButton();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.高级ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.作者ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.主页ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.支持版本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.常见问题ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.防撤回原理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.完整文档ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.特征码防撤回ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.手动输入补丁信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblPathTag
             // 
             this.lblPathTag.AutoSize = true;
-            this.lblPathTag.Location = new System.Drawing.Point(12, 34);
+            this.lblPathTag.Location = new System.Drawing.Point(14, 63);
             this.lblPathTag.Name = "lblPathTag";
             this.lblPathTag.Size = new System.Drawing.Size(65, 12);
             this.lblPathTag.TabIndex = 1;
@@ -59,11 +71,11 @@
             // btnPatch
             // 
             this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPatch.Location = new System.Drawing.Point(372, 56);
+            this.btnPatch.Location = new System.Drawing.Point(374, 85);
             this.btnPatch.Name = "btnPatch";
             this.btnPatch.Size = new System.Drawing.Size(102, 23);
             this.btnPatch.TabIndex = 3;
-            this.btnPatch.Text = "点我防撤回！";
+            this.btnPatch.Text = "一键防撤回！";
             this.btnPatch.UseVisualStyleBackColor = true;
             this.btnPatch.Click += new System.EventHandler(this.btnPatch_Click);
             // 
@@ -71,7 +83,7 @@
             // 
             this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPath.Location = new System.Drawing.Point(82, 29);
+            this.txtPath.Location = new System.Drawing.Point(84, 58);
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(352, 21);
             this.txtPath.TabIndex = 4;
@@ -80,7 +92,7 @@
             // btnChoosePath
             // 
             this.btnChoosePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChoosePath.Location = new System.Drawing.Point(440, 27);
+            this.btnChoosePath.Location = new System.Drawing.Point(442, 56);
             this.btnChoosePath.Name = "btnChoosePath";
             this.btnChoosePath.Size = new System.Drawing.Size(34, 23);
             this.btnChoosePath.TabIndex = 5;
@@ -91,7 +103,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 87);
+            this.label1.Location = new System.Drawing.Point(14, 116);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 12);
             this.label1.TabIndex = 6;
@@ -100,7 +112,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(119, 87);
+            this.linkLabel1.Location = new System.Drawing.Point(121, 116);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(41, 12);
             this.linkLabel1.TabIndex = 7;
@@ -111,7 +123,7 @@
             // btnRestore
             // 
             this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRestore.Location = new System.Drawing.Point(264, 56);
+            this.btnRestore.Location = new System.Drawing.Point(266, 85);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(102, 23);
             this.btnRestore.TabIndex = 8;
@@ -124,7 +136,7 @@
             this.lblUpdatePachJson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUpdatePachJson.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblUpdatePachJson.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lblUpdatePachJson.Location = new System.Drawing.Point(166, 89);
+            this.lblUpdatePachJson.Location = new System.Drawing.Point(168, 118);
             this.lblUpdatePachJson.Name = "lblUpdatePachJson";
             this.lblUpdatePachJson.Size = new System.Drawing.Size(308, 12);
             this.lblUpdatePachJson.TabIndex = 9;
@@ -135,7 +147,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(83, 61);
+            this.lblVersion.Location = new System.Drawing.Point(85, 90);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(0, 12);
             this.lblVersion.TabIndex = 10;
@@ -143,7 +155,7 @@
             // lblVersionTag
             // 
             this.lblVersionTag.AutoSize = true;
-            this.lblVersionTag.Location = new System.Drawing.Point(12, 61);
+            this.lblVersionTag.Location = new System.Drawing.Point(14, 90);
             this.lblVersionTag.Name = "lblVersionTag";
             this.lblVersionTag.Size = new System.Drawing.Size(65, 12);
             this.lblVersionTag.TabIndex = 9;
@@ -153,7 +165,7 @@
             // 
             this.rbtWechat.AutoSize = true;
             this.rbtWechat.Checked = true;
-            this.rbtWechat.Location = new System.Drawing.Point(82, 7);
+            this.rbtWechat.Location = new System.Drawing.Point(84, 36);
             this.rbtWechat.Name = "rbtWechat";
             this.rbtWechat.Size = new System.Drawing.Size(47, 16);
             this.rbtWechat.TabIndex = 12;
@@ -165,7 +177,7 @@
             // rbtQQ
             // 
             this.rbtQQ.AutoSize = true;
-            this.rbtQQ.Location = new System.Drawing.Point(140, 7);
+            this.rbtQQ.Location = new System.Drawing.Point(142, 36);
             this.rbtQQ.Name = "rbtQQ";
             this.rbtQQ.Size = new System.Drawing.Size(35, 16);
             this.rbtQQ.TabIndex = 13;
@@ -176,7 +188,7 @@
             // rbtTIM
             // 
             this.rbtTIM.AutoSize = true;
-            this.rbtTIM.Location = new System.Drawing.Point(186, 7);
+            this.rbtTIM.Location = new System.Drawing.Point(188, 36);
             this.rbtTIM.Name = "rbtTIM";
             this.rbtTIM.Size = new System.Drawing.Size(41, 16);
             this.rbtTIM.TabIndex = 14;
@@ -187,38 +199,119 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 9);
+            this.label5.Location = new System.Drawing.Point(14, 38);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 12);
             this.label5.TabIndex = 16;
             this.label5.Text = "选择应用：";
             // 
-            // panelMask
-            // 
-            this.panelMask.Location = new System.Drawing.Point(140, 127);
-            this.panelMask.Name = "panelMask";
-            this.panelMask.Size = new System.Drawing.Size(157, 58);
-            this.panelMask.TabIndex = 17;
-            this.panelMask.Visible = false;
-            // 
             // rbtQQLite
             // 
             this.rbtQQLite.AutoSize = true;
-            this.rbtQQLite.Location = new System.Drawing.Point(235, 7);
+            this.rbtQQLite.Location = new System.Drawing.Point(237, 36);
             this.rbtQQLite.Name = "rbtQQLite";
             this.rbtQQLite.Size = new System.Drawing.Size(71, 16);
             this.rbtQQLite.TabIndex = 18;
             this.rbtQQLite.Text = "QQ轻聊版";
             this.rbtQQLite.UseVisualStyleBackColor = true;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.高级ToolStripMenuItem,
+            this.帮助ToolStripMenuItem,
+            this.关于ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStrip1.Size = new System.Drawing.Size(490, 25);
+            this.menuStrip1.TabIndex = 19;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 高级ToolStripMenuItem
+            // 
+            this.高级ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.特征码防撤回ToolStripMenuItem,
+            this.手动输入补丁信息ToolStripMenuItem});
+            this.高级ToolStripMenuItem.Name = "高级ToolStripMenuItem";
+            this.高级ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.高级ToolStripMenuItem.Text = "高级";
+            // 
+            // 关于ToolStripMenuItem
+            // 
+            this.关于ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.作者ToolStripMenuItem,
+            this.主页ToolStripMenuItem});
+            this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.关于ToolStripMenuItem.Text = "关于";
+            // 
+            // 作者ToolStripMenuItem
+            // 
+            this.作者ToolStripMenuItem.Name = "作者ToolStripMenuItem";
+            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.作者ToolStripMenuItem.Text = "作者";
+            // 
+            // 主页ToolStripMenuItem
+            // 
+            this.主页ToolStripMenuItem.Name = "主页ToolStripMenuItem";
+            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.主页ToolStripMenuItem.Text = "软件主页";
+            // 
+            // 帮助ToolStripMenuItem
+            // 
+            this.帮助ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.支持版本ToolStripMenuItem,
+            this.常见问题ToolStripMenuItem,
+            this.防撤回原理ToolStripMenuItem,
+            this.完整文档ToolStripMenuItem});
+            this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
+            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.帮助ToolStripMenuItem.Text = "帮助";
+            // 
+            // 支持版本ToolStripMenuItem
+            // 
+            this.支持版本ToolStripMenuItem.Name = "支持版本ToolStripMenuItem";
+            this.支持版本ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.支持版本ToolStripMenuItem.Text = "支持版本";
+            // 
+            // 常见问题ToolStripMenuItem
+            // 
+            this.常见问题ToolStripMenuItem.Name = "常见问题ToolStripMenuItem";
+            this.常见问题ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.常见问题ToolStripMenuItem.Text = "常见问题";
+            // 
+            // 防撤回原理ToolStripMenuItem
+            // 
+            this.防撤回原理ToolStripMenuItem.Name = "防撤回原理ToolStripMenuItem";
+            this.防撤回原理ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.防撤回原理ToolStripMenuItem.Text = "防撤回原理";
+            // 
+            // 完整文档ToolStripMenuItem
+            // 
+            this.完整文档ToolStripMenuItem.Name = "完整文档ToolStripMenuItem";
+            this.完整文档ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.完整文档ToolStripMenuItem.Text = "完整文档";
+            // 
+            // 特征码防撤回ToolStripMenuItem
+            // 
+            this.特征码防撤回ToolStripMenuItem.Name = "特征码防撤回ToolStripMenuItem";
+            this.特征码防撤回ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.特征码防撤回ToolStripMenuItem.Text = "特征码防撤回";
+            // 
+            // 手动输入补丁信息ToolStripMenuItem
+            // 
+            this.手动输入补丁信息ToolStripMenuItem.Name = "手动输入补丁信息ToolStripMenuItem";
+            this.手动输入补丁信息ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.手动输入补丁信息ToolStripMenuItem.Text = "手动输入补丁信息";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(490, 110);
+            this.ClientSize = new System.Drawing.Size(490, 146);
             this.Controls.Add(this.rbtQQLite);
             this.Controls.Add(this.lblUpdatePachJson);
-            this.Controls.Add(this.panelMask);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblVersionTag);
             this.Controls.Add(this.label5);
@@ -232,12 +325,16 @@
             this.Controls.Add(this.btnChoosePath);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(506, 149);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "微信/QQ/TIM防撤回补丁";
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,8 +355,19 @@
         private System.Windows.Forms.RadioButton rbtQQ;
         private System.Windows.Forms.RadioButton rbtTIM;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panelMask;
         private System.Windows.Forms.RadioButton rbtQQLite;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 高级ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 作者ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 主页ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 支持版本ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 常见问题ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 防撤回原理ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 完整文档ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 特征码防撤回ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 手动输入补丁信息ToolStripMenuItem;
     }
 }
 

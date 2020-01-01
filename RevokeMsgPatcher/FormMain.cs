@@ -76,7 +76,7 @@ namespace RevokeMsgPatcher
             if (!string.IsNullOrEmpty(txtPath.Text))
             {
                 modifier.InitEditors(txtPath.Text);
-                lblVersion.Text = modifier.GetVersion();
+                modifier.SetVersionLabel(lblVersion);
                 btnRestore.Enabled = modifier.BackupExists();
             }
         }
@@ -178,7 +178,7 @@ namespace RevokeMsgPatcher
                     if (!string.IsNullOrEmpty(txtPath.Text))
                     {
                         modifier.InitEditors(txtPath.Text);
-                        lblVersion.Text = modifier.GetVersion();
+                        modifier.SetVersionLabel(lblVersion);
                         btnRestore.Enabled = modifier.BackupExists();
                     }
                 }
@@ -237,6 +237,7 @@ namespace RevokeMsgPatcher
                         needUpdate = false;
                         lblUpdatePachJson.Text = "[ 获取成功，点击查看更多信息 ]";
                     }
+                    InitControls();
                 }
                 catch (Exception ex)
                 {
@@ -295,7 +296,7 @@ namespace RevokeMsgPatcher
             if (!string.IsNullOrEmpty(txtPath.Text))
             {
                 modifier.InitEditors(txtPath.Text);
-                lblVersion.Text = modifier.GetVersion();
+                modifier.SetVersionLabel(lblVersion);
                 btnRestore.Enabled = modifier.BackupExists();
             }
             ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");

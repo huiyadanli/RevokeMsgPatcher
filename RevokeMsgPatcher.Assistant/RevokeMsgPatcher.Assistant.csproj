@@ -68,8 +68,6 @@
       <DependentUpon>FormAssisant.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonData.cs" />
-    <Compile Include="Matcher\BoyerMooreMatcher.cs" />
-    <Compile Include="Matcher\FuzzyMatcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormAssisant.resx">

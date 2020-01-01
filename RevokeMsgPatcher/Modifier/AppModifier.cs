@@ -1,10 +1,8 @@
 ﻿using RevokeMsgPatcher.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RevokeMsgPatcher.Modifier
 {
@@ -38,6 +36,71 @@ namespace RevokeMsgPatcher.Modifier
         /// </summary>
         /// <returns></returns>
         public abstract string GetVersion();
+
+        /// <summary>
+        /// 操作版本号显示控件的内容和样式
+        /// </summary>
+        /// <param name="label">显示版本的控件</param>
+        public void SetVersionLabel(System.Windows.Forms.Label label)
+        {
+            string version = GetVersion();
+            // 补丁信息中是否都有对应的版本
+            int i = 0, j = 0;
+            foreach (FileHexEditor editor in editors) // 多种文件
+            {
+                // 精确版本匹配
+                bool haven = false;
+                foreach (ModifyInfo modifyInfo in config.FileModifyInfos[editor.FileName]) // 多个版本信息
+                {
+                    if (editor.FileVersion == modifyInfo.Version)
+                    {
+                        haven = true;
+                        break;
+                    }
+                }
+                if (haven)
+                {
+                    i++;
+                }
+
+                // 匹配出对应版本是否有可以使用的特征
+                if (config.FileCommonModifyInfos != null)
+                {
+                    bool inRange = false;
+                    foreach (CommonModifyInfo commonModifyInfo in config.FileCommonModifyInfos[editor.FileName])
+                    {
+                        // editor.FileVersion 在 StartVersion 和 EndVersion 之间
+                        if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
+                        {
+                            inRange = true;
+                            break;
+                        }
+                    }
+                    if (inRange)
+                    {
+                        j++;
+                    }
+                }
+            }
+
+            // 全部都有对应匹配的版本
+            if (i == editors.Count)
+            {
+                label.Text = version + "（已支持）";
+                label.ForeColor = Color.Green;
+            }
+            else if (j == editors.Count)
+            {
+                label.Text = version + "（支持特征码防撤回）";
+                label.ForeColor = Color.LimeGreen;
+            }
+            else
+            {
+                label.Text = version + "（不支持）";
+                label.ForeColor = Color.Red;
+            }
+
+        }
 
         /// <summary>
         /// 判断APP安装路径内是否都存在要修改的文件
@@ -149,14 +212,17 @@ namespace RevokeMsgPatcher.Modifier
                     }
                 }
 
-                // 多个版本范围，匹配通用的补丁替换方式
-                foreach (CommonModifyInfo commonModifyInfo in config.FileCommonModifyInfos[editor.FileName])
+                // 多个版本范围，匹配出对应版本可以使用的特征
+                if (config.FileCommonModifyInfos != null)
                 {
-                    // editor.FileVersion 在 StartVersion 和 EndVersion 之间
-                    if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
+                    foreach (CommonModifyInfo commonModifyInfo in config.FileCommonModifyInfos[editor.FileName])
                     {
-                        editor.FileCommonModifyInfo = commonModifyInfo;
-                        break;
+                        // editor.FileVersion 在 StartVersion 和 EndVersion 之间
+                        if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
+                        {
+                            editor.FileCommonModifyInfo = commonModifyInfo;
+                            break;
+                        }
                     }
                 }
 
