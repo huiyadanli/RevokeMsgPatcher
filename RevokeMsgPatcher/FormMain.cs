@@ -1,5 +1,4 @@
 ﻿using RevokeMsgPatcher.Model;
-using RevokeMsgPatcher.Model.Enum;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
 using System;
