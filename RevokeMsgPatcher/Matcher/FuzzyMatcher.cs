@@ -106,7 +106,7 @@ namespace RevokeMsgPatcher.Matcher
         /// <param name="start">头串匹配位置</param>
         /// <param name="whole">完整查找串</param>
         /// <returns></returns>
-        private static bool IsEqual(byte[] content, int start, byte[] whole)
+        public static bool IsEqual(byte[] content, int start, byte[] whole)
         {
             int i = 0;
             for (i = 0; i < whole.Length; i++)

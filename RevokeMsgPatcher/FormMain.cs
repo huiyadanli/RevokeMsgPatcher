@@ -93,7 +93,6 @@ namespace RevokeMsgPatcher
             ga.RequestPageView($"{enName}/{version}/patch", "点击防撤回");
 
             EnableAllButton(false);
-            PatchType type = PatchType.Accurate; // 两种打补丁的方式：精准（指定位置替换）、通用（特征码替换）
             // a.重新初始化编辑器
             modifier.InitEditors(txtPath.Text);
             // b.计算SHA1，验证文件完整性，寻找对应的补丁信息（精确版本、通用特征码两种补丁信息）
@@ -103,19 +102,11 @@ namespace RevokeMsgPatcher
             }
             catch (BusinessException ex)
             {
-                if ((ex.ErrorCode == "not_support" || ex.ErrorCode == "maybe_modified") && modifier.EditorsHasCommonModifyInfos())
-                {
-                    // 存在特征码修改替换信息的情况下，尝试使用特征码替换
-                    type = PatchType.Common;
-                }
-                else
-                {
-                    ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.ErrorCode}", ex.Message);
-                    MessageBox.Show(ex.Message);
-                    EnableAllButton(true);
-                    btnRestore.Enabled = modifier.BackupExists();
-                    return;
-                }
+                ga.RequestPageView($"{enName}/{version}/patch/sha1/ex/{ex.ErrorCode}", ex.Message);
+                MessageBox.Show(ex.Message);
+                EnableAllButton(true);
+                btnRestore.Enabled = modifier.BackupExists();
+                return;
             }
             catch (IOException ex)
             {
@@ -137,7 +128,7 @@ namespace RevokeMsgPatcher
             // c.打补丁
             try
             {
-                modifier.Patch(type);
+                modifier.Patch();
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "防撤回成功");
                 MessageBox.Show("补丁安装成功！");
             }

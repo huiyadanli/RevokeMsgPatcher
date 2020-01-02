@@ -59,11 +59,11 @@
     </Compile>
     <Compile Include="Matcher\BoyerMooreMatcher.cs" />
     <Compile Include="Matcher\FuzzyMatcher.cs" />
+    <Compile Include="Matcher\ModifyFinder.cs" />
     <Compile Include="Model\App.cs" />
     <Compile Include="Model\Bag.cs" />
     <Compile Include="Model\Change.cs" />
     <Compile Include="Model\CommonModifyInfo.cs" />
-    <Compile Include="Model\Enum\PatchType.cs" />
     <Compile Include="Model\ModifyInfo.cs" />
     <Compile Include="Model\ReplacePattern.cs" />
     <Compile Include="Model\TargetInfo.cs" />

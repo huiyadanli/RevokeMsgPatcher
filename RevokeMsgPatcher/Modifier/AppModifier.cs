@@ -1,4 +1,5 @@
-﻿using RevokeMsgPatcher.Model;
+﻿using RevokeMsgPatcher.Matcher;
+using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Model.Enum;
 using System;
 using System.Collections.Generic;
@@ -169,9 +170,27 @@ namespace RevokeMsgPatcher.Modifier
         }
 
         /// <summary>
+        /// 寻找版本对应的特征码信息
+        /// </summary>
+        /// <param name="editor">文件编辑器</param>
+        private CommonModifyInfo FindCommonModifyInfo(FileHexEditor editor)
+        {
+            foreach (CommonModifyInfo commonModifyInfo in config.FileCommonModifyInfos[editor.FileName])
+            {
+                // editor.FileVersion 在 StartVersion 和 EndVersion 之间
+                if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
+                {
+                    return commonModifyInfo;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// 文件修改器是否已经有对应的特征码修改替换信息
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         public bool EditorsHasCommonModifyInfos()
         {
             int i = 0;
@@ -238,24 +257,11 @@ namespace RevokeMsgPatcher.Modifier
                     }
                 }
 
-                // 多个版本范围，匹配出对应版本可以使用的特征
-                if (config.FileCommonModifyInfos != null)
-                {
-                    foreach (CommonModifyInfo commonModifyInfo in config.FileCommonModifyInfos[editor.FileName])
-                    {
-                        // editor.FileVersion 在 StartVersion 和 EndVersion 之间
-                        if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
-                        {
-                            editor.FileCommonModifyInfo = commonModifyInfo;
-                            break;
-                        }
-                    }
-                }
-
                 // 补丁前SHA1匹配上，肯定是正确的dll
                 if (matchingSHA1Before != null)
                 {
                     editor.FileModifyInfo = matchingSHA1Before;
+                    editor.TargetChanges = matchingSHA1Before.Changes;
                     continue;
                 }
                 // 补丁后SHA1匹配上，肯定已经打过补丁
@@ -263,15 +269,36 @@ namespace RevokeMsgPatcher.Modifier
                 {
                     throw new BusinessException("installed", $"你已经安装过此补丁！");
                 }
-                // 全部不匹配，说明不支持
-                if (matchingSHA1Before == null && matchingSHA1After == null && matchingVersion == null)
+
+                // SHA1不匹配说明精准替换肯定不支持
+                if (matchingSHA1Before == null && matchingSHA1After == null)
                 {
-                    throw new BusinessException("not_support", $"不支持此版本：{editor.FileVersion}！");
-                }
-                // SHA1不匹配，版本匹配，可能dll已经被其他补丁程序修改过
-                if ((matchingSHA1Before == null && matchingSHA1After == null) && matchingVersion != null)
-                {
-                    throw new BusinessException("maybe_modified", $"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序！");
+                    // 多个版本范围，匹配出对应版本可以使用的特征
+                    if (config.FileCommonModifyInfos != null)
+                    {
+                        editor.FileCommonModifyInfo = FindCommonModifyInfo(editor);
+                    }
+
+                    // 存在对应的特征时不报错
+                    if (editor.FileCommonModifyInfo != null && editor.FileCommonModifyInfo.ReplacePatterns != null)
+                    {
+                        // 如果能顺利得到 TargetChanges 不报错则可以使用特征替换方式
+                        editor.TargetChanges = ModifyFinder.FindChanges(editor.FilePath, editor.FileCommonModifyInfo.ReplacePatterns);
+                        continue;
+                    }
+                    else
+                    {
+                        // SHA1不匹配，连版本也不匹配，说明完全不支持
+                        if (matchingVersion == null)
+                        {
+                            throw new BusinessException("not_support", $"不支持此版本：{editor.FileVersion}！");
+                        }
+                        // SHA1不匹配，但是版本匹配，可能dll已经被其他补丁程序修改过
+                        if (matchingVersion != null)
+                        {
+                            throw new BusinessException("maybe_modified", $"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序！");
+                        }
+                    }
                 }
             }
         }
@@ -280,20 +307,15 @@ namespace RevokeMsgPatcher.Modifier
         /// c.根据补丁信息，安装补丁
         /// 两种打补丁的方式：精准（指定位置替换）、通用（特征码替换）
         /// </summary>
-        /// <param name="type">两种打补丁的方式：精准（指定位置替换）、通用（特征码替换）</param>
         /// <returns></returns>
-        public bool Patch(PatchType type = PatchType.Accurate)
+        public bool Patch()
         {
             // 首先验证文件修改器是否没问题
             foreach (FileHexEditor editor in editors)
             {
-                if (type == PatchType.Accurate && editor.FileModifyInfo == null)
+                if(editor == null)
                 {
                     throw new Exception("补丁安装失败，原因：文件修改器初始化失败！");
-                }
-                if (type == PatchType.Common && editor.FileCommonModifyInfo == null)
-                {
-                    throw new Exception("补丁安装失败，原因：特征码修改器初始化失败！");
                 }
             }
             // 再备份所有文件
@@ -307,7 +329,7 @@ namespace RevokeMsgPatcher.Modifier
             {
                 foreach (FileHexEditor editor in editors)
                 {
-                    bool success = editor.Patch(type);
+                    bool success = editor.Patch();
                     if (!success)
                     {
                         editor.Restore();
@@ -365,6 +387,10 @@ namespace RevokeMsgPatcher.Modifier
                         {
                             return false;
                         }
+                    }
+                    else
+                    {
+                        editor.Restore();
                     }
                 }
                 return true;
