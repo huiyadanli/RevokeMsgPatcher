@@ -93,7 +93,7 @@ namespace RevokeMsgPatcher.Modifier
             }
             else if (j == editors.Count)
             {
-                label.Text = version + "（支持特征码防撤回）";
+                label.Text = version + "（支持特征防撤回）";
                 label.ForeColor = Color.LimeGreen;
             }
             else
