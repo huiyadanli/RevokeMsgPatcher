@@ -16,7 +16,7 @@ namespace RevokeMsgPatcher
             return new Bag
             {
                 Apps = AppConfig(),
-                LatestVersion = "0.6",
+                LatestVersion = "0.7",
                 Notice = ""
             };
         }
