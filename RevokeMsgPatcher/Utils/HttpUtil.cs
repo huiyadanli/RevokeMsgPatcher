@@ -40,7 +40,7 @@ namespace RevokeMsgPatcher.Utils
             {
                 Console.WriteLine("第" + (i + 1) + "次请求异常:[" + ex.Message + "]\nURL:" + urls[i]);
                 i++;
-                if (i > urls.Length)
+                if (i >= urls.Length)
                 {
                     i = 0;
                     return null;
