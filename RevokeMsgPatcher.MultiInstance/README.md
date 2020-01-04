@@ -1,8 +1,11 @@
-## 💎一个通用的微信多开工具
+## 一个通用的微信多开工具
 
 此工具可以无视微信版本进行多开。
 
 **⚠如果你曾使用过“PC版微信/QQ/TIM防撤回补丁”，并对微信安装了防撤回/多开的补丁，此时微信本身已经支持多开，请勿重复使用本工具！！！**
+
+## 📷截图
+![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.mi.png)
 
 ## 🔨使用方法
 

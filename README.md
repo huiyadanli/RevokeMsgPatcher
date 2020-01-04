@@ -23,9 +23,9 @@
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
 下载地址：
-**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.6/RevokeMsgPatcher.v0.6.zip)** |
-[☁备用下载-蓝奏云](https://www.lanzous.com/i75gffi) | 
-[☁备用下载-百度云](https://pan.baidu.com/s/1M8rNYrhS85pFjpAASZqKlw) 提取码：coco
+**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.7/RevokeMsgPatcher.v0.7.zip)** |
+[☁备用下载-蓝奏云](https://www.lanzous.com/i8gmgjg) | 
+[☁备用下载-百度云](https://pan.baidu.com/s/1lZu5Rj7UzEUdl-B7nBDkVQ) 提取码：coco
 
 相关文档：
 **[✔支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)** | 
@@ -36,6 +36,8 @@
 [📗微信](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E5%BE%AE%E4%BF%A1%E9%98%B2%E6%92%A4%E5%9B%9E%E4%B8%8E%E5%A4%9A%E5%BC%80%E6%95%99%E7%A8%8B) |
 [📕QQ](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/QQ%E6%88%96TIM%E9%98%B2%E6%92%A4%E5%9B%9E%E6%95%99%E7%A8%8B) |
 [📘TIM](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/QQ%E6%88%96TIM%E9%98%B2%E6%92%A4%E5%9B%9E%E6%95%99%E7%A8%8B)
+
+附带产物：[一个通用的微信多开工具](https://github.com/huiyadanli/RevokeMsgPatcher/tree/master/RevokeMsgPatcher.MultiInstance)
 
 ## 📷截图
 ![Screenshot](https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/screenshot.png)
