@@ -1,2 +1,8 @@
 image:
 - Visual Studio 2017
+
+artifacts:
+  - path: RevokeMsgPatcher\bin\Release\RevokeMsgPatcher.exe
+    name: RevokeMsgPatcher
+  - path: RevokeMsgPatcher.MultiInstance.exe\bin\Release\RevokeMsgPatcher.MultiInstance.exe
+    name: RevokeMsgPatcher.MultiInstance
