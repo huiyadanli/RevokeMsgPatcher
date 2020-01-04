@@ -135,7 +135,7 @@
             // 
             this.lblUpdatePachJson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUpdatePachJson.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblUpdatePachJson.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lblUpdatePachJson.ForeColor = System.Drawing.Color.OrangeRed;
             this.lblUpdatePachJson.Location = new System.Drawing.Point(168, 118);
             this.lblUpdatePachJson.Name = "lblUpdatePachJson";
             this.lblUpdatePachJson.Size = new System.Drawing.Size(308, 12);

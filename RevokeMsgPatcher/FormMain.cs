@@ -2,6 +2,7 @@
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
@@ -239,11 +240,13 @@ namespace RevokeMsgPatcher
                     {
                         needUpdate = true;
                         lblUpdatePachJson.Text = $"[ 存在最新版本 {bag.LatestVersion} ]";
+                        lblUpdatePachJson.ForeColor = Color.Red;
                     }
                     else
                     {
                         needUpdate = false;
                         lblUpdatePachJson.Text = "[ 获取成功，点击查看更多信息 ]";
+                        lblUpdatePachJson.ForeColor = Color.RoyalBlue;
                     }
                     InitControls();
                 }
