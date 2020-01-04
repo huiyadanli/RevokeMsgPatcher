@@ -4,7 +4,5 @@ image:
 configuration: Release
 
 artifacts:
-  - path: bin\Release\RevokeMsgPatcher.exe
+  - path: bin\Release\
     name: RevokeMsgPatcher
-  - path: bin\Release\RevokeMsgPatcher.MultiInstance.exe
-    name: RevokeMsgPatcher.MultiInstance
