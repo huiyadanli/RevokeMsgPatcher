@@ -56,6 +56,7 @@
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.作者ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.主页ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.通用微信多开工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -232,17 +233,18 @@
             // 
             this.高级ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.特征码防撤回强制ToolStripMenuItem,
-            this.手动输入补丁信息ToolStripMenuItem});
+            this.手动输入补丁信息ToolStripMenuItem,
+            this.通用微信多开工具ToolStripMenuItem});
             this.高级ToolStripMenuItem.Name = "高级ToolStripMenuItem";
             this.高级ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.高级ToolStripMenuItem.Text = "高级";
-            this.高级ToolStripMenuItem.Visible = false;
             // 
             // 特征码防撤回强制ToolStripMenuItem
             // 
             this.特征码防撤回强制ToolStripMenuItem.Name = "特征码防撤回强制ToolStripMenuItem";
             this.特征码防撤回强制ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.特征码防撤回强制ToolStripMenuItem.Text = "特征码防撤回（强制）";
+            this.特征码防撤回强制ToolStripMenuItem.Visible = false;
             this.特征码防撤回强制ToolStripMenuItem.Click += new System.EventHandler(this.特征码防撤回强制ToolStripMenuItem_Click);
             // 
             // 手动输入补丁信息ToolStripMenuItem
@@ -250,6 +252,7 @@
             this.手动输入补丁信息ToolStripMenuItem.Name = "手动输入补丁信息ToolStripMenuItem";
             this.手动输入补丁信息ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.手动输入补丁信息ToolStripMenuItem.Text = "手动输入补丁信息";
+            this.手动输入补丁信息ToolStripMenuItem.Visible = false;
             this.手动输入补丁信息ToolStripMenuItem.Click += new System.EventHandler(this.手动输入补丁信息ToolStripMenuItem_Click);
             // 
             // 帮助ToolStripMenuItem
@@ -266,28 +269,28 @@
             // 支持版本ToolStripMenuItem
             // 
             this.支持版本ToolStripMenuItem.Name = "支持版本ToolStripMenuItem";
-            this.支持版本ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.支持版本ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.支持版本ToolStripMenuItem.Text = "支持版本";
             this.支持版本ToolStripMenuItem.Click += new System.EventHandler(this.支持版本ToolStripMenuItem_Click);
             // 
             // 常见问题ToolStripMenuItem
             // 
             this.常见问题ToolStripMenuItem.Name = "常见问题ToolStripMenuItem";
-            this.常见问题ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.常见问题ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.常见问题ToolStripMenuItem.Text = "常见问题";
             this.常见问题ToolStripMenuItem.Click += new System.EventHandler(this.常见问题ToolStripMenuItem_Click);
             // 
             // 防撤回原理ToolStripMenuItem
             // 
             this.防撤回原理ToolStripMenuItem.Name = "防撤回原理ToolStripMenuItem";
-            this.防撤回原理ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.防撤回原理ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.防撤回原理ToolStripMenuItem.Text = "防撤回原理";
             this.防撤回原理ToolStripMenuItem.Click += new System.EventHandler(this.防撤回原理ToolStripMenuItem_Click);
             // 
             // 完整文档ToolStripMenuItem
             // 
             this.完整文档ToolStripMenuItem.Name = "完整文档ToolStripMenuItem";
-            this.完整文档ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.完整文档ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.完整文档ToolStripMenuItem.Text = "完整文档";
             this.完整文档ToolStripMenuItem.Click += new System.EventHandler(this.完整文档ToolStripMenuItem_Click);
             // 
@@ -303,16 +306,23 @@
             // 作者ToolStripMenuItem
             // 
             this.作者ToolStripMenuItem.Name = "作者ToolStripMenuItem";
-            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.作者ToolStripMenuItem.Text = "关于";
             this.作者ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // 主页ToolStripMenuItem
             // 
             this.主页ToolStripMenuItem.Name = "主页ToolStripMenuItem";
-            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.主页ToolStripMenuItem.Text = "软件主页";
             this.主页ToolStripMenuItem.Click += new System.EventHandler(this.主页ToolStripMenuItem_Click);
+            // 
+            // 通用微信多开工具ToolStripMenuItem
+            // 
+            this.通用微信多开工具ToolStripMenuItem.Name = "通用微信多开工具ToolStripMenuItem";
+            this.通用微信多开工具ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.通用微信多开工具ToolStripMenuItem.Text = "通用微信多开工具";
+            this.通用微信多开工具ToolStripMenuItem.Click += new System.EventHandler(this.通用微信多开工具ToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -377,6 +387,7 @@
         private System.Windows.Forms.ToolStripMenuItem 完整文档ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 手动输入补丁信息ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 特征码防撤回强制ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 通用微信多开工具ToolStripMenuItem;
     }
 }
 

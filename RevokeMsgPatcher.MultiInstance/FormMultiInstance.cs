@@ -10,6 +10,14 @@ namespace RevokeMsgPatcher.MultiInstance
         public FormMultiInstance()
         {
             InitializeComponent();
+
+            // 标题加上版本号
+            string currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            if (currentVersion.Length > 3)
+            {
+                currentVersion = " v" + currentVersion.Substring(0, 3);
+            }
+            this.Text += currentVersion;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -106,7 +114,7 @@ namespace RevokeMsgPatcher.MultiInstance
 
         private void lblHowToUse_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher");
+            Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/tree/master/RevokeMsgPatcher.MultiInstance");
         }
 
         private void FormMultiInstance_FormClosed(object sender, FormClosedEventArgs e)

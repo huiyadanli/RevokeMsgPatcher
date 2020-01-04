@@ -37,13 +37,13 @@
             this.lblProcNum = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblHowToUse = new System.Windows.Forms.LinkLabel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblHowToUse = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -52,7 +52,7 @@
             // 
             // btnStartTimer
             // 
-            this.btnStartTimer.Location = new System.Drawing.Point(158, 46);
+            this.btnStartTimer.Location = new System.Drawing.Point(170, 46);
             this.btnStartTimer.Name = "btnStartTimer";
             this.btnStartTimer.Size = new System.Drawing.Size(91, 23);
             this.btnStartTimer.TabIndex = 99;
@@ -88,7 +88,7 @@
             // btnStopTimer
             // 
             this.btnStopTimer.Enabled = false;
-            this.btnStopTimer.Location = new System.Drawing.Point(158, 75);
+            this.btnStopTimer.Location = new System.Drawing.Point(170, 75);
             this.btnStopTimer.Name = "btnStopTimer";
             this.btnStopTimer.Size = new System.Drawing.Size(91, 23);
             this.btnStopTimer.TabIndex = 98;
@@ -99,7 +99,7 @@
             // lblProcNum
             // 
             this.lblProcNum.AutoSize = true;
-            this.lblProcNum.Location = new System.Drawing.Point(158, 23);
+            this.lblProcNum.Location = new System.Drawing.Point(170, 23);
             this.lblProcNum.Name = "lblProcNum";
             this.lblProcNum.Size = new System.Drawing.Size(95, 12);
             this.lblProcNum.TabIndex = 20;
@@ -114,7 +114,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(271, 146);
+            this.tabControl1.Size = new System.Drawing.Size(286, 146);
             this.tabControl1.TabIndex = 21;
             // 
             // tabPage1
@@ -126,10 +126,21 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(263, 120);
+            this.tabPage1.Size = new System.Drawing.Size(278, 120);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "自动模式";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.textBox1.Location = new System.Drawing.Point(7, 14);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(157, 92);
+            this.textBox1.TabIndex = 22;
+            this.textBox1.Text = "1.使用方法：点击【启动多开】之后，就可以启动多个微信了。\r\n2.注意：启动多个微信频率太快时，可能会失败。";
             // 
             // tabPage2
             // 
@@ -144,6 +155,17 @@
             this.tabPage2.Text = "手动功能";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // lblHowToUse
+            // 
+            this.lblHowToUse.AutoSize = true;
+            this.lblHowToUse.Location = new System.Drawing.Point(96, 16);
+            this.lblHowToUse.Name = "lblHowToUse";
+            this.lblHowToUse.Size = new System.Drawing.Size(65, 12);
+            this.lblHowToUse.TabIndex = 19;
+            this.lblHowToUse.TabStop = true;
+            this.lblHowToUse.Text = "如何使用？";
+            this.lblHowToUse.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblHowToUse_LinkClicked);
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.label1);
@@ -156,6 +178,15 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "关于";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(23, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(221, 61);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "本工具是\r\n【 PC版微信/QQ/TIM防撤回补丁】\r\n的额外产物\r\n更多信息可以在软件主页查看";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1
             // 
@@ -176,42 +207,11 @@
             this.label3.TabIndex = 15;
             this.label3.Text = "软件主页(开源)：";
             // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.textBox1.Location = new System.Drawing.Point(7, 14);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(144, 92);
-            this.textBox1.TabIndex = 22;
-            this.textBox1.Text = "1.使用方法：点击【启动多开】之后，就可以启动多个微信了。\r\n2.注意：启动多个微信频率太快时，可能会失败。";
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(23, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(221, 61);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "本工具是\r\n【 PC版微信/QQ/TIM防撤回补丁】\r\n的额外产物\r\n更多信息可以在软件主页查看";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblHowToUse
-            // 
-            this.lblHowToUse.AutoSize = true;
-            this.lblHowToUse.Location = new System.Drawing.Point(96, 16);
-            this.lblHowToUse.Name = "lblHowToUse";
-            this.lblHowToUse.Size = new System.Drawing.Size(65, 12);
-            this.lblHowToUse.TabIndex = 19;
-            this.lblHowToUse.TabStop = true;
-            this.lblHowToUse.Text = "如何使用？";
-            this.lblHowToUse.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblHowToUse_LinkClicked);
-            // 
             // FormMultiInstance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(271, 146);
+            this.ClientSize = new System.Drawing.Size(286, 146);
             this.Controls.Add(this.tabControl1);
             this.MaximizeBox = false;
             this.Name = "FormMultiInstance";
