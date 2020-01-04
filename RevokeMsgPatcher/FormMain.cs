@@ -344,5 +344,45 @@ namespace RevokeMsgPatcher
                 }
             }
         }
+
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("本程序仅供学习交流,严禁用于商业用途。\n十六进制编辑器使用的修改数据集收集自网络。\n作者：huiyadanli", "关于本软件");
+        }
+
+        private void 主页ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher");
+        }
+
+        private void 支持版本ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81");
+        }
+
+        private void 常见问题ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98");
+        }
+
+        private void 防撤回原理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%8E%9F%E7%90%86");
+        }
+
+        private void 完整文档ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/wiki");
+        }
+
+        private void 特征码防撤回强制ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("作者正在考虑是否要加上这个功能", "强制使用特征码防撤回");
+        }
+
+        private void 手动输入补丁信息ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("作者正在考虑是否要加上这个功能，该功能可能有安全风险，暂时不加入", "手动输入补丁信息");
+        }
     }
 }

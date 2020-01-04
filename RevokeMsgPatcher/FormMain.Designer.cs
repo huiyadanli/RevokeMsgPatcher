@@ -46,7 +46,7 @@
             this.rbtQQLite = new System.Windows.Forms.RadioButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.高级ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.特征码防撤回ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.特征码防撤回强制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.手动输入补丁信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.支持版本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -231,23 +231,26 @@
             // 高级ToolStripMenuItem
             // 
             this.高级ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.特征码防撤回ToolStripMenuItem,
+            this.特征码防撤回强制ToolStripMenuItem,
             this.手动输入补丁信息ToolStripMenuItem});
             this.高级ToolStripMenuItem.Name = "高级ToolStripMenuItem";
             this.高级ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.高级ToolStripMenuItem.Text = "高级";
+            this.高级ToolStripMenuItem.Visible = false;
             // 
-            // 特征码防撤回ToolStripMenuItem
+            // 特征码防撤回强制ToolStripMenuItem
             // 
-            this.特征码防撤回ToolStripMenuItem.Name = "特征码防撤回ToolStripMenuItem";
-            this.特征码防撤回ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.特征码防撤回ToolStripMenuItem.Text = "特征码防撤回";
+            this.特征码防撤回强制ToolStripMenuItem.Name = "特征码防撤回强制ToolStripMenuItem";
+            this.特征码防撤回强制ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.特征码防撤回强制ToolStripMenuItem.Text = "特征码防撤回（强制）";
+            this.特征码防撤回强制ToolStripMenuItem.Click += new System.EventHandler(this.特征码防撤回强制ToolStripMenuItem_Click);
             // 
             // 手动输入补丁信息ToolStripMenuItem
             // 
             this.手动输入补丁信息ToolStripMenuItem.Name = "手动输入补丁信息ToolStripMenuItem";
-            this.手动输入补丁信息ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.手动输入补丁信息ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.手动输入补丁信息ToolStripMenuItem.Text = "手动输入补丁信息";
+            this.手动输入补丁信息ToolStripMenuItem.Click += new System.EventHandler(this.手动输入补丁信息ToolStripMenuItem_Click);
             // 
             // 帮助ToolStripMenuItem
             // 
@@ -263,26 +266,30 @@
             // 支持版本ToolStripMenuItem
             // 
             this.支持版本ToolStripMenuItem.Name = "支持版本ToolStripMenuItem";
-            this.支持版本ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.支持版本ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.支持版本ToolStripMenuItem.Text = "支持版本";
+            this.支持版本ToolStripMenuItem.Click += new System.EventHandler(this.支持版本ToolStripMenuItem_Click);
             // 
             // 常见问题ToolStripMenuItem
             // 
             this.常见问题ToolStripMenuItem.Name = "常见问题ToolStripMenuItem";
-            this.常见问题ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.常见问题ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.常见问题ToolStripMenuItem.Text = "常见问题";
+            this.常见问题ToolStripMenuItem.Click += new System.EventHandler(this.常见问题ToolStripMenuItem_Click);
             // 
             // 防撤回原理ToolStripMenuItem
             // 
             this.防撤回原理ToolStripMenuItem.Name = "防撤回原理ToolStripMenuItem";
-            this.防撤回原理ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.防撤回原理ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.防撤回原理ToolStripMenuItem.Text = "防撤回原理";
+            this.防撤回原理ToolStripMenuItem.Click += new System.EventHandler(this.防撤回原理ToolStripMenuItem_Click);
             // 
             // 完整文档ToolStripMenuItem
             // 
             this.完整文档ToolStripMenuItem.Name = "完整文档ToolStripMenuItem";
-            this.完整文档ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.完整文档ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.完整文档ToolStripMenuItem.Text = "完整文档";
+            this.完整文档ToolStripMenuItem.Click += new System.EventHandler(this.完整文档ToolStripMenuItem_Click);
             // 
             // 关于ToolStripMenuItem
             // 
@@ -296,14 +303,16 @@
             // 作者ToolStripMenuItem
             // 
             this.作者ToolStripMenuItem.Name = "作者ToolStripMenuItem";
-            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.作者ToolStripMenuItem.Text = "作者";
+            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.作者ToolStripMenuItem.Text = "关于";
+            this.作者ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // 主页ToolStripMenuItem
             // 
             this.主页ToolStripMenuItem.Name = "主页ToolStripMenuItem";
-            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.主页ToolStripMenuItem.Text = "软件主页";
+            this.主页ToolStripMenuItem.Click += new System.EventHandler(this.主页ToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -366,8 +375,8 @@
         private System.Windows.Forms.ToolStripMenuItem 常见问题ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 防撤回原理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 完整文档ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 特征码防撤回ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 手动输入补丁信息ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 特征码防撤回强制ToolStripMenuItem;
     }
 }
 

@@ -57,6 +57,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormPatchInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPatchInfo.Designer.cs">
+      <DependentUpon>FormPatchInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Matcher\BoyerMooreMatcher.cs" />
     <Compile Include="Matcher\FuzzyMatcher.cs" />
     <Compile Include="Matcher\ModifyFinder.cs" />
@@ -83,6 +89,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPatchInfo.resx">
+      <DependentUpon>FormPatchInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
