@@ -1,5 +1,6 @@
 ﻿using RevokeMsgPatcher.Matcher;
 using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -145,18 +146,7 @@ namespace RevokeMsgPatcher.Modifier
         {
             try
             {
-                int v = Convert.ToInt32(version.Replace(".", ""));
-                int s = Convert.ToInt32(start.Replace(".", ""));
-                int e = 0;
-                if (string.IsNullOrEmpty(end))
-                {
-                    e = int.MaxValue;
-                }
-                else
-                {
-                    e = Convert.ToInt32(end.Replace(".", ""));
-                }
-                if (v >= s && v <= e)
+                if (VersionUtil.Compare(version, start) == 1 && VersionUtil.Compare(version, end) <= 0)
                 {
                     return true;
                 }
@@ -179,6 +169,7 @@ namespace RevokeMsgPatcher.Modifier
                 // editor.FileVersion 在 StartVersion 和 EndVersion 之间
                 if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
                 {
+                    Console.WriteLine($"{commonModifyInfo.StartVersion}<{editor.FileVersion}<={commonModifyInfo.EndVersion}");
                     return commonModifyInfo;
                 }
             }
@@ -312,7 +303,7 @@ namespace RevokeMsgPatcher.Modifier
             // 首先验证文件修改器是否没问题
             foreach (FileHexEditor editor in editors)
             {
-                if(editor == null)
+                if (editor == null)
                 {
                     throw new Exception("补丁安装失败，原因：文件修改器初始化失败！");
                 }
