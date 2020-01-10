@@ -18,7 +18,7 @@
 </p>
 
 # 👀微信/QQ/TIM防撤回补丁
-适用于 Windows 下 PC 版微信/QQ/TIM的防撤回补丁。
+适用于 Windows 下 PC 版微信/QQ/TIM的防撤回补丁。**从 0.7 版本开始通杀所有新版本微信/QQ（含测试版）**
 
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
