@@ -23,7 +23,7 @@ namespace RevokeMsgPatcher.Utils
         /// </summary>
         private static readonly string[] urls = new string[]
         {
-            "https://coding.net/u/huiyadanli/p/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/0.8/patch.json",
+            "https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/0.8/patch.json",
             "https://gitee.com/huiyadanli/RevokeMsgPatcher/raw/master/RevokeMsgPatcher.Assistant/Data/0.8/patch.json",
             "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/0.8/patch.json"
         };
