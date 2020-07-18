@@ -1,4 +1,5 @@
-﻿using RevokeMsgPatcher.Model;
+﻿using RevokeMsgPatcher.Forms;
+using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
 using System;
@@ -75,7 +76,7 @@ namespace RevokeMsgPatcher
             if (!string.IsNullOrEmpty(txtPath.Text))
             {
                 modifier.InitEditors(txtPath.Text);
-                modifier.SetVersionLabel(lblVersion);
+                modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
                 btnRestore.Enabled = modifier.BackupExists();
             }
         }
@@ -96,10 +97,19 @@ namespace RevokeMsgPatcher
             EnableAllButton(false);
             // a.重新初始化编辑器
             modifier.InitEditors(txtPath.Text);
-            // b.计算SHA1，验证文件完整性，寻找对应的补丁信息（精确版本、通用特征码两种补丁信息）
+            // b.获取选择的功能
+            string[] categories = UIController.GetCategoriesFromPanel(panelCategories);
+            if (panelCategories.Controls.Count > 0 && (categories == null || categories.Length == 0))
+            {
+                MessageBox.Show("请至少选择一项功能");
+                EnableAllButton(true);
+                btnRestore.Enabled = modifier.BackupExists();
+                return;
+            }
+            // c.计算SHA1，验证文件完整性，寻找对应的补丁信息（精确版本、通用特征码两种补丁信息）
             try
             {
-                modifier.ValidateAndFindModifyInfo();
+                modifier.ValidateAndFindModifyInfo(categories);
             }
             catch (BusinessException ex)
             {
@@ -126,11 +136,11 @@ namespace RevokeMsgPatcher
                 return;
             }
 
-            // c.打补丁
+            // d.打补丁
             try
             {
                 modifier.Patch();
-                ga.RequestPageView($"{enName}/{version}/patch/succ", "防撤回成功");
+                ga.RequestPageView($"{enName}/{version}/patch/succ", "补丁安装成功");
                 MessageBox.Show("补丁安装成功！");
             }
             catch (BusinessException ex)
@@ -185,7 +195,7 @@ namespace RevokeMsgPatcher
                     if (!string.IsNullOrEmpty(txtPath.Text))
                     {
                         modifier.InitEditors(txtPath.Text);
-                        modifier.SetVersionLabel(lblVersion);
+                        modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
                         btnRestore.Enabled = modifier.BackupExists();
                     }
                 }
@@ -220,7 +230,8 @@ namespace RevokeMsgPatcher
         private async void FormMain_Load(object sender, EventArgs e)
         {
             // 异步获取最新的补丁信息
-            string json = await HttpUtil.GetPatchJsonAsync();
+            //string json = await HttpUtil.GetPatchJsonAsync();
+            string json = null; // local test
             if (string.IsNullOrEmpty(json))
             {
                 lblUpdatePachJson.Text = "[ 获取最新补丁信息失败 ]";
@@ -304,11 +315,12 @@ namespace RevokeMsgPatcher
             EnableAllButton(true);
             lblVersion.Text = "";
             btnRestore.Enabled = false;
+            panelCategories.Controls.Clear();
             // 显示是否能够备份还原
             if (!string.IsNullOrEmpty(txtPath.Text))
             {
                 modifier.InitEditors(txtPath.Text);
-                modifier.SetVersionLabel(lblVersion);
+                modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
                 btnRestore.Enabled = modifier.BackupExists();
             }
             ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");

@@ -35,7 +35,7 @@ namespace RevokeMsgPatcher.Matcher
             {
                 if (IsAllReplaced(fileByteArray, replacePatterns))
                 {
-                    throw new BusinessException("match_already_replace", "特征比对：当前应用已经安装了防撤回补丁！");
+                    throw new BusinessException("match_already_replace", "特征比对：当前应用已经安装了对应功能的补丁！");
                 }
                 else
                 {
@@ -64,7 +64,6 @@ namespace RevokeMsgPatcher.Matcher
                     return changes;
                 }
             }
-            return null;
         }
 
         private static bool IsAllReplaced(byte[] fileByteArray, List<ReplacePattern> replacePatterns)

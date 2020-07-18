@@ -8,6 +8,8 @@ namespace RevokeMsgPatcher.Model
 
         public byte[] Replace { get; set; }
 
+        public string Category { get; set; }
+
         public ReplacePattern Clone()
         {
             ReplacePattern o = new ReplacePattern();

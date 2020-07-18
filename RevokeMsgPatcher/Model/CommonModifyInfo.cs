@@ -24,12 +24,24 @@ namespace RevokeMsgPatcher.Model
             o.StartVersion = StartVersion;
             o.EndVersion = EndVersion;
             List<ReplacePattern> cs = new List<ReplacePattern>();
-            foreach(ReplacePattern c in ReplacePatterns)
+            foreach (ReplacePattern c in ReplacePatterns)
             {
                 cs.Add(c.Clone());
             }
             o.ReplacePatterns = cs;
             return o;
+        }
+
+        public List<string> GetCategories()
+        {
+            if (ReplacePatterns != null && ReplacePatterns.Count > 0)
+            {
+                return ReplacePatterns.Select(p => p.Category).ToList();
+            }
+            else
+            {
+                return new List<string>();
+            }
         }
     }
 }

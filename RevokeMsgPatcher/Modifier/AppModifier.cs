@@ -1,10 +1,12 @@
-﻿using RevokeMsgPatcher.Matcher;
+﻿using RevokeMsgPatcher.Forms;
+using RevokeMsgPatcher.Matcher;
 using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace RevokeMsgPatcher.Modifier
@@ -44,11 +46,13 @@ namespace RevokeMsgPatcher.Modifier
         /// 操作版本号显示控件的内容和样式
         /// </summary>
         /// <param name="label">显示版本的控件</param>
-        public void SetVersionLabel(System.Windows.Forms.Label label)
+        public void SetVersionLabelAndCategoryCategories(Label label, Panel panel)
         {
             string version = GetVersion();
             // 补丁信息中是否都有对应的版本
             int i = 0, j = 0;
+            // 特征码匹配的时候的可选功能项
+            SortedSet<string> categories = new SortedSet<string>();
             foreach (FileHexEditor editor in editors) // 多种文件
             {
                 // 精确版本匹配
@@ -75,6 +79,14 @@ namespace RevokeMsgPatcher.Modifier
                         // editor.FileVersion 在 StartVersion 和 EndVersion 之间
                         if (IsInVersionRange(editor.FileVersion, commonModifyInfo.StartVersion, commonModifyInfo.EndVersion))
                         {
+                            // 取出特征码的功能类型
+                            foreach (string c in commonModifyInfo.GetCategories())
+                            {
+                                if (c != null)
+                                {
+                                    categories.Add(c);
+                                }
+                            }
                             inRange = true;
                             break;
                         }
@@ -91,16 +103,19 @@ namespace RevokeMsgPatcher.Modifier
             {
                 label.Text = version + "（已支持）";
                 label.ForeColor = Color.Green;
+                UIController.AddMsgToPanel(panel, "只有基于特征的补丁才能选择功能");
             }
             else if (j == editors.Count)
             {
                 label.Text = version + "（支持特征防撤回）";
                 label.ForeColor = Color.LimeGreen;
+                UIController.AddCategoryCheckBoxToPanel(panel, categories.ToArray());
             }
             else
             {
                 label.Text = version + "（不支持）";
                 label.ForeColor = Color.Red;
+                UIController.AddMsgToPanel(panel, "无功能选项");
             }
 
         }
@@ -220,7 +235,8 @@ namespace RevokeMsgPatcher.Modifier
         /// <summary>
         /// b.验证文件完整性，寻找对应的补丁信息
         /// </summary>
-        public void ValidateAndFindModifyInfo()
+        /// <param name="categories">操作类型（防撤回或者多开等）,为空则是所有操作</param>
+        public void ValidateAndFindModifyInfo(string[] categories)
         {
             // 寻找对应文件版本与SHA1的修改信息
             foreach (FileHexEditor editor in editors) // 多种文件
@@ -263,6 +279,7 @@ namespace RevokeMsgPatcher.Modifier
                 // SHA1不匹配说明精准替换肯定不支持
                 if (matchingSHA1Before == null && matchingSHA1After == null)
                 {
+                    // 尝试使用特征码替换
                     // 多个版本范围，匹配出对应版本可以使用的特征
                     if (config.FileCommonModifyInfos != null)
                     {
@@ -272,8 +289,14 @@ namespace RevokeMsgPatcher.Modifier
                     // 存在对应的特征时不报错
                     if (editor.FileCommonModifyInfo != null && editor.FileCommonModifyInfo.ReplacePatterns != null)
                     {
+                        List<ReplacePattern> replacePatterns = editor.FileCommonModifyInfo.ReplacePatterns;
+                        // 根据需要操作的功能类型（防撤回或者多开等）筛选特征码
+                        if (categories.Length > 0)
+                        {
+                            replacePatterns = editor.FileCommonModifyInfo.ReplacePatterns.Where(info => categories.Contains(info.Category)).ToList();
+                        }
                         // 如果能顺利得到 TargetChanges 不报错则可以使用特征替换方式
-                        editor.TargetChanges = ModifyFinder.FindChanges(editor.FilePath, editor.FileCommonModifyInfo.ReplacePatterns);
+                        editor.TargetChanges = ModifyFinder.FindChanges(editor.FilePath, replacePatterns);
                         continue;
                     }
                     else

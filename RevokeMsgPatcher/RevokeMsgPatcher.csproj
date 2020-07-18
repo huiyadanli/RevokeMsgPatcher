@@ -63,6 +63,7 @@
     <Compile Include="Forms\FormPatchInfo.Designer.cs">
       <DependentUpon>FormPatchInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UIController.cs" />
     <Compile Include="Matcher\BoyerMooreMatcher.cs" />
     <Compile Include="Matcher\FuzzyMatcher.cs" />
     <Compile Include="Matcher\ModifyFinder.cs" />
