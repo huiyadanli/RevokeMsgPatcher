@@ -57,6 +57,8 @@
 
 5. 点击防撤回。界面可能会出现一段时间的无响应，请耐心等待。**由于修改了微信的 WeChatWin.dll 文件、QQ/TIM的 IM.dll 文件，杀毒软件可能会弹出警告，放行即可。**
 
+注意：微信/QQ/TIM更新之后要重新安装补丁！
+
 ## ❤Thanks
 
 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke)
