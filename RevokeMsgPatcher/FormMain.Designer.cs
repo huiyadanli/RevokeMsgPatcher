@@ -78,7 +78,7 @@
             this.btnPatch.Name = "btnPatch";
             this.btnPatch.Size = new System.Drawing.Size(98, 23);
             this.btnPatch.TabIndex = 3;
-            this.btnPatch.Text = "安装补丁";
+            this.btnPatch.Text = "安装补丁！";
             this.btnPatch.UseVisualStyleBackColor = true;
             this.btnPatch.Click += new System.EventHandler(this.btnPatch_Click);
             // 

@@ -345,6 +345,7 @@ namespace RevokeMsgPatcher.Modifier
                     bool success = editor.Patch();
                     if (!success)
                     {
+                        // 此处还原逻辑不可能进入
                         editor.Restore();
                     }
                     else
@@ -369,7 +370,7 @@ namespace RevokeMsgPatcher.Modifier
         {
             foreach (FileHexEditor editor in editors)
             {
-                if (!File.Exists(editor.FileBakPath))
+                if (!File.Exists(editor.FileBakPath) || editor.FileVersion != editor.BackupFileVersion)
                 {
                     return false;
                 }
