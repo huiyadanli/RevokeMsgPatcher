@@ -353,7 +353,7 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="IM.dll",
-                                StartVersion="9.1.7.00000",
+                                StartVersion="9.1.6.00000",
                                 EndVersion="",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
