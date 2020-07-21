@@ -32,6 +32,7 @@ namespace RevokeMsgPatcher.Modifier
         {
             get
             {
+                // 获取当前最新的备份文件版本号
                 return FileUtil.GetFileVersion(FileBakPath);
             }
         }
@@ -66,7 +67,7 @@ namespace RevokeMsgPatcher.Modifier
         /// </summary>
         public List<Change> TargetChanges { get; set; }
 
-        public FileHexEditor(string installPath, TargetInfo target)
+        public FileHexEditor(string installPath, TargetInfo target, string mainAppVersion = null)
         {
             FileTargetInfo = target.Clone();
             FileName = FileTargetInfo.Name;

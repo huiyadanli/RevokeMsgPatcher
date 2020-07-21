@@ -1,4 +1,5 @@
 ﻿using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +11,8 @@ namespace RevokeMsgPatcher.Matcher
         // TODO 该逻辑需要优化！
         public static List<Change> FindChanges(string path, List<ReplacePattern> replacePatterns)
         {
-            // 读取整个文件(dll)
-            byte[] fileByteArray = File.ReadAllBytes(path);
+            // 读取整个文件(dll) // 20200721 钉钉:读取 先不改了！
+            byte[] fileByteArray = FileUtil.ReadFileBytes(path, replacePatterns[0].Start);
 
             List<Change> changes = new List<Change>(); // 匹配且需要替换的地方
 

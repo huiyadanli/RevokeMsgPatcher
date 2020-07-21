@@ -74,5 +74,15 @@ namespace RevokeMsgPatcher.Utils
                 }
             }
         }
+
+        public static byte[] ReadFileBytes(string path, int start)
+        {
+            using (FileStream fsSource = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                byte[] bytes = new byte[fsSource.Length - start];
+                fsSource.Read(bytes, start, (int)fsSource.Length);
+                return bytes;
+            }
+        }
     }
 }

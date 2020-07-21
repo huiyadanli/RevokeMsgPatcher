@@ -798,5 +798,51 @@ namespace RevokeMsgPatcher
                 }
             };
         }
+
+        public App DingTalk()
+        {
+            return new App
+            {
+                Name = "DingTalk",
+                MainAppRelativePath = @"main\current\DingTalk.exe",
+                FileTargetInfos = new Dictionary<string, TargetInfo>
+                {
+                    {
+                        "MainFrame.dll",
+                        new TargetInfo
+                        {
+                            Name = "MainFrame.dll",
+                            RelativePath = @"main\current\MainFrame.dll"
+                        }
+                    }
+                },
+                FileCommonModifyInfos = new Dictionary<string, List<CommonModifyInfo>>
+                {
+                    {
+                        "MainFrame.dll",
+                        new List<CommonModifyInfo>
+                        {
+                            new CommonModifyInfo
+                            {
+                                Name="MainFrame.dll",
+                                StartVersion="4.0.00.00",
+                                EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("CC CC CC CC CC CC CC 55 8B EC 83 E4 F8 6A FF 68"),
+                                        Replace = ByteUtil.HexStringToByteArray("CC CC CC CC CC CC CC C3 8B EC 83 E4 F8 6A FF 68"),
+                                        Start = 0x400000,
+                                        Category = "防撤回"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
     }
 }

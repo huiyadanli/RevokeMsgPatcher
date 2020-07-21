@@ -10,6 +10,11 @@ namespace RevokeMsgPatcher.Model
     {
         public string Name { get; set; }
 
+        /// <summary>
+        /// 主程序相对路径, 非必填, 用于主程序版本号的使用
+        /// </summary>
+        public string MainAppRelativePath { get; set; }
+
         public Dictionary<string, TargetInfo> FileTargetInfos { get; set; }
 
         public Dictionary<string, List<ModifyInfo>> FileModifyInfos { get; set; }
