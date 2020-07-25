@@ -18,14 +18,14 @@
 </p>
 
 # 👀微信/QQ/TIM防撤回补丁
-适用于 Windows 下 PC 版微信/QQ/TIM的防撤回补丁。**从 0.7 版本开始通杀所有新版本微信/QQ（含测试版）**
+适用于 Windows 下 PC 版微信/QQ/TIM的防撤回补丁。**支持最新版微信/QQ/TIM**，其中微信能够选择安装多开功能。
 
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
 下载地址：
-**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.8/RevokeMsgPatcher.v0.8.zip)** |
-[☁备用下载-蓝奏云](https://www.lanzous.com/i8lhkyf) | 
-[☁备用下载-百度云](https://pan.baidu.com/s/1m90EZj32B-Y8nwzxm7Efdg) 提取码：coco
+**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/0.9/RevokeMsgPatcher.v0.9.zip)** |
+[☁备用下载-蓝奏云](https://wwa.lanzous.com/iaULseyzpbe) | 
+[☁备用下载-百度云](https://pan.baidu.com/s/1Yty-6d31by_E53SKZyQvTg) 提取码：coco
 
 相关文档：
 **[✔支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)** | 
