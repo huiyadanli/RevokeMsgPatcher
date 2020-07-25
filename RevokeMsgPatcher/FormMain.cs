@@ -74,7 +74,6 @@ namespace RevokeMsgPatcher
             txtPath.Text = modifier.FindInstallPath();
             // 显示是否能够备份还原、版本和功能
             InitEditorsAndUI(txtPath.Text);
-
         }
 
         private void InitEditorsAndUI(string path)
@@ -121,7 +120,7 @@ namespace RevokeMsgPatcher
             EnableAllButton(false);
             // a.重新初始化编辑器
             modifier.InitEditors(txtPath.Text);
-            // b.获取选择的功能 （精准匹配返回null）
+            // b.获取选择的功能 （精准匹配返回null） // TODO 此处逻辑可以优化 不可完全信任UI信息
             List<string> categories = UIController.GetCategoriesFromPanel(panelCategories);
             if (categories != null && categories.Count == 0)
             {
@@ -250,8 +249,8 @@ namespace RevokeMsgPatcher
         private async void FormMain_Load(object sender, EventArgs e)
         {
             // 异步获取最新的补丁信息
-            //string json = await HttpUtil.GetPatchJsonAsync();
-            string json = null; // local test
+            string json = await HttpUtil.GetPatchJsonAsync();
+            //string json = null; // local test
             if (string.IsNullOrEmpty(json))
             {
                 lblUpdatePachJson.Text = "[ 获取最新补丁信息失败 ]";
