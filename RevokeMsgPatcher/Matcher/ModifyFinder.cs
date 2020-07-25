@@ -79,6 +79,13 @@ namespace RevokeMsgPatcher.Matcher
             }
         }
 
+        public static SortedSet<string> FindReplacedFunction(string path, List<ReplacePattern> replacePatterns)
+        {
+            byte[] fileByteArray = File.ReadAllBytes(path);
+            Tuple<bool, SortedSet<string>> res = IsAllReplaced(fileByteArray, replacePatterns);
+            return res.Item2;
+        }
+
         private static Tuple<bool, SortedSet<string>> IsAllReplaced(byte[] fileByteArray, List<ReplacePattern> replacePatterns)
         {
             int matchNum = 0;

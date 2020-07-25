@@ -3,6 +3,7 @@ using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -71,13 +72,36 @@ namespace RevokeMsgPatcher
         {
             // 自动获取应用安装路径
             txtPath.Text = modifier.FindInstallPath();
-            btnRestore.Enabled = false;
-            // 显示是否能够备份还原
-            if (!string.IsNullOrEmpty(txtPath.Text))
+            // 显示是否能够备份还原、版本和功能
+            InitEditorsAndUI(txtPath.Text);
+
+        }
+
+        private void InitEditorsAndUI(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
             {
-                modifier.InitEditors(txtPath.Text);
+                EnableAllButton(false);
+
+                // 清空界面元素
+                lblVersion.Text = "";
+                panelCategories.Controls.Clear();
+
+                // 重新计算并修改界面元素
+                modifier.InitEditors(path);
                 modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
+
+                EnableAllButton(true);
+
+                // 重新显示备份状态
+                btnRestore.Enabled = false;
                 btnRestore.Enabled = modifier.BackupExists();
+
+                List<string> categories = UIController.GetCategoriesFromPanel(panelCategories);
+                if (categories != null && categories.Count == 0)
+                {
+                    btnPatch.Enabled = false;
+                }
             }
         }
 
@@ -97,9 +121,9 @@ namespace RevokeMsgPatcher
             EnableAllButton(false);
             // a.重新初始化编辑器
             modifier.InitEditors(txtPath.Text);
-            // b.获取选择的功能
-            string[] categories = UIController.GetCategoriesFromPanel(panelCategories);
-            if (panelCategories.Controls.Count > 0 && (categories == null || categories.Length == 0))
+            // b.获取选择的功能 （精准匹配返回null）
+            List<string> categories = UIController.GetCategoriesFromPanel(panelCategories);
+            if (categories != null && categories.Count == 0)
             {
                 MessageBox.Show("请至少选择一项功能");
                 EnableAllButton(true);
@@ -142,6 +166,7 @@ namespace RevokeMsgPatcher
                 modifier.Patch();
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "补丁安装成功");
                 MessageBox.Show("补丁安装成功！");
+                
             }
             catch (BusinessException ex)
             {
@@ -157,8 +182,7 @@ namespace RevokeMsgPatcher
             }
             finally
             {
-                EnableAllButton(true);
-                btnRestore.Enabled = modifier.BackupExists();
+                InitEditorsAndUI(txtPath.Text);
             }
 
         }
@@ -167,11 +191,12 @@ namespace RevokeMsgPatcher
         {
             if (modifier.IsAllFilesExist(txtPath.Text))
             {
-                modifier.InitEditors(txtPath.Text);
-                btnRestore.Enabled = modifier.BackupExists();
+                InitEditorsAndUI(txtPath.Text);
             }
             else
             {
+                UIController.AddMsgToPanel(panelCategories, "请输入正确的应用路径");
+                lblVersion.Text = "";
                 btnPatch.Enabled = false;
                 btnRestore.Enabled = false;
             }
@@ -190,14 +215,8 @@ namespace RevokeMsgPatcher
                 else
                 {
                     txtPath.Text = dialog.SelectedPath;
-                    btnRestore.Enabled = false;
-                    // 显示是否能够备份还原
-                    if (!string.IsNullOrEmpty(txtPath.Text))
-                    {
-                        modifier.InitEditors(txtPath.Text);
-                        modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
-                        btnRestore.Enabled = modifier.BackupExists();
-                    }
+                    // 显示是否能够备份还原、版本和功能
+                    InitEditorsAndUI(txtPath.Text);
                 }
             }
         }
@@ -219,12 +238,13 @@ namespace RevokeMsgPatcher
                 MessageBox.Show(ex.Message);
             }
             EnableAllButton(true);
-            btnRestore.Enabled = modifier.BackupExists();
+            // 重新计算显示是否能够备份还原、版本和功能
+            InitEditorsAndUI(txtPath.Text);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher");
+            Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher");
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -313,16 +333,9 @@ namespace RevokeMsgPatcher
             }
             txtPath.Text = modifier.FindInstallPath();
             EnableAllButton(true);
-            lblVersion.Text = "";
-            btnRestore.Enabled = false;
-            panelCategories.Controls.Clear();
-            // 显示是否能够备份还原
-            if (!string.IsNullOrEmpty(txtPath.Text))
-            {
-                modifier.InitEditors(txtPath.Text);
-                modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
-                btnRestore.Enabled = modifier.BackupExists();
-            }
+
+            // 重新计算显示是否能够备份还原、版本和功能
+            InitEditorsAndUI(txtPath.Text);
             ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
         }
 

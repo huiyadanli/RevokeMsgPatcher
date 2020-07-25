@@ -339,7 +339,7 @@
             // 
             this.panelCategories.Location = new System.Drawing.Point(83, 85);
             this.panelCategories.Name = "panelCategories";
-            this.panelCategories.Size = new System.Drawing.Size(201, 18);
+            this.panelCategories.Size = new System.Drawing.Size(393, 18);
             this.panelCategories.TabIndex = 22;
             // 
             // FormMain

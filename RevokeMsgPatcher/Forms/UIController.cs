@@ -10,7 +10,7 @@ namespace RevokeMsgPatcher.Forms
 {
     public class UIController
     {
-        public static void AddCategoryCheckBoxToPanel(Panel panel, string[] categories = null)
+        public static void AddCategoryCheckBoxToPanel(Panel panel, string[] categories, string[] installed)
         {
             if (categories != null && categories.Length != 0)
             {
@@ -24,9 +24,9 @@ namespace RevokeMsgPatcher.Forms
                         Checked = true,
                         AutoSize = true
                     };
-                    // 只有一个选项时,必选
-                    if (categories.Length == 1)
+                    if (installed.Contains(categories[i]))
                     {
+                        chk.Text = chk.Text + "（已安装）";
                         chk.Enabled = false;
                     }
                     panel.Controls.Add(chk);
@@ -45,22 +45,30 @@ namespace RevokeMsgPatcher.Forms
             {
                 Name = "lblCategoriesMsg",
                 Text = msg,
-                TextAlign = ContentAlignment.MiddleLeft
+                TextAlign = ContentAlignment.MiddleLeft,
+                Size = new Size(panel.Width, panel.Height)
             };
             panel.Controls.Add(label);
         }
 
-        public static string[] GetCategoriesFromPanel(Panel panel)
+        public static List<string> GetCategoriesFromPanel(Panel panel)
         {
             List<string> categories = new List<string>();
-            foreach (CheckBox checkBox in panel.Controls)
+            foreach (Control ctrl in panel.Controls)
             {
-                if (checkBox.Checked)
+                if (ctrl is CheckBox checkBox)
                 {
-                    categories.Add(checkBox.Text);
+                    if (checkBox.Enabled && checkBox.Checked)
+                    {
+                        categories.Add(checkBox.Text);
+                    }
+                }
+                else if (ctrl is Label label)
+                {
+                    return null; // 如果是标签, 说明是精准匹配, 直接返回null
                 }
             }
-            return categories.ToArray();
+            return categories;
         }
     }
 }

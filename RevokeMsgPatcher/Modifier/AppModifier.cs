@@ -51,8 +51,8 @@ namespace RevokeMsgPatcher.Modifier
             string version = GetVersion();
             // 补丁信息中是否都有对应的版本
             int i = 0, j = 0;
-            // 特征码匹配的时候的可选功能项
-            SortedSet<string> categories = new SortedSet<string>();
+
+            // 精确版本匹配
             foreach (FileHexEditor editor in editors) // 多种文件
             {
                 // 精确版本匹配
@@ -69,7 +69,22 @@ namespace RevokeMsgPatcher.Modifier
                 {
                     i++;
                 }
+            }
 
+            if (i == editors.Count)
+            {
+                label.Text = version + "（已支持）";
+                label.ForeColor = Color.Green;
+                UIController.AddMsgToPanel(panel, "只有基于特征的补丁才能选择功能");
+                return;
+            }
+
+            // 模糊版本匹配（特征码）
+            // 特征码匹配的时候的可选功能项
+            SortedSet<string> categories = new SortedSet<string>();
+            SortedSet<string> installed = new SortedSet<string>();
+            foreach (FileHexEditor editor in editors) // 多种文件
+            {
                 // 匹配出对应版本是否有可以使用的特征
                 if (config.FileCommonModifyInfos != null)
                 {
@@ -87,6 +102,12 @@ namespace RevokeMsgPatcher.Modifier
                                     categories.Add(c);
                                 }
                             }
+                            // 获取已经安装过的功能类型
+                            SortedSet<string> replaced = ModifyFinder.FindReplacedFunction(editor.FilePath, commonModifyInfo.ReplacePatterns);
+                            foreach (string c in replaced)
+                            {
+                                installed.Add(c);
+                            }
                             inRange = true;
                             break;
                         }
@@ -99,17 +120,11 @@ namespace RevokeMsgPatcher.Modifier
             }
 
             // 全部都有对应匹配的版本
-            if (i == editors.Count)
-            {
-                label.Text = version + "（已支持）";
-                label.ForeColor = Color.Green;
-                UIController.AddMsgToPanel(panel, "只有基于特征的补丁才能选择功能");
-            }
-            else if (j == editors.Count)
+            if (j == editors.Count)
             {
                 label.Text = version + "（支持特征防撤回）";
                 label.ForeColor = Color.LimeGreen;
-                UIController.AddCategoryCheckBoxToPanel(panel, categories.ToArray());
+                UIController.AddCategoryCheckBoxToPanel(panel, categories.ToArray(), installed.ToArray());
             }
             else
             {
@@ -236,7 +251,7 @@ namespace RevokeMsgPatcher.Modifier
         /// b.验证文件完整性，寻找对应的补丁信息
         /// </summary>
         /// <param name="categories">操作类型（防撤回或者多开等）,为空则是所有操作</param>
-        public void ValidateAndFindModifyInfo(string[] categories)
+        public void ValidateAndFindModifyInfo(List<string> categories)
         {
             // 寻找对应文件版本与SHA1的修改信息
             foreach (FileHexEditor editor in editors) // 多种文件
@@ -291,7 +306,7 @@ namespace RevokeMsgPatcher.Modifier
                     {
                         List<ReplacePattern> replacePatterns = editor.FileCommonModifyInfo.ReplacePatterns;
                         // 根据需要操作的功能类型（防撤回或者多开等）筛选特征码
-                        if (categories.Length > 0)
+                        if (categories != null && categories.Count > 0)
                         {
                             replacePatterns = editor.FileCommonModifyInfo.ReplacePatterns.Where(info => categories.Contains(info.Category)).ToList();
                         }
