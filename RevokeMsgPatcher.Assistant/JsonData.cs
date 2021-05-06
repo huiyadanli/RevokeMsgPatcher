@@ -423,7 +423,7 @@ namespace RevokeMsgPatcher
                             {
                                 Name="IM.dll",
                                 StartVersion="9.1.6.00000",
-                                EndVersion="",
+                                EndVersion="9.4.7.00000",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
