@@ -24,6 +24,7 @@ namespace RevokeMsgPatcher
 
         private string thisVersion;
         private bool needUpdate = false;
+        private string getPatchJsonStatus = "GETTING";  // GETTING FAIL SUCCESS
 
         private GAHelper ga = new GAHelper(); // Google Analytics 记录
 
@@ -117,6 +118,18 @@ namespace RevokeMsgPatcher
             string version = modifier.GetVersion(); // 应用版本
             ga.RequestPageView($"{enName}/{version}/patch", "点击防撤回");
 
+            //if (getPatchJsonStatus != "SUCCESS")
+            //{
+            //    if (MessageBox.Show("当前程序未获取到最新补丁信息(或者正在获取中，如果成功请无视本提示)，可能会出现补丁安装失败的情况，你可以通过以下方法重试:" + Environment.NewLine
+            //        + "1. 重新启动本程序，重新获取最新补丁信息" + Environment.NewLine
+            //        + "2. 如果每次都是[获取最新补丁信息失败]，请检查自身网络是否有问题，或者等一段时间后重试" + Environment.NewLine
+            //        + "点击 \"确定\" 继续安装补丁。",
+            //        "提示", MessageBoxButtons.OKCancel) != DialogResult.OK)
+            //    {
+            //        return;
+            //    }
+            //}
+
             EnableAllButton(false);
             // a.重新初始化编辑器
             modifier.InitEditors(txtPath.Text);
@@ -165,7 +178,7 @@ namespace RevokeMsgPatcher
                 modifier.Patch();
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "补丁安装成功");
                 MessageBox.Show("补丁安装成功！");
-                
+
             }
             catch (BusinessException ex)
             {
@@ -254,6 +267,8 @@ namespace RevokeMsgPatcher
             if (string.IsNullOrEmpty(json))
             {
                 lblUpdatePachJson.Text = "[ 获取最新补丁信息失败 ]";
+                ga.RequestPageView($"/main/json/fail", $"获取最新补丁信息失败");
+                getPatchJsonStatus = "FAIL";
             }
             else
             {
@@ -279,12 +294,15 @@ namespace RevokeMsgPatcher
                         lblUpdatePachJson.Text = "[ 获取成功，点击查看更多信息 ]";
                         lblUpdatePachJson.ForeColor = Color.RoyalBlue;
                     }
+                    getPatchJsonStatus = "SUCCESS";
                     InitControls();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     lblUpdatePachJson.Text = "[ 更换新配置时异常 ]";
+                    ga.RequestPageView($"/main/json/exception", $"更换新配置时异常");
+                    getPatchJsonStatus = "FAIL";
                 }
             }
         }
