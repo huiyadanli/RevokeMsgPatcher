@@ -21,8 +21,8 @@
 
 下载地址：
 **[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/1.0/RevokeMsgPatcher.v1.0.zip)** |
-[☁备用下载-蓝奏云](https://wwa.lanzous.com/iaULseyzpbe) | 
-[☁备用下载-百度云](https://pan.baidu.com/s/1Yty-6d31by_E53SKZyQvTg) 提取码：coco
+[☁备用下载-蓝奏云](https://wwx.lanzoui.com/iUp9fpv64bc) | 
+[☁备用下载-百度云](https://pan.baidu.com/s/1adpzRtCMvk6cy2MM-QzaxQ) 提取码：ud9e
 
 相关文档：
 **[✔支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)** | 
