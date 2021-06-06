@@ -26,7 +26,7 @@ namespace RevokeMsgPatcher
         private bool needUpdate = false;
         private string getPatchJsonStatus = "GETTING";  // GETTING FAIL SUCCESS
 
-        private GAHelper ga = new GAHelper(); // Google Analytics 记录
+        private readonly GAHelper ga = GAHelper.Instance; // Google Analytics 记录
 
         public void InitModifier()
         {

@@ -39,6 +39,7 @@ namespace RevokeMsgPatcher.Utils
             catch (Exception ex)
             {
                 Console.WriteLine("第" + (i + 1) + "次请求异常:[" + ex.Message + "]\nURL:" + urls[i]);
+                GAHelper.Instance.RequestPageView($"/main/json/request_ex/{i + 1}/{ex.Message}", "第" + (i + 1) + "次请求异常:[" + ex.Message + "]");
                 i++;
                 if (i >= urls.Length)
                 {

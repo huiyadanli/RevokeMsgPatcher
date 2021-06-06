@@ -17,6 +17,24 @@ namespace RevokeMsgPatcher.Utils
     /// </summary>
     public class GAHelper
     {
+        private static GAHelper instance = null;
+        private static readonly object obj = new object();
+
+        public static GAHelper Instance
+        {
+            get
+            {
+                lock (obj)
+                {
+                    if (instance == null)
+                    {
+                        instance = new GAHelper();
+                    }
+                    return instance;
+                }
+            }
+        }
+
         // 根据实际情况修改
         private static readonly HttpClient client = HttpUtil.Client;
 
