@@ -9,9 +9,6 @@
 	<a href="https://github.com/huiyadanli/RevokeMsgPatcher/releases">
 		<img src="https://img.shields.io/github/downloads/huiyadanli/RevokeMsgPatcher/total.svg?style=flat-square"/>
 	</a>
-	<a href="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher">
-		<img src="http://hits.dwyl.io/huiyadanli/RevokeMsgPatcher.svg"/>
-	</a>
 	<a href="https://ci.appveyor.com/project/huiyadanli/RevokeMsgPatcher">
 		<img src="https://img.shields.io/appveyor/ci/huiyadanli/RevokeMsgPatcher.svg?style=flat-square"/>
 	</a>
