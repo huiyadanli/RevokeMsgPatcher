@@ -62,6 +62,5 @@ jobs:
       with:
         name: RevokeMsgPatcher-${{matrix.BUILD_CONFIGURATION}}
         path: |
-          .\RevokeMsgPatcher\bin
-          !.\RevokeMsgPatcher\bin\**\RevokeMsgPatcher.exe.config
-          !.\RevokeMsgPatcher\bin\**\RevokeMsgPatcher.pdb
+          .\RevokeMsgPatcher\bin\Release\RevokeMsgPatcher.exe
+          .\RevokeMsgPatcher.MultiInstance\bin\Release\RevokeMsgPatcher.MultiInstance.exe
