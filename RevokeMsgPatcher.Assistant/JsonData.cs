@@ -161,6 +161,25 @@ namespace RevokeMsgPatcher
                         {
                             new ModifyInfo {
                                 Name="WeChatWin.dll",
+                                Version="3.3.5.25",
+                                SHA1Before="3e94753ccbc2799d98f3c741377e99bdae33b4cf",
+                                SHA1After="ab98f83fc16674ac4911380882c79c3ca4c2fd71",
+                                Changes = new List<Change>
+                                {
+                                    new Change
+                                    {
+                                        Position =0x003417D9,
+                                        Content =new byte[] { 0xEB }
+                                    },
+                                    new Change
+                                    {
+                                        Position =0x00B98A67,
+                                        Content =new byte[] { 0xEB }
+                                    }
+                                }
+                            },
+                            new ModifyInfo {
+                                Name="WeChatWin.dll",
                                 Version="3.3.5.15",
                                 SHA1Before="7d06e076c525aec6783e919dde4ee11ba9fdb198",
                                 SHA1After="f22ab996a1779c2b41132d42c4fdf98c003284e0",
