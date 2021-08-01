@@ -16,7 +16,7 @@ namespace RevokeMsgPatcher
             return new Bag
             {
                 Apps = AppConfig(),
-                LatestVersion = "1.0",
+                LatestVersion = "1.1",
                 Notice = ""
             };
         }
@@ -69,8 +69,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.2.0.00",
+                                StartVersion="3.3.5.15",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("00 85 C0 74 32 B9 3F 3F 95 11 8A"),
+                                        Replace = ByteUtil.HexStringToByteArray("00 85 C0 EB 32 B9 3F 3F 95 11 8A"),
+                                        Category = "防撤回"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("E8 6B 00 00 00 84 C0 74 56 56 6A 00"),
+                                        Replace = ByteUtil.HexStringToByteArray("E8 6B 00 00 00 84 C0 EB 56 56 6A 00"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.2.0.00",
+                                EndVersion="3.3.5.00",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
