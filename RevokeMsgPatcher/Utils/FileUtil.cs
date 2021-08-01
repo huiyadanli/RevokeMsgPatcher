@@ -70,7 +70,18 @@ namespace RevokeMsgPatcher.Utils
                 foreach (Change change in changes)
                 {
                     stream.Seek(change.Position, SeekOrigin.Begin);
-                    stream.Write(change.Content, 0, change.Content.Length);
+                    foreach(byte b in change.Content)
+                    {
+                        // 跳过通配符
+                        if(b == 0x3F)
+                        {
+                            stream.ReadByte();
+                        }
+                        else
+                        {
+                            stream.WriteByte(b);
+                        }
+                    }
                 }
             }
         }
