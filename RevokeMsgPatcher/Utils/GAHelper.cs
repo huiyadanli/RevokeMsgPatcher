@@ -24,14 +24,14 @@ namespace RevokeMsgPatcher.Utils
         {
             get
             {
-                lock (obj)
-                {
+                //lock (obj)
+                //{
                     if (instance == null)
                     {
                         instance = new GAHelper();
                     }
                     return instance;
-                }
+                //}
             }
         }
 
