@@ -1,5 +1,6 @@
 ﻿using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Utils;
+using System.IO;
 
 namespace RevokeMsgPatcher.Modifier
 {
@@ -18,11 +19,13 @@ namespace RevokeMsgPatcher.Modifier
         public override string FindInstallPath()
         {
             string installPath = PathUtil.FindInstallPathFromRegistry("Wechat");
-            if (!IsAllFilesExist(installPath))
+            string realPath = GetRealInstallPath(installPath);
+            if (string.IsNullOrEmpty(realPath))
             {
                 foreach (string defaultPath in PathUtil.GetDefaultInstallPaths(@"Tencent\Wechat"))
                 {
-                    if (IsAllFilesExist(defaultPath))
+                    realPath = GetRealInstallPath(defaultPath);
+                    if (!string.IsNullOrEmpty(realPath))
                     {
                         return defaultPath;
                     }
@@ -30,10 +33,34 @@ namespace RevokeMsgPatcher.Modifier
             }
             else
             {
-                return installPath;
+                return realPath;
             }
             return null;
         }
+
+        /// <summary>
+        /// 微信 3.5.0.4 改变了目录结构
+        /// </summary>
+        /// <param name="basePath"></param>
+        /// <returns></returns>
+        private string GetRealInstallPath(string basePath)
+        {
+            if (IsAllFilesExist(basePath))
+            {
+                return basePath;
+            }
+            DirectoryInfo[] directories = new DirectoryInfo(basePath).GetDirectories();
+            PathUtil.SortByLastWriteTimeDesc(ref directories); // 按修改时间倒序
+            foreach (DirectoryInfo folder in directories)
+            {
+                if (IsAllFilesExist(folder.FullName))
+                {
+                    return folder.FullName;
+                }
+            }
+            return null;
+        }
+
 
         /// <summary>
         /// 获取整个APP的当前版本

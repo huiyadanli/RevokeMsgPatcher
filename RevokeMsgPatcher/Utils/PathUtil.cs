@@ -77,5 +77,15 @@ namespace RevokeMsgPatcher.Utils
             }
             return list;
         }
+
+        /// <summary>
+        /// 按文件夹修改时间倒序
+        /// </summary>
+        /// <param name="dirs"></param>
+        public static void SortByLastWriteTimeDesc(ref DirectoryInfo[] dirs)
+        {
+            Array.Sort(dirs, delegate (DirectoryInfo x, DirectoryInfo y) { return y.LastWriteTime.CompareTo(x.LastWriteTime); });
+        }
+
     }
 }
