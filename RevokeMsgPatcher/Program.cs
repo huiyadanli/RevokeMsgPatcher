@@ -61,7 +61,7 @@ namespace RevokeMsgPatcher
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message + "\n" + ex.StackTrace.Trim(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 #endif
         }
@@ -69,12 +69,12 @@ namespace RevokeMsgPatcher
 
         static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(e.Exception.Message + "\n" + e.Exception.StackTrace.Trim(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show((e.ExceptionObject as Exception).Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show((e.ExceptionObject as Exception).Message + "\n" + (e.ExceptionObject as Exception).StackTrace.Trim(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

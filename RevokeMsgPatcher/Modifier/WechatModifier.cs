@@ -1,5 +1,7 @@
 ﻿using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Utils;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace RevokeMsgPatcher.Modifier
@@ -18,22 +20,30 @@ namespace RevokeMsgPatcher.Modifier
         /// <returns></returns>
         public override string FindInstallPath()
         {
-            string installPath = PathUtil.FindInstallPathFromRegistry("Wechat");
-            string realPath = GetRealInstallPath(installPath);
-            if (string.IsNullOrEmpty(realPath))
+            try
             {
-                foreach (string defaultPath in PathUtil.GetDefaultInstallPaths(@"Tencent\Wechat"))
+                string installPath = PathUtil.FindInstallPathFromRegistry("Wechat");
+                string realPath = GetRealInstallPath(installPath);
+                if (string.IsNullOrEmpty(realPath))
                 {
-                    realPath = GetRealInstallPath(defaultPath);
-                    if (!string.IsNullOrEmpty(realPath))
+                    List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\QQ");
+                    foreach (string defaultPath in defaultPathList)
                     {
-                        return defaultPath;
+                        realPath = GetRealInstallPath(defaultPath);
+                        if (!string.IsNullOrEmpty(realPath))
+                        {
+                            return defaultPath;
+                        }
                     }
                 }
+                else
+                {
+                    return realPath;
+                }
             }
-            else
+            catch (Exception e)
             {
-                return realPath;
+                Console.WriteLine(e.Message);
             }
             return null;
         }
@@ -45,6 +55,10 @@ namespace RevokeMsgPatcher.Modifier
         /// <returns></returns>
         private string GetRealInstallPath(string basePath)
         {
+            if (basePath == null)
+            {
+                return null;
+            }
             if (IsAllFilesExist(basePath))
             {
                 return basePath;

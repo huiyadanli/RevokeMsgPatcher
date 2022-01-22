@@ -1,5 +1,7 @@
 ﻿using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Utils;
+using System;
+using System.Collections.Generic;
 
 namespace RevokeMsgPatcher.Modifier
 {
@@ -16,20 +18,28 @@ namespace RevokeMsgPatcher.Modifier
         /// <returns></returns>
         public override string FindInstallPath()
         {
-            string installPath = PathUtil.FindInstallPathFromRegistry("{052CFB79-9D62-42E3-8A15-DE66C2C97C3E}");
-            if (!IsAllFilesExist(installPath))
+            try
             {
-                foreach (string defaultPath in PathUtil.GetDefaultInstallPaths(@"Tencent\QQ"))
+                string installPath = PathUtil.FindInstallPathFromRegistry("{052CFB79-9D62-42E3-8A15-DE66C2C97C3E}");
+                if (!IsAllFilesExist(installPath))
                 {
-                    if (IsAllFilesExist(defaultPath))
+                    List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\QQ");
+                    foreach (string defaultPath in defaultPathList)
                     {
-                        return defaultPath;
+                        if (IsAllFilesExist(defaultPath))
+                        {
+                            return defaultPath;
+                        }
                     }
                 }
+                else
+                {
+                    return installPath;
+                }
             }
-            else
+            catch (Exception e)
             {
-                return installPath;
+                Console.WriteLine(e.Message);
             }
             return null;
         }
