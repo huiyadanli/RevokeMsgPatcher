@@ -69,7 +69,7 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.5.0.29",
+                                StartVersion="3.5.0.28",
                                 EndVersion="",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
