@@ -69,8 +69,30 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.5.0.28",
+                                StartVersion="3.6.0.5",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    // 防撤回特征又和 3.4 时期一样了
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("EF 00 85 C0 74 32 B9 3F 3F 3F 11 8A"),
+                                        Replace = ByteUtil.HexStringToByteArray("EF 00 85 C0 EB 32 B9 3F 3F 3F 11 8A"),
+                                        Category = "防撤回"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("83 C4 04 80 BD 2F FC FF FF 00 74 58 8B 3D"),
+                                        Replace = ByteUtil.HexStringToByteArray("83 C4 04 80 BD 2F FC FF FF 00 EB 58 8B 3D"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.5.0.28",
+                                EndVersion="3.6.0.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
