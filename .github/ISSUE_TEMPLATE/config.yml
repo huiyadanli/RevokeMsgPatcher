@@ -1,5 +1,8 @@
 blank_issues_enabled: true
 contact_links:
+  - name: 直接发起 Issue
+    url: https://github.com/huiyadanli/RevokeMsgPatcher/issues/new
+    about: 一些功能反馈，或者软件更新后遇到的问题可以直接 Issue 进行提问（请先确认当前使用的是[最新版本的软件](https://github.com/huiyadanli/RevokeMsgPatcher/releases)）
   - name: 常见问题
     url: https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98
     about: 在发起 Issue 前，请先查阅常见问题的解决方案，如果仍有疑问再发起 Issue
