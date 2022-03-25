@@ -299,7 +299,7 @@ namespace RevokeMsgPatcher
                         getPatchJsonStatus = "SUCCESS";
                         InitControls();
                     }
-                    else if (newBag.PatchVersion < bag.PatchVersion)
+                    else if (newBag.PatchVersion <= bag.PatchVersion)
                     {
                         needUpdate = false;
                         lblUpdatePachJson.Text = "[ 软件内置补丁信息已经是最新 ]";
