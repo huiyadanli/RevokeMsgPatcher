@@ -11,6 +11,7 @@ body:
         请按下方的要求填写完整的问题表单，方便作者进行更新。
 
   - type: input
+    id: version
     attributes:
       label: 微信/QQ 版本
       description: | 
@@ -20,12 +21,14 @@ body:
       required: true
    
   - type: input
+    id: url
     attributes:
       label: 对应版本的下载地址
       description: 如果是从某个链接下载的对应版本，请把链接附上。测试版本请务必附上下载链接！
       placeholder: 例：https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe
 
   - type: textarea
+    id: tips
     attributes:
       label: 软件提示了什么？
       description: 你的操作流程简述，和软件安装补丁失败后的提示，建议附上截图。
