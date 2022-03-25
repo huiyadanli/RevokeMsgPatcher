@@ -1,0 +1,33 @@
+name: 版本支持
+description: 发现有未支持的版本可以通过创建这个Issue反馈
+title: "[未支持版本]: "
+labels: ["未支持版本"]
+assignees:
+  - huiyadanli
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请按下方的要求填写完整的问题表单，方便作者进行更新。
+
+  - type: input
+    attributes:
+      label: 微信/QQ 版本
+      description: | 
+        请填写完整版本号，并写清楚是正式版还是测试版。
+      placeholder: 例：微信正式版 3.6.0.18
+    validations:
+      required: true
+   
+  - type: input
+    attributes:
+      label: 对应版本的下载地址
+      description: 如果是从某个链接下载的对应版本，请把链接附上。测试版本请务必附上下载链接！
+      placeholder: 例：https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe
+
+  - type: textarea
+    attributes:
+      label: 软件提示了什么？
+      description: 你的操作流程简述，和软件安装补丁失败后的提示，建议附上截图。
+    validations:
+      required: true

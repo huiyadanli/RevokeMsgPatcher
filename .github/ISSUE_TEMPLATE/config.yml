@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 常见问题
+    url: https://github.com/huiyadanli/RevokeMsgPatcher/wiki#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98
+    about: 在发起 Issue 前，请先查阅常见问题的解决方案，如果仍有疑问再发起 Issue
+  - name: Mac 版本微信防撤回
+    url: https://github.com/Sunnyyoung/WeChatTweak-macOS
+    about: 需要 Mac 版本微信防撤回的请直接访问这个项目：https://github.com/Sunnyyoung/WeChatTweak-macOS
