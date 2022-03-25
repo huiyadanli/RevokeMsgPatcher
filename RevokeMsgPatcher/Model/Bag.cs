@@ -13,5 +13,7 @@ namespace RevokeMsgPatcher.Model
         public string LatestVersion { get; set; }
 
         public string Notice { get; set; }
+
+        public int PatchVersion { get; set; }
     }
 }

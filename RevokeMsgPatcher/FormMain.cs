@@ -28,11 +28,13 @@ namespace RevokeMsgPatcher
 
         private readonly GAHelper ga = GAHelper.Instance; // Google Analytics 记录
 
+        Bag bag = null;
+
         public void InitModifier()
         {
             // 从配置文件中读取配置
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            Bag bag = serializer.Deserialize<Bag>(Properties.Resources.PatchJson);
+            bag = serializer.Deserialize<Bag>(Properties.Resources.PatchJson);
 
             // 初始化每个应用对应的修改者
             wechatModifier = new WechatModifier(bag.Apps["Wechat"]);
@@ -275,27 +277,35 @@ namespace RevokeMsgPatcher
                 try
                 {
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
-                    Bag bag = serializer.Deserialize<Bag>(json);
+                    Bag newBag = serializer.Deserialize<Bag>(json);
 
-                    wechatModifier.Config = bag.Apps["Wechat"];
-                    qqModifier.Config = bag.Apps["QQ"];
-                    timModifier.Config = bag.Apps["TIM"];
-                    qqLiteModifier.Config = bag.Apps["QQLite"];
-
-                    if (Convert.ToDecimal(bag.LatestVersion) > Convert.ToDecimal(thisVersion))
+                    if (Convert.ToDecimal(newBag.LatestVersion) > Convert.ToDecimal(thisVersion))
                     {
                         needUpdate = true;
-                        lblUpdatePachJson.Text = $"[ 存在最新版本 {bag.LatestVersion} ]";
+                        lblUpdatePachJson.Text = $"[ 存在最新版本 {newBag.LatestVersion} ]";
                         lblUpdatePachJson.ForeColor = Color.Red;
                     }
-                    else
+                    else if(bag.PatchVersion == 0 || newBag.PatchVersion > bag.PatchVersion)
                     {
                         needUpdate = false;
                         lblUpdatePachJson.Text = "[ 获取成功，点击查看更多信息 ]";
                         lblUpdatePachJson.ForeColor = Color.RoyalBlue;
+
+                        wechatModifier.Config = newBag.Apps["Wechat"];
+                        qqModifier.Config = newBag.Apps["QQ"];
+                        timModifier.Config = newBag.Apps["TIM"];
+                        qqLiteModifier.Config = newBag.Apps["QQLite"];
+
+                        getPatchJsonStatus = "SUCCESS";
+                        InitControls();
                     }
-                    getPatchJsonStatus = "SUCCESS";
-                    InitControls();
+                    else if (newBag.PatchVersion < bag.PatchVersion)
+                    {
+                        needUpdate = false;
+                        lblUpdatePachJson.Text = "[ 软件内置补丁信息已经是最新 ]";
+                        lblUpdatePachJson.ForeColor = Color.RoyalBlue;
+                    }
+
                 }
                 catch (Exception ex)
                 {

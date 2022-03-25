@@ -23,33 +23,37 @@ namespace RevokeMsgPatcher.Utils
         /// </summary>
         private static readonly string[] urls = new string[]
         {
+            "https://gitee.com/huiyadanli/RevokeMsgPatcher/raw/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json",
             "https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json",
             "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json"
         };
 
-        private static int i = 0;
-
         public static async Task<string> GetPatchJsonAsync()
         {
-            try
+            int i = 0;
+            while (i < urls.Length)
             {
-                return await Client.GetStringAsync(urls[i]);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("第" + (i + 1) + "次请求异常:[" + ex.Message + "]\nURL:" + urls[i]);
-                GAHelper.Instance.RequestPageView($"/main/json/request_ex/{i + 1}/{ex.Message}", "第" + (i + 1) + "次请求异常:[" + ex.Message + "]");
+                try
+                {
+                    string json = await Client.GetStringAsync(urls[i]);
+                    if (!string.IsNullOrEmpty(json) && json.Contains("LatestVersion"))
+                    {
+                        return json;
+                    }
+                    else
+                    {
+                        Console.WriteLine("第" + (i + 1) + "次请求获得的数据并非期望数据\nURL:" + urls[i]);
+                        GAHelper.Instance.RequestPageView($"/main/json/request_ex/{i + 1}/not_my_json", "第" + (i + 1) + "次请求获得的数据并非期望数据");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("第" + (i + 1) + "次请求异常:[" + ex.Message + "]\nURL:" + urls[i]);
+                    GAHelper.Instance.RequestPageView($"/main/json/request_ex/{i + 1}/{ex.Message}", "第" + (i + 1) + "次请求异常:[" + ex.Message + "]");
+                }
                 i++;
-                if (i >= urls.Length)
-                {
-                    i = 0;
-                    return null;
-                }
-                else
-                {
-                    return await GetPatchJsonAsync();
-                }
             }
+            return null;
         }
     }
 }
