@@ -44,7 +44,7 @@
 1. 首先，你的系统需要满足以下条件：
 
     * Windows 7 或更高版本，**不支持XP**。
-    * [.NET Framework 4.5](https://www.microsoft.com/zh-cn/download/details.aspx?id=30653) 或更高版本。**低于此版本在打开程序时可能无反应，或者直接报错**。
+    * [.NET Framework 4.5.2](https://www.microsoft.com/en-us/download/details.aspx?id=42642) 或更高版本。**低于此版本在打开程序时可能无反应，或者直接报错**。
 
 2. 使用本程序前，先关闭微信/QQ/TIM。
 
