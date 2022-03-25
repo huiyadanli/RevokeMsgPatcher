@@ -20,10 +20,11 @@ namespace RevokeMsgPatcher.Utils
         /// 已经弃用的路径
         /// https://swordmaker-hauls-51508.netlify.com/i/revokemsg/05.json
         /// https://huiyadanli.github.io/i/revokemsg/05.json
+        /// 会自动跳转，没用了
+        /// https://gitee.com/huiyadanli/RevokeMsgPatcher/raw/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json
         /// </summary>
         private static readonly string[] urls = new string[]
         {
-            "https://gitee.com/huiyadanli/RevokeMsgPatcher/raw/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json",
             "https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json",
             "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json"
         };

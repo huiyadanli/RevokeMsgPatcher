@@ -90,6 +90,7 @@
     <None Include="Data\1.0\patch.json" />
     <None Include="Data\1.1\patch.json" />
     <None Include="Data\1.2\patch.json" />
+    <None Include="Data\1.3\patch.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
