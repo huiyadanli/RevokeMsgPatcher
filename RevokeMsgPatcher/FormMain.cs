@@ -76,7 +76,7 @@ namespace RevokeMsgPatcher
             // 自动获取应用安装路径
             txtPath.Text = modifier.FindInstallPath();
             // 显示是否能够备份还原、版本和功能
-            InitEditorsAndUI(txtPath.Text);
+            //InitEditorsAndUI(txtPath.Text);
         }
 
         private void InitEditorsAndUI(string path)
@@ -362,7 +362,7 @@ namespace RevokeMsgPatcher
             EnableAllButton(true);
 
             // 重新计算显示是否能够备份还原、版本和功能
-            InitEditorsAndUI(txtPath.Text);
+            //InitEditorsAndUI(txtPath.Text);
             ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
         }
 
