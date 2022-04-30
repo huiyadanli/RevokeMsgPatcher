@@ -1,6 +1,7 @@
 ﻿using RevokeMsgPatcher.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -11,8 +12,11 @@ namespace RevokeMsgPatcher.Matcher
         // TODO 该逻辑需要优化！
         public static List<Change> FindChanges(string path, List<ReplacePattern> replacePatterns)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             // 读取整个文件(dll)
             byte[] fileByteArray = File.ReadAllBytes(path);
+            Console.WriteLine("读取文件耗时：{0}ms.", sw.Elapsed.TotalMilliseconds);
 
             List<Change> changes = new List<Change>(); // 匹配且需要替换的地方
 
@@ -22,6 +26,7 @@ namespace RevokeMsgPatcher.Matcher
             {
                 // 所有的匹配点位
                 int[] matchIndexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Search);
+                Console.WriteLine("匹配{0}耗时：{1}ms.", pattern.Category, sw.Elapsed.TotalMilliseconds);
                 if (matchIndexs.Length >= 1)
                 {
                     for (int i = 0; i < matchIndexs.Length; i++)
@@ -85,19 +90,23 @@ namespace RevokeMsgPatcher.Matcher
 
         public static SortedSet<string> FindReplacedFunction(string path, List<ReplacePattern> replacePatterns)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             byte[] fileByteArray = File.ReadAllBytes(path);
+            Console.WriteLine("读取文件耗时：{0}ms.", sw.Elapsed.TotalMilliseconds);
             Tuple<bool, SortedSet<string>> res = IsAllReplaced(fileByteArray, replacePatterns);
+            Console.WriteLine("匹配耗时：{0}ms.", sw.Elapsed.TotalMilliseconds);
             return res.Item2;
         }
 
-        private static Tuple<bool, SortedSet<string>> IsAllReplaced(byte[] fileByteArray, List<ReplacePattern> replacePatterns)
+        private static Tuple<bool, SortedSet<string>> IsAllReplaced(byte[] partByteArray, List<ReplacePattern> replacePatterns)
         {
             int matchNum = 0;
             SortedSet<string> alreadyReplaced = new SortedSet<string>(); // 已经被替换特征的功能
             foreach (ReplacePattern pattern in replacePatterns)
             {
-                int[] searchMatchIndexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Search);
-                int[] replaceMatchIndexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Replace);
+                int[] searchMatchIndexs = FuzzyMatcher.MatchAll(partByteArray, pattern.Search);
+                int[] replaceMatchIndexs = FuzzyMatcher.MatchAll(partByteArray, pattern.Replace);
                 // 查找串没有，但是替换串存在，也就是说明这个功能已经完全完成替换
                 if (searchMatchIndexs.Length == 0 && replaceMatchIndexs.Length > 0)
                 {
