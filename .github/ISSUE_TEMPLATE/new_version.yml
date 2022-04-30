@@ -1,45 +1,44 @@
-name: °æ±¾Ö§³Ö
-description: ·¢ÏÖÓĞÎ´Ö§³ÖµÄ°æ±¾£¬ÇÒ Issue ÁĞ±íÖĞÔİÎŞÈËÌá³öÏàÍ¬°æ±¾Î´Ö§³ÖµÄÎÊÌâ£¬¿ÉÒÔÍ¨¹ı´´½¨Õâ¸ö Issue ½øĞĞ·´À¡
-title: "[Î´Ö§³Ö°æ±¾]: "
-labels: ["Î´Ö§³Ö°æ±¾"]
+name: ç‰ˆæœ¬æ”¯æŒ
+description: å‘ç°æœ‰æœªæ”¯æŒçš„ç‰ˆæœ¬ï¼Œä¸” Issue åˆ—è¡¨ä¸­æš‚æ— äººæå‡ºç›¸åŒç‰ˆæœ¬æœªæ”¯æŒçš„é—®é¢˜ï¼Œå¯ä»¥é€šè¿‡åˆ›å»ºè¿™ä¸ª Issue è¿›è¡Œåé¦ˆ
+title: "[æœªæ”¯æŒç‰ˆæœ¬]: "
 assignees:
   - huiyadanli
 body:
   - type: markdown
     attributes:
       value: |
-        Çë°´ÏÂ·½µÄÒªÇóÌîĞ´ÍêÕûµÄÎÊÌâ±íµ¥£¬·½±ã×÷Õß½øĞĞ¸üĞÂ¡£
+        è¯·æŒ‰ä¸‹æ–¹çš„è¦æ±‚å¡«å†™å®Œæ•´çš„é—®é¢˜è¡¨å•ï¼Œæ–¹ä¾¿ä½œè€…è¿›è¡Œæ›´æ–°ã€‚
 
   - type: checkboxes
     id: lastest
     attributes:
-      label: ÇëÏÈÈ·ÈÏµ±Ç°Ê¹ÓÃµÄ Î¢ĞÅ/QQ/TIM·À³·»Ø²¹¶¡ ÊÇ×îĞÂ°æ±¾£¡
-      description: Ìá½»´Ë Issue Ç°ÇëÏÈÈ·ÈÏÄãÊ¹ÓÃµÄÊÇ[×îĞÂ Release °æ±¾µÄÈí¼ş](https://github.com/huiyadanli/RevokeMsgPatcher/releases)
+      label: è¯·å…ˆç¡®è®¤å½“å‰ä½¿ç”¨çš„ å¾®ä¿¡/QQ/TIMé˜²æ’¤å›è¡¥ä¸ æ˜¯æœ€æ–°ç‰ˆæœ¬ï¼
+      description: æäº¤æ­¤ Issue å‰è¯·å…ˆç¡®è®¤ä½ ä½¿ç”¨çš„æ˜¯[æœ€æ–° Release ç‰ˆæœ¬çš„è½¯ä»¶](https://github.com/huiyadanli/RevokeMsgPatcher/releases)
       options:
-        - label: ÎÒÈ·ÈÏµ±Ç°Ê¹ÓÃµÄÊÇ×îĞÂ°æ
+        - label: æˆ‘ç¡®è®¤å½“å‰ä½¿ç”¨çš„æ˜¯æœ€æ–°ç‰ˆ
           required: true
 
   - type: input
     id: version
     attributes:
-      label: Î¢ĞÅ/QQ °æ±¾
+      label: å¾®ä¿¡/QQ ç‰ˆæœ¬
       description: | 
-        ÇëÌîĞ´ÍêÕû°æ±¾ºÅ£¬²¢Ğ´Çå³şÊÇÕıÊ½°æ»¹ÊÇ²âÊÔ°æ¡£
-      placeholder: Àı£ºÎ¢ĞÅÕıÊ½°æ 3.6.0.18
+        è¯·å¡«å†™å®Œæ•´ç‰ˆæœ¬å·ï¼Œå¹¶å†™æ¸…æ¥šæ˜¯æ­£å¼ç‰ˆè¿˜æ˜¯æµ‹è¯•ç‰ˆã€‚
+      placeholder: ä¾‹ï¼šå¾®ä¿¡æ­£å¼ç‰ˆ 3.6.0.18
     validations:
       required: true
    
   - type: input
     id: url
     attributes:
-      label: ¶ÔÓ¦°æ±¾µÄÏÂÔØµØÖ·
-      description: Èç¹ûÊÇ´ÓÄ³¸öÁ´½ÓÏÂÔØµÄ¶ÔÓ¦°æ±¾£¬Çë°ÑÁ´½Ó¸½ÉÏ¡£²âÊÔ°æ±¾ÇëÎñ±Ø¸½ÉÏÏÂÔØÁ´½Ó£¡
-      placeholder: Àı£ºhttps://dldir1.qq.com/weixin/Windows/WeChatSetup.exe
+      label: å¯¹åº”ç‰ˆæœ¬çš„ä¸‹è½½åœ°å€
+      description: å¦‚æœæ˜¯ä»æŸä¸ªé“¾æ¥ä¸‹è½½çš„å¯¹åº”ç‰ˆæœ¬ï¼Œè¯·æŠŠé“¾æ¥é™„ä¸Šã€‚æµ‹è¯•ç‰ˆæœ¬è¯·åŠ¡å¿…é™„ä¸Šä¸‹è½½é“¾æ¥ï¼
+      placeholder: ä¾‹ï¼šhttps://dldir1.qq.com/weixin/Windows/WeChatSetup.exe
 
   - type: textarea
     id: tips
     attributes:
-      label: Èí¼şÌáÊ¾ÁËÊ²Ã´£¿
-      description: ÄãµÄ²Ù×÷Á÷³Ì¼òÊö£¬ºÍÈí¼ş°²×°²¹¶¡Ê§°ÜºóµÄÌáÊ¾£¬½¨Òé¸½ÉÏ½ØÍ¼¡£
+      label: è½¯ä»¶æç¤ºäº†ä»€ä¹ˆï¼Ÿ
+      description: ä½ çš„æ“ä½œæµç¨‹ç®€è¿°ï¼Œå’Œè½¯ä»¶å®‰è£…è¡¥ä¸å¤±è´¥åçš„æç¤ºï¼Œå»ºè®®é™„ä¸Šæˆªå›¾ã€‚
     validations:
       required: true
