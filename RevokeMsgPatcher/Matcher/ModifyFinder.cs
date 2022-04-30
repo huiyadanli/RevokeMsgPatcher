@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace RevokeMsgPatcher.Matcher
 {
@@ -21,19 +22,22 @@ namespace RevokeMsgPatcher.Matcher
             {
                 // 所有的匹配点位
                 int[] matchIndexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Search);
-                if (matchIndexs.Length == 1)
+                if (matchIndexs.Length >= 1)
                 {
-                    matchNum++;
-                    // 与要替换的串不一样才需要替换（当前的特征肯定不一样）
-                    if (!FuzzyMatcher.IsEqual(fileByteArray, matchIndexs[0], pattern.Replace))
+                    for (int i = 0; i < matchIndexs.Length; i++)
                     {
-                        changes.Add(new Change(matchIndexs[0], pattern.Replace));
+                        matchNum++;
+                        // 与要替换的串不一样才需要替换（当前的特征肯定不一样）
+                        if (!FuzzyMatcher.IsEqual(fileByteArray, matchIndexs[i], pattern.Replace))
+                        {
+                            changes.Add(new Change(matchIndexs[i], pattern.Replace));
+                        }
                     }
                 }
             }
 
-            // 匹配数和期望的匹配数不一致时报错（当前一个特征只会出现一次）
-            if (matchNum != replacePatterns.Count)
+            // 匹配数和期望的匹配数不一致时报错（当前一个特征会出现多次）
+            if (matchNum < replacePatterns.Count)
             {
                 Tuple<bool, SortedSet<string>> res = IsAllReplaced(fileByteArray, replacePatterns);
                 if (res.Item1)
@@ -92,15 +96,15 @@ namespace RevokeMsgPatcher.Matcher
             SortedSet<string> alreadyReplaced = new SortedSet<string>(); // 已经被替换特征的功能
             foreach (ReplacePattern pattern in replacePatterns)
             {
-                // 所有的匹配点位
-                int[] matchIndexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Replace);
-                if (matchIndexs.Length == 1)
+                int[] searchMatchIndexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Search);
+                int[] replaceMatchIndexs = FuzzyMatcher.MatchAll(fileByteArray, pattern.Replace);
+                // 查找串没有，但是替换串存在，也就是说明这个功能已经完全完成替换
+                if (searchMatchIndexs.Length == 0 && replaceMatchIndexs.Length > 0)
                 {
-                    matchNum++;
                     alreadyReplaced.Add(pattern.Category);
                 }
             }
-            return new Tuple<bool, SortedSet<string>>(matchNum == replacePatterns.Count, alreadyReplaced);
+            return new Tuple<bool, SortedSet<string>>(matchNum >= replacePatterns.Count, alreadyReplaced);
         }
     }
 }

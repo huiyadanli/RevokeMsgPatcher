@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "1.3",
-                PatchVersion = 20220430,
+                PatchVersion = 202204301,
                 Notice = ""
             };
         }
@@ -76,8 +76,8 @@ namespace RevokeMsgPatcher
                                 {
                                     new ReplacePattern
                                     {
-                                        Search = ByteUtil.HexStringToByteArray("F0 00 85 C0 74 32 B9 3F 3F 3F 11 8A"),
-                                        Replace = ByteUtil.HexStringToByteArray("F0 00 85 C0 EB 32 B9 3F 3F 3F 11 8A"),
+                                        Search = ByteUtil.HexStringToByteArray("00 85 C0 74 32 B9 3F 3F 3F 11 8A"),
+                                        Replace = ByteUtil.HexStringToByteArray("00 85 C0 EB 32 B9 3F 3F 3F 11 8A"),
                                         Category = "防撤回"
                                     },
                                     new ReplacePattern
