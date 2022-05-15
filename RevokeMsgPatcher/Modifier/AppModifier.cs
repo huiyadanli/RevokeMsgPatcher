@@ -243,12 +243,13 @@ namespace RevokeMsgPatcher.Modifier
             {
                 FileHexEditor editor = new FileHexEditor(installPath, info);
                 // editor.FileVersion 在 StartVersion 和 EndVersion 之间
-                if (IsInVersionRange(editor.FileVersion, info.StartVersion, info.EndVersion))
+                if ((string.IsNullOrEmpty(info.StartVersion) && string.IsNullOrEmpty(info.EndVersion))
+                    || IsInVersionRange(editor.FileVersion, info.StartVersion, info.EndVersion))
                 {
                     editors.Add(editor);
                 }
             }
-            if(editors.Count == 0)
+            if (editors.Count == 0)
             {
                 throw new BusinessException("no_support_editor", "当前版本没有对应的文件修改信息，请确认补丁信息是否正常！");
             }
@@ -346,7 +347,7 @@ namespace RevokeMsgPatcher.Modifier
         public bool Patch()
         {
             // 首先验证文件修改器是否没问题
-            if(editors.Count == 0)
+            if (editors.Count == 0)
             {
                 throw new Exception("补丁安装失败，原因：无对应的文件修改器");
             }
