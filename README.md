@@ -20,9 +20,9 @@
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
 下载地址：
-**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/1.3/RevokeMsgPatcher.v1.3.zip)** |
-[☁备用下载-蓝奏云](https://wwn.lanzouf.com/iv79w0227o6h) | 
-[☁备用下载-百度云](https://pan.baidu.com/s/1ADnQv0Y2oG6O6LiDz2tK-w?pwd=63fn) 
+**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/1.4/RevokeMsgPatcher.v1.4.zip)** |
+[☁备用下载-蓝奏云](https://wwn.lanzouf.com/ivwUU04v0swb) | 
+[☁备用下载-百度云](https://pan.baidu.com/s/1MCZu1ivIr2hDa4ZGecYeqQ?pwd=d4ey) 
 
 相关文档：
 **[✔支持哪些版本](https://github.com/huiyadanli/RevokeMsgPatcher/wiki/%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81)** | 
