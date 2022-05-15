@@ -90,7 +90,12 @@ namespace RevokeMsgPatcher
                 panelCategories.Controls.Clear();
 
                 // 重新计算并修改界面元素
-                modifier.InitEditors(path);
+                bool hasEditors = modifier.InitEditors(path);
+                if (!hasEditors)
+                {
+                    btnPatch.Enabled = false;
+                    return;
+                }
                 modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
 
                 EnableAllButton(true);
@@ -134,7 +139,12 @@ namespace RevokeMsgPatcher
 
             EnableAllButton(false);
             // a.重新初始化编辑器
-            modifier.InitEditors(txtPath.Text);
+            bool hasEditors = modifier.InitEditors(txtPath.Text);
+            if (!hasEditors)
+            {
+                btnPatch.Enabled = false;
+                return;
+            }
             // b.获取选择的功能 （精准匹配返回null） // TODO 此处逻辑可以优化 不可完全信任UI信息
             List<string> categories = UIController.GetCategoriesFromPanel(panelCategories);
             if (categories != null && categories.Count == 0)
@@ -285,7 +295,7 @@ namespace RevokeMsgPatcher
                         lblUpdatePachJson.Text = $"[ 存在最新版本 {newBag.LatestVersion} ]";
                         lblUpdatePachJson.ForeColor = Color.Red;
                     }
-                    else if(bag.PatchVersion == 0 || newBag.PatchVersion > bag.PatchVersion)
+                    else if (bag.PatchVersion == 0 || newBag.PatchVersion > bag.PatchVersion)
                     {
                         needUpdate = false;
                         lblUpdatePachJson.Text = "[ 获取成功，点击查看更多信息 ]";

@@ -235,7 +235,7 @@ namespace RevokeMsgPatcher.Modifier
         /// a.初始化修改器
         /// </summary>
         /// <param name="installPath">APP安装路径</param>
-        public void InitEditors(string installPath)
+        public bool InitEditors(string installPath)
         {
             // 初始化文件修改器
             editors = new List<FileHexEditor>();
@@ -251,8 +251,10 @@ namespace RevokeMsgPatcher.Modifier
             }
             if (editors.Count == 0)
             {
-                throw new BusinessException("no_support_editor", "当前版本没有对应的文件修改信息，请确认补丁信息是否正常！");
+                MessageBox.Show("当前版本没有对应的文件修改信息，请确认补丁信息是否正常！");
+                return false;
             }
+            return true;
         }
 
         /// <summary>
