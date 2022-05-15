@@ -242,9 +242,16 @@ namespace RevokeMsgPatcher.Modifier
             foreach (TargetInfo info in config.FileTargetInfos.Values)
             {
                 FileHexEditor editor = new FileHexEditor(installPath, info);
-                editors.Add(editor);
+                // editor.FileVersion 在 StartVersion 和 EndVersion 之间
+                if (IsInVersionRange(editor.FileVersion, info.StartVersion, info.EndVersion))
+                {
+                    editors.Add(editor);
+                }
             }
-
+            if(editors.Count == 0)
+            {
+                throw new BusinessException("no_support_editor", "当前版本没有对应的文件修改信息，请确认补丁信息是否正常！");
+            }
         }
 
         /// <summary>
@@ -319,12 +326,12 @@ namespace RevokeMsgPatcher.Modifier
                         // SHA1不匹配，连版本也不匹配，说明完全不支持
                         if (matchingVersion == null)
                         {
-                            throw new BusinessException("not_support", $"不支持此版本：{editor.FileVersion}！");
+                            throw new BusinessException("not_support", $"不支持的文件：名称 {editor.FileName} 版本 {editor.FileVersion}！");
                         }
                         // SHA1不匹配，但是版本匹配，可能dll已经被其他补丁程序修改过
                         if (matchingVersion != null)
                         {
-                            throw new BusinessException("maybe_modified", $"程序支持此版本：{editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序！");
+                            throw new BusinessException("maybe_modified", $"程序支持此文件版本： {editor.FileName} - {editor.FileVersion}。但是文件校验不通过，请确认是否使用过其他补丁程序！");
                         }
                     }
                 }
@@ -339,6 +346,10 @@ namespace RevokeMsgPatcher.Modifier
         public bool Patch()
         {
             // 首先验证文件修改器是否没问题
+            if(editors.Count == 0)
+            {
+                throw new Exception("补丁安装失败，原因：无对应的文件修改器");
+            }
             foreach (FileHexEditor editor in editors)
             {
                 if (editor == null)

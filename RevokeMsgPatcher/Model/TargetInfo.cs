@@ -14,6 +14,10 @@ namespace RevokeMsgPatcher.Model
 
         public string Memo { get; set; }
 
+        public string StartVersion { get; set; }
+
+        public string EndVersion { get; set; }
+
         public TargetInfo Clone()
         {
             TargetInfo o = new TargetInfo();
