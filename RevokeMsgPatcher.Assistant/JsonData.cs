@@ -49,7 +49,7 @@ namespace RevokeMsgPatcher
         {
             return new App
             {
-                Name = "Wechat",
+                Name = "WeChat",
                 FileTargetInfos = new Dictionary<string, TargetInfo>
                 {
                     {
@@ -59,10 +59,39 @@ namespace RevokeMsgPatcher
                             Name = "WeChatWin.dll",
                             RelativePath = "WeChatWin.dll"
                         }
+                    },
+                    {
+                        "WeChat.exe",
+                        new TargetInfo
+                        {
+                            Name = "WeChat.exe",
+                            RelativePath = "../WeChat.exe"
+                        }
                     }
                 },
                 FileCommonModifyInfos = new Dictionary<string, List<CommonModifyInfo>>
                 {
+                    {
+                        "WeChat.exe",
+                        new List<CommonModifyInfo>
+                        {
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.7.0.0",
+                                EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("85 C0 75 59"),
+                                        Replace = ByteUtil.HexStringToByteArray("85 C0 EB 59"),
+                                        Category = "去除校验"
+                                    }
+                                }
+                            }
+                        }
+                    },
                     {
                         "WeChatWin.dll",
                         new List<CommonModifyInfo>
@@ -283,6 +312,13 @@ namespace RevokeMsgPatcher
                 },
                 FileModifyInfos = new Dictionary<string, List<ModifyInfo>>
                 {
+                    {
+                        "WeChat.exe",
+                        new List<ModifyInfo>
+                        {
+
+                        }
+                    },
                     {
                         "WeChatWin.dll",
                         new List<ModifyInfo>
