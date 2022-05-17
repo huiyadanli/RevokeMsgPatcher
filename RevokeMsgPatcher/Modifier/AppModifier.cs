@@ -146,16 +146,20 @@ namespace RevokeMsgPatcher.Modifier
             {
                 return false;
             }
-            int success = 0;
+            int success = 0, count = 0;
             foreach (TargetInfo info in config.FileTargetInfos.Values)
             {
                 string filePath = Path.Combine(installPath, info.RelativePath);
+                if (info.Name != "WeChat.exe")
+                {
+                    count++;
+                }
                 if (File.Exists(filePath))
                 {
                     success++;
                 }
             }
-            if (success == config.FileTargetInfos.Count)
+            if (success == count)
             {
                 return true;
             }
