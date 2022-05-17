@@ -153,13 +153,13 @@ namespace RevokeMsgPatcher.Modifier
                 if (info.Name != "WeChat.exe")
                 {
                     count++;
-                }
-                if (File.Exists(filePath))
-                {
-                    success++;
+                    if (File.Exists(filePath))
+                    {
+                        success++;
+                    }
                 }
             }
-            if (success == count)
+            if (success == count && success >= 1)
             {
                 return true;
             }
