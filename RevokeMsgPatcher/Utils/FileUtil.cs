@@ -16,8 +16,16 @@ namespace RevokeMsgPatcher.Utils
         /// <returns></returns>
         public static string GetFileVersion(string path)
         {
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(path);
-            return fileVersionInfo.FileVersion;
+            if (File.Exists(path))
+            {
+                FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(path);
+                return fileVersionInfo.FileVersion;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         /// <summary>
