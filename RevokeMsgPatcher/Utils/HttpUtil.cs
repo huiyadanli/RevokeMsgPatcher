@@ -25,8 +25,8 @@ namespace RevokeMsgPatcher.Utils
         /// </summary>
         private static readonly string[] urls = new string[]
         {
-            "https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.4/patch.json",
-            "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.4/patch.json"
+            "https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.5/patch.json",
+            "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.5/patch.json"
         };
 
         public static async Task<string> GetPatchJsonAsync()
