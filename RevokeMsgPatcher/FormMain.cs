@@ -349,8 +349,14 @@ namespace RevokeMsgPatcher
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
         {
-            EnableAllButton(false);
             RadioButton radioButton = sender as RadioButton;
+            if (!radioButton.Checked)
+            {
+                return;
+            }
+
+            EnableAllButton(false);
+
             // 切换使用不同的防撤回对象
             if (rbtWechat.Checked)
             {
@@ -368,11 +374,11 @@ namespace RevokeMsgPatcher
             {
                 modifier = (QQLiteModifier)rbtQQLite.Tag;
             }
-            txtPath.Text = modifier.FindInstallPath();
             EnableAllButton(true);
+            // 触发了 txtPath_TextChanged 方法 已经调用了 InitEditorsAndUI(txtPath.Text);
+            // 也就是说 重新计算显示是否能够备份还原、版本和功能
+            txtPath.Text = modifier.FindInstallPath();
 
-            // 重新计算显示是否能够备份还原、版本和功能
-            //InitEditorsAndUI(txtPath.Text);
             ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
         }
 
