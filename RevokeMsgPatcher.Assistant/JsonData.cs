@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "1.5",
-                PatchVersion = 20220525,
+                PatchVersion = 20220601,
                 Notice = ""
             };
         }
@@ -67,7 +67,8 @@ namespace RevokeMsgPatcher
                         {
                             Name = "WeChat.exe",
                             RelativePath = "../WeChat.exe",
-                            StartVersion = "3.7.0.0"
+                            StartVersion = "3.7.0.0",
+                            EndVersion = "3.7.0.26"
                         }
                     }
                 },
@@ -81,7 +82,7 @@ namespace RevokeMsgPatcher
                             {
                                 Name="WeChatWin.dll",
                                 StartVersion="3.7.0.8",
-                                EndVersion="",
+                                EndVersion="3.7.0.26",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
