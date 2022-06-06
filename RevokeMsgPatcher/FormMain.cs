@@ -308,6 +308,7 @@ namespace RevokeMsgPatcher
 
                         getPatchJsonStatus = "SUCCESS";
                         InitControls();
+                        InitEditorsAndUI(txtPath.Text);
                     }
                     else if (newBag.PatchVersion <= bag.PatchVersion)
                     {
