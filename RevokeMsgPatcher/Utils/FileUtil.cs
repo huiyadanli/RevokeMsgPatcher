@@ -35,6 +35,7 @@ namespace RevokeMsgPatcher.Utils
         /// <returns></returns>
         public static string ComputeFileSHA1(string s)
         {
+            File.SetAttributes(s, FileAttributes.Normal);
             FileStream file = new FileStream(s, FileMode.Open);
             SHA1 sha1 = new SHA1CryptoServiceProvider();
             byte[] retval = sha1.ComputeHash(file);
