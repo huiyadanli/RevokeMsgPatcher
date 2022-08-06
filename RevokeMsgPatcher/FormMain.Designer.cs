@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.lblPathTag = new System.Windows.Forms.Label();
             this.btnPatch = new System.Windows.Forms.Button();
@@ -59,6 +60,7 @@
             this.主页ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblCategory = new System.Windows.Forms.Label();
             this.panelCategories = new System.Windows.Forms.FlowLayoutPanel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +78,7 @@
             // 
             this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPatch.Location = new System.Drawing.Point(567, 162);
-            this.btnPatch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPatch.Margin = new System.Windows.Forms.Padding(4);
             this.btnPatch.Name = "btnPatch";
             this.btnPatch.Size = new System.Drawing.Size(147, 34);
             this.btnPatch.TabIndex = 3;
@@ -89,7 +91,7 @@
             this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPath.Location = new System.Drawing.Point(126, 87);
-            this.txtPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(526, 28);
             this.txtPath.TabIndex = 4;
@@ -99,7 +101,7 @@
             // 
             this.btnChoosePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChoosePath.Location = new System.Drawing.Point(663, 84);
-            this.btnChoosePath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnChoosePath.Margin = new System.Windows.Forms.Padding(4);
             this.btnChoosePath.Name = "btnChoosePath";
             this.btnChoosePath.Size = new System.Drawing.Size(51, 34);
             this.btnChoosePath.TabIndex = 5;
@@ -133,7 +135,7 @@
             // 
             this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRestore.Location = new System.Drawing.Point(435, 162);
-            this.btnRestore.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRestore.Margin = new System.Windows.Forms.Padding(4);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(123, 34);
             this.btnRestore.TabIndex = 8;
@@ -179,7 +181,7 @@
             this.rbtWechat.AutoSize = true;
             this.rbtWechat.Checked = true;
             this.rbtWechat.Location = new System.Drawing.Point(126, 54);
-            this.rbtWechat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtWechat.Margin = new System.Windows.Forms.Padding(4);
             this.rbtWechat.Name = "rbtWechat";
             this.rbtWechat.Size = new System.Drawing.Size(69, 22);
             this.rbtWechat.TabIndex = 12;
@@ -192,7 +194,7 @@
             // 
             this.rbtQQ.AutoSize = true;
             this.rbtQQ.Location = new System.Drawing.Point(213, 54);
-            this.rbtQQ.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtQQ.Margin = new System.Windows.Forms.Padding(4);
             this.rbtQQ.Name = "rbtQQ";
             this.rbtQQ.Size = new System.Drawing.Size(51, 22);
             this.rbtQQ.TabIndex = 13;
@@ -204,7 +206,7 @@
             // 
             this.rbtTIM.AutoSize = true;
             this.rbtTIM.Location = new System.Drawing.Point(282, 54);
-            this.rbtTIM.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtTIM.Margin = new System.Windows.Forms.Padding(4);
             this.rbtTIM.Name = "rbtTIM";
             this.rbtTIM.Size = new System.Drawing.Size(60, 22);
             this.rbtTIM.TabIndex = 14;
@@ -226,7 +228,7 @@
             // 
             this.rbtQQLite.AutoSize = true;
             this.rbtQQLite.Location = new System.Drawing.Point(356, 54);
-            this.rbtQQLite.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtQQLite.Margin = new System.Windows.Forms.Padding(4);
             this.rbtQQLite.Name = "rbtQQLite";
             this.rbtQQLite.Size = new System.Drawing.Size(105, 22);
             this.rbtQQLite.TabIndex = 18;
@@ -244,7 +246,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(735, 34);
+            this.menuStrip1.Size = new System.Drawing.Size(735, 32);
             this.menuStrip1.TabIndex = 19;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -332,14 +334,14 @@
             // 作者ToolStripMenuItem
             // 
             this.作者ToolStripMenuItem.Name = "作者ToolStripMenuItem";
-            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(182, 34);
+            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.作者ToolStripMenuItem.Text = "关于";
             this.作者ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // 主页ToolStripMenuItem
             // 
             this.主页ToolStripMenuItem.Name = "主页ToolStripMenuItem";
-            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(182, 34);
+            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.主页ToolStripMenuItem.Text = "软件主页";
             this.主页ToolStripMenuItem.Click += new System.EventHandler(this.主页ToolStripMenuItem_Click);
             // 
@@ -355,8 +357,9 @@
             // 
             // panelCategories
             // 
+            this.panelCategories.AutoSize = true;
             this.panelCategories.Location = new System.Drawing.Point(124, 128);
-            this.panelCategories.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelCategories.Margin = new System.Windows.Forms.Padding(4);
             this.panelCategories.Name = "panelCategories";
             this.panelCategories.Size = new System.Drawing.Size(590, 27);
             this.panelCategories.TabIndex = 22;
@@ -386,7 +389,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(748, 196);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -430,6 +433,7 @@
         private System.Windows.Forms.ToolStripMenuItem 通用微信多开工具ToolStripMenuItem;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.FlowLayoutPanel panelCategories;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

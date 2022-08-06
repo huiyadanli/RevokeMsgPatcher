@@ -154,6 +154,25 @@ namespace RevokeMsgPatcher
                 btnRestore.Enabled = modifier.BackupExists();
                 return;
             }
+            // 20220806 偷懒的特殊逻辑，用于提示用户选择对防撤回功能进行二选一
+            if (categories.Contains("防撤回(老)") && categories.Contains("防撤回带提示(新)"))
+            {
+                DialogResult result = MessageBox.Show(@"防撤回(老) 和 防撤回带提示(新) 两个功能二选一即可！
+
+1. 防撤回(老) 没有提示；
+
+2. 防撤回带提示(新) 有撤回提示 但是存在以下问题：
+    a. 如果正在和对方聊天时，对方撤回了消息，那撤回提示依然不会显示，只有在左侧预览窗有显示撤回，需要切换到和别人的聊天窗再切回来才能看到撤回提示，如果是把聊天拉出单独窗口，一直不会有撤回提示。
+    b. 视频/图片消息撤回后会被删除，无法查看
+    c. 部分历史消息无法防撤回；
+
+点击确定继续，点击取消重新选择！", "功能选择提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
             // c.计算SHA1，验证文件完整性，寻找对应的补丁信息（精确版本、通用特征码两种补丁信息）
             try
             {
