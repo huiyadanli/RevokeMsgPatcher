@@ -28,6 +28,9 @@ namespace RevokeMsgPatcher.Utils
         private static readonly string[] urls = new string[]
         {
             "https://hui-config.oss-cn-hangzhou.aliyuncs.com/1.6/patch.json",
+            "https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
+            "https://ghproxy.com/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
+            "https://raw.fastgit.org/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
             "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.5/patch.json"
         };
 
