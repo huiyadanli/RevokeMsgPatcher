@@ -22,7 +22,7 @@ namespace RevokeMsgPatcher.Utils
         /// https://huiyadanli.github.io/i/revokemsg/05.json
         /// 会自动跳转，没用了
         /// https://gitee.com/huiyadanli/RevokeMsgPatcher/raw/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json
-        /// 需要登录，没用了
+        /// 需要登录，没用了  // 又正常了
         /// https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.5/patch.json
         /// </summary>
         private static readonly string[] urls = new string[]
@@ -31,7 +31,8 @@ namespace RevokeMsgPatcher.Utils
             "https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
             "https://ghproxy.com/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
             "https://raw.fastgit.org/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
-            "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.5/patch.json"
+            "https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
+            "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json"
         };
 
         public static async Task<string> GetPatchJsonAsync()
