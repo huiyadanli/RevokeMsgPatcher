@@ -234,6 +234,7 @@
             this.rbtQQLite.TabIndex = 18;
             this.rbtQQLite.Text = "QQ轻聊版";
             this.rbtQQLite.UseVisualStyleBackColor = true;
+            this.rbtQQLite.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
             // 
             // menuStrip1
             // 
