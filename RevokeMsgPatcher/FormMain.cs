@@ -2,6 +2,7 @@
 using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -147,17 +148,21 @@ namespace RevokeMsgPatcher
             }
             // b.获取选择的功能 （精准匹配返回null） // TODO 此处逻辑可以优化 不可完全信任UI信息
             List<string> categories = UIController.GetCategoriesFromPanel(panelCategories);
-            if (categories != null && categories.Count == 0)
+
+            // DealiAxy: 修复一个空指针异常的逻辑错误
+            if (categories != null)
             {
-                MessageBox.Show("请至少选择一项功能");
-                EnableAllButton(true);
-                btnRestore.Enabled = modifier.BackupExists();
-                return;
-            }
-            // 20220806 偷懒的特殊逻辑，用于提示用户选择对防撤回功能进行二选一
-            if (categories.Contains("防撤回(老)") && categories.Contains("防撤回带提示(新)"))
-            {
-                DialogResult result = MessageBox.Show(@"防撤回(老) 和 防撤回带提示(新) 两个功能二选一即可！
+                if (categories.Count == 0)
+                {
+                    MessageBox.Show("请至少选择一项功能");
+                    EnableAllButton(true);
+                    btnRestore.Enabled = modifier.BackupExists();
+                    return;
+                }
+                // 20220806 偷懒的特殊逻辑，用于提示用户选择对防撤回功能进行二选一
+                if (categories.Contains("防撤回(老)") && categories.Contains("防撤回带提示(新)"))
+                {
+                    DialogResult result = MessageBox.Show(@"防撤回(老) 和 防撤回带提示(新) 两个功能二选一即可！
 
 1. 防撤回(老) 没有提示；
 
@@ -167,9 +172,10 @@ namespace RevokeMsgPatcher
     c. 部分历史消息无法防撤回；
 
 点击确定继续，点击取消重新选择！", "功能选择提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result != DialogResult.Yes)
-                {
-                    return;
+                    if (result != DialogResult.Yes)
+                    {
+                        return;
+                    }
                 }
             }
 
