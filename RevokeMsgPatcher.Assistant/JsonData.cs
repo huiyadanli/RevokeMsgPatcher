@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "1.6",
-                PatchVersion = 20221112,
+                PatchVersion = 20221218,
                 Notice = ""
             };
         }
@@ -117,8 +117,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.8.0.0",
+                                StartVersion="3.8.1.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("85 C0 74 32 B9 3F 3F 3F 3F 8A"),
+                                        Replace = ByteUtil.HexStringToByteArray("85 C0 EB 32 B9 3F 3F 3F 3F 8A"),
+                                        Category = "防撤回(老)"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("83 C4 04 84 DB 0F 84 26 01 00 00 8B 3D"),
+                                        Replace = ByteUtil.HexStringToByteArray("83 C4 04 84 DB 90 E9 26 01 00 00 8B 3D"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.8.0.0",
+                                EndVersion="3.8.1.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
