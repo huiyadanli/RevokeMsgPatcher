@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "1.6",
-                PatchVersion = 20221218,
+                PatchVersion = 20230115,
                 Notice = ""
             };
         }
@@ -117,8 +117,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.8.1.0",
+                                StartVersion="3.9.0.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("85 C0 74 32 B9 3F 3F 3F 3F 8A"),
+                                        Replace = ByteUtil.HexStringToByteArray("85 C0 EB 32 B9 3F 3F 3F 3F 8A"),
+                                        Category = "防撤回(老)"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("C3 33 C0 A3 3F 3F 3F 3F C3 CC CC CC CC CC CC CC CC CC CC CC CC 55 8B EC"),
+                                        Replace = ByteUtil.HexStringToByteArray("C3 33 C0 A3 3F 3F 3F 3F C3 CC CC CC CC CC CC CC CC CC CC CC CC C3 8B EC"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.8.1.0",
+                                EndVersion="3.9.0.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
