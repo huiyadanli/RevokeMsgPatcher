@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "1.6",
-                PatchVersion = 20230115,
+                PatchVersion = 20230325,
                 Notice = ""
             };
         }
@@ -117,8 +117,23 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.9.0.0",
+                                StartVersion="3.9.2.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("83 C4 04 84 DB 0F 84 3F 3F 3F 3F 8B 3D"),
+                                        Replace = ByteUtil.HexStringToByteArray("83 C4 04 84 DB 90 E9 3F 3F 3F 3F 8B 3D"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.9.0.0",
+                                EndVersion="3.9.2.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
