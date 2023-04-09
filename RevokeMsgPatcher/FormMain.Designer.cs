@@ -61,7 +61,10 @@
             this.lblCategory = new System.Windows.Forms.Label();
             this.panelCategories = new System.Windows.Forms.FlowLayoutPanel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.panelNotice = new System.Windows.Forms.Panel();
+            this.labelNotice = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
+            this.panelNotice.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblPathTag
@@ -183,7 +186,7 @@
             this.rbtWechat.Location = new System.Drawing.Point(126, 54);
             this.rbtWechat.Margin = new System.Windows.Forms.Padding(4);
             this.rbtWechat.Name = "rbtWechat";
-            this.rbtWechat.Size = new System.Drawing.Size(69, 22);
+            this.rbtWechat.Size = new System.Drawing.Size(62, 22);
             this.rbtWechat.TabIndex = 12;
             this.rbtWechat.TabStop = true;
             this.rbtWechat.Text = "微信";
@@ -196,7 +199,7 @@
             this.rbtQQ.Location = new System.Drawing.Point(213, 54);
             this.rbtQQ.Margin = new System.Windows.Forms.Padding(4);
             this.rbtQQ.Name = "rbtQQ";
-            this.rbtQQ.Size = new System.Drawing.Size(51, 22);
+            this.rbtQQ.Size = new System.Drawing.Size(44, 22);
             this.rbtQQ.TabIndex = 13;
             this.rbtQQ.Text = "QQ";
             this.rbtQQ.UseVisualStyleBackColor = true;
@@ -208,7 +211,7 @@
             this.rbtTIM.Location = new System.Drawing.Point(282, 54);
             this.rbtTIM.Margin = new System.Windows.Forms.Padding(4);
             this.rbtTIM.Name = "rbtTIM";
-            this.rbtTIM.Size = new System.Drawing.Size(60, 22);
+            this.rbtTIM.Size = new System.Drawing.Size(53, 22);
             this.rbtTIM.TabIndex = 14;
             this.rbtTIM.Text = "TIM";
             this.rbtTIM.UseVisualStyleBackColor = true;
@@ -230,7 +233,7 @@
             this.rbtQQLite.Location = new System.Drawing.Point(356, 54);
             this.rbtQQLite.Margin = new System.Windows.Forms.Padding(4);
             this.rbtQQLite.Name = "rbtQQLite";
-            this.rbtQQLite.Size = new System.Drawing.Size(105, 22);
+            this.rbtQQLite.Size = new System.Drawing.Size(98, 22);
             this.rbtQQLite.TabIndex = 18;
             this.rbtQQLite.Text = "QQ轻聊版";
             this.rbtQQLite.UseVisualStyleBackColor = true;
@@ -238,7 +241,6 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.高级ToolStripMenuItem,
@@ -247,7 +249,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(735, 32);
+            this.menuStrip1.Size = new System.Drawing.Size(735, 25);
             this.menuStrip1.TabIndex = 19;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -258,13 +260,13 @@
             this.手动输入补丁信息ToolStripMenuItem,
             this.通用微信多开工具ToolStripMenuItem});
             this.高级ToolStripMenuItem.Name = "高级ToolStripMenuItem";
-            this.高级ToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
+            this.高级ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.高级ToolStripMenuItem.Text = "高级";
             // 
             // 特征码防撤回强制ToolStripMenuItem
             // 
             this.特征码防撤回强制ToolStripMenuItem.Name = "特征码防撤回强制ToolStripMenuItem";
-            this.特征码防撤回强制ToolStripMenuItem.Size = new System.Drawing.Size(290, 34);
+            this.特征码防撤回强制ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.特征码防撤回强制ToolStripMenuItem.Text = "特征码防撤回（强制）";
             this.特征码防撤回强制ToolStripMenuItem.Visible = false;
             this.特征码防撤回强制ToolStripMenuItem.Click += new System.EventHandler(this.特征码防撤回强制ToolStripMenuItem_Click);
@@ -272,7 +274,7 @@
             // 手动输入补丁信息ToolStripMenuItem
             // 
             this.手动输入补丁信息ToolStripMenuItem.Name = "手动输入补丁信息ToolStripMenuItem";
-            this.手动输入补丁信息ToolStripMenuItem.Size = new System.Drawing.Size(290, 34);
+            this.手动输入补丁信息ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.手动输入补丁信息ToolStripMenuItem.Text = "手动输入补丁信息";
             this.手动输入补丁信息ToolStripMenuItem.Visible = false;
             this.手动输入补丁信息ToolStripMenuItem.Click += new System.EventHandler(this.手动输入补丁信息ToolStripMenuItem_Click);
@@ -280,7 +282,7 @@
             // 通用微信多开工具ToolStripMenuItem
             // 
             this.通用微信多开工具ToolStripMenuItem.Name = "通用微信多开工具ToolStripMenuItem";
-            this.通用微信多开工具ToolStripMenuItem.Size = new System.Drawing.Size(290, 34);
+            this.通用微信多开工具ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.通用微信多开工具ToolStripMenuItem.Text = "通用微信多开工具";
             this.通用微信多开工具ToolStripMenuItem.Click += new System.EventHandler(this.通用微信多开工具ToolStripMenuItem_Click);
             // 
@@ -292,34 +294,34 @@
             this.防撤回原理ToolStripMenuItem,
             this.完整文档ToolStripMenuItem});
             this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
-            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
+            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.帮助ToolStripMenuItem.Text = "帮助";
             // 
             // 支持版本ToolStripMenuItem
             // 
             this.支持版本ToolStripMenuItem.Name = "支持版本ToolStripMenuItem";
-            this.支持版本ToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.支持版本ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.支持版本ToolStripMenuItem.Text = "支持版本";
             this.支持版本ToolStripMenuItem.Click += new System.EventHandler(this.支持版本ToolStripMenuItem_Click);
             // 
             // 常见问题ToolStripMenuItem
             // 
             this.常见问题ToolStripMenuItem.Name = "常见问题ToolStripMenuItem";
-            this.常见问题ToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.常见问题ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.常见问题ToolStripMenuItem.Text = "常见问题";
             this.常见问题ToolStripMenuItem.Click += new System.EventHandler(this.常见问题ToolStripMenuItem_Click);
             // 
             // 防撤回原理ToolStripMenuItem
             // 
             this.防撤回原理ToolStripMenuItem.Name = "防撤回原理ToolStripMenuItem";
-            this.防撤回原理ToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.防撤回原理ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.防撤回原理ToolStripMenuItem.Text = "防撤回原理";
             this.防撤回原理ToolStripMenuItem.Click += new System.EventHandler(this.防撤回原理ToolStripMenuItem_Click);
             // 
             // 完整文档ToolStripMenuItem
             // 
             this.完整文档ToolStripMenuItem.Name = "完整文档ToolStripMenuItem";
-            this.完整文档ToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.完整文档ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.完整文档ToolStripMenuItem.Text = "完整文档";
             this.完整文档ToolStripMenuItem.Click += new System.EventHandler(this.完整文档ToolStripMenuItem_Click);
             // 
@@ -329,20 +331,20 @@
             this.作者ToolStripMenuItem,
             this.主页ToolStripMenuItem});
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
             // 作者ToolStripMenuItem
             // 
             this.作者ToolStripMenuItem.Name = "作者ToolStripMenuItem";
-            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.作者ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.作者ToolStripMenuItem.Text = "关于";
             this.作者ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // 主页ToolStripMenuItem
             // 
             this.主页ToolStripMenuItem.Name = "主页ToolStripMenuItem";
-            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.主页ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.主页ToolStripMenuItem.Text = "软件主页";
             this.主页ToolStripMenuItem.Click += new System.EventHandler(this.主页ToolStripMenuItem_Click);
             // 
@@ -365,11 +367,31 @@
             this.panelCategories.Size = new System.Drawing.Size(590, 27);
             this.panelCategories.TabIndex = 22;
             // 
+            // panelNotice
+            // 
+            this.panelNotice.BackColor = System.Drawing.SystemColors.Info;
+            this.panelNotice.Controls.Add(this.labelNotice);
+            this.panelNotice.Location = new System.Drawing.Point(24, 260);
+            this.panelNotice.Name = "panelNotice";
+            this.panelNotice.Size = new System.Drawing.Size(690, 41);
+            this.panelNotice.TabIndex = 23;
+            // 
+            // labelNotice
+            // 
+            this.labelNotice.BackColor = System.Drawing.Color.Transparent;
+            this.labelNotice.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.labelNotice.Location = new System.Drawing.Point(17, 11);
+            this.labelNotice.Name = "labelNotice";
+            this.labelNotice.Size = new System.Drawing.Size(661, 20);
+            this.labelNotice.TabIndex = 0;
+            this.labelNotice.Text = "测试测试测试测试";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 254);
+            this.Controls.Add(this.panelNotice);
             this.Controls.Add(this.panelCategories);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.rbtQQLite);
@@ -398,6 +420,7 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panelNotice.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -435,6 +458,8 @@
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.FlowLayoutPanel panelCategories;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Panel panelNotice;
+        private System.Windows.Forms.Label labelNotice;
     }
 }
 

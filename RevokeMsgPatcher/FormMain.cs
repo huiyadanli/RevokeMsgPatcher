@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
@@ -298,6 +299,7 @@ namespace RevokeMsgPatcher
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
+            InitNoticeControls(null);
             // 异步获取最新的补丁信息
             string json = await HttpUtil.GetPatchJsonAsync();
             //string json = null; // local test
@@ -332,7 +334,9 @@ namespace RevokeMsgPatcher
                         qqLiteModifier.Config = newBag.Apps["QQLite"];
 
                         getPatchJsonStatus = "SUCCESS";
+                        bag = newBag;
                         InitControls();
+                        InitNoticeControls(newBag);
                         InitEditorsAndUI(txtPath.Text);
                     }
                     else if (newBag.PatchVersion <= bag.PatchVersion)
@@ -496,6 +500,39 @@ namespace RevokeMsgPatcher
                 {
                     Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/tree/master/RevokeMsgPatcher.MultiInstance");
                 }
+            }
+        }
+
+        private void InitNoticeControls(Bag b)
+        {
+            labelNotice.Cursor = Cursors.Default;
+            panelNotice.Visible = false;
+            labelNotice.Visible = false;
+            if (b != null && !string.IsNullOrEmpty(b.Notice))
+            {
+                labelNotice.Text = b.Notice;
+                // 一行26个中文字 // TODO 这种计算方式并不精确，而且高dpi缩放问题会导致很多问题
+                int height = (int)((Encoding.Default.GetByteCount(b.Notice) / 2 - 26) * 20 * 1.0 / 26);
+                labelNotice.Size = new Size(labelNotice.Size.Width, labelNotice.Size.Height + height);
+                panelNotice.Size = new Size(panelNotice.Size.Width, panelNotice.Size.Height + height);
+                this.Size = new Size(this.Size.Width, this.Size.Height + panelNotice.Size.Height + 20);
+
+                if (!string.IsNullOrEmpty(b.NoticeUrl))
+                {
+                    labelNotice.Cursor = Cursors.Hand;
+                    this.labelNotice.MouseClick += new MouseEventHandler(this.labelNotice_MouseClick);
+                }
+
+                panelNotice.Visible = true;
+                labelNotice.Visible = true;
+            }
+        }
+
+        private void labelNotice_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (bag.NoticeUrl != null && bag.NoticeUrl.ToLower().StartsWith("http"))
+            {
+                Process.Start(bag.NoticeUrl);
             }
         }
     }
