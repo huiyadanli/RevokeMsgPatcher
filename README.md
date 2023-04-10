@@ -65,7 +65,7 @@
 
 觉的好用的话，可以支持作者哟ヾ(･ω･`｡) 
 * [⚡爱发电](https://afdian.net/@huiyadanli)
-* [🍚顿顿饭](https://dun.mianbaoduo.com/@huiyadanli)
+* [🍚微信赞赏](https://github.com/huiyadanli/huiyadanli/blob/master/DONATE.md)
 
 ## 📄License
 [GPLv3](https://github.com/huiyadanli/RevokeMsgPatcher/blob/master/LICENSE)
