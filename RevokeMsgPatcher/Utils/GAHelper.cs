@@ -50,7 +50,7 @@ namespace RevokeMsgPatcher.Utils
 
         public GAHelper()
         {
-            UserAgent = string.Format("Hui Google Analytics Tracker/1.0 ({0}; {1}; {2})", Environment.OSVersion.Platform.ToString(), Environment.OSVersion.Version.ToString(), Environment.OSVersion.VersionString);
+            UserAgent = $"Hui Google Analytics Tracker/1.0 ({Environment.OSVersion.Platform.ToString()}; {Environment.OSVersion.Version.ToString()}; {Environment.OSVersion.VersionString})";
         }
 
         public async Task RequestPageViewAsync(string page, string title = null)
@@ -68,20 +68,27 @@ namespace RevokeMsgPatcher.Utils
                     { "client_id",UserAgent},
                     { "user_id", cid },
                     { "non_personalized_ads", "false" },
-                    { "events", new List<Dictionary<string, string>>()
+                    { "events", new List<Dictionary<string, object>>()
                         {
-                            new Dictionary<string, string>()
+                            new Dictionary<string, object>()
                             {
-                                 { "name",page},
+                                { "name",page },
+                                {
+                                    "params",
+                                    new Dictionary<string, object>()
+                                    {
+                                        { "engagement_time_msec", "1"},
+                                    }
+                                },
                             }
                         }
                     },
                 };
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                string json = serializer.Serialize(values);
+                var serializer = new JavaScriptSerializer();
+                var json = serializer.Serialize(values);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(GAUrl, content);
-                Console.WriteLine(response.ToString());
+                // Console.WriteLine(response.ToString());
             }
             catch (Exception ex)
             {
