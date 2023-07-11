@@ -222,13 +222,13 @@ namespace RevokeMsgPatcher.MultiInstance
             foreach (SYSTEM_HANDLE_INFORMATION handle in aHandles)
             {
                 // Mutant 类型的句柄
-                if (handle.ObjectType == OBJECT_TYPE_MUTANT)
-                {
+                // if (handle.ObjectType == OBJECT_TYPE_MUTANT)
+                // {
                     if (FindAndCloseWeChatMutexHandle(handle, process))
                     {
                         existMutexHandle = true;
                     }
-                }
+                // }
             }
             return existMutexHandle;
         }
