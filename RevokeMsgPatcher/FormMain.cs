@@ -2,7 +2,6 @@
 using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,7 +25,7 @@ namespace RevokeMsgPatcher
 
         private string thisVersion;
         private bool needUpdate = false;
-        private string getPatchJsonStatus = "GETTING";  // GETTING FAIL SUCCESS
+        private string getPatchJsonStatus = "GETTING"; // GETTING FAIL SUCCESS
 
         private readonly GAHelper ga = GAHelper.Instance; // Google Analytics 记录
 
@@ -65,6 +64,7 @@ namespace RevokeMsgPatcher
                 thisVersion = currentVersion.Substring(0, 3);
                 currentVersion = " v" + thisVersion;
             }
+
             this.Text += currentVersion;
 
             InitModifier();
@@ -98,6 +98,7 @@ namespace RevokeMsgPatcher
                     btnPatch.Enabled = false;
                     return;
                 }
+
                 modifier.SetVersionLabelAndCategoryCategories(lblVersion, panelCategories);
 
                 EnableAllButton(true);
@@ -147,6 +148,7 @@ namespace RevokeMsgPatcher
                 btnPatch.Enabled = false;
                 return;
             }
+
             // b.获取选择的功能 （精准匹配返回null） // TODO 此处逻辑可以优化 不可完全信任UI信息
             List<string> categories = UIController.GetCategoriesFromPanel(panelCategories);
 
@@ -160,6 +162,7 @@ namespace RevokeMsgPatcher
                     btnRestore.Enabled = modifier.BackupExists();
                     return;
                 }
+
                 // 20220806 偷懒的特殊逻辑，用于提示用户选择对防撤回功能进行二选一
                 if (categories.Contains("防撤回(老)") && categories.Contains("防撤回带提示(新)"))
                 {
@@ -216,7 +219,6 @@ namespace RevokeMsgPatcher
                 modifier.Patch();
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "补丁安装成功");
                 MessageBox.Show("补丁安装成功！");
-
             }
             catch (BusinessException ex)
             {
@@ -234,7 +236,6 @@ namespace RevokeMsgPatcher
             {
                 InitEditorsAndUI(txtPath.Text);
             }
-
         }
 
         private void txtPath_TextChanged(object sender, EventArgs e)
@@ -287,6 +288,7 @@ namespace RevokeMsgPatcher
                 Console.WriteLine(ex.Message);
                 MessageBox.Show(ex.Message);
             }
+
             EnableAllButton(true);
             // 重新计算显示是否能够备份还原、版本和功能
             InitEditorsAndUI(txtPath.Text);
@@ -299,7 +301,7 @@ namespace RevokeMsgPatcher
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
-            InitNoticeControls(null);
+            InitNoticeControls(bag);
             // 异步获取最新的补丁信息
             string json = await HttpUtil.GetPatchJsonAsync();
             //string json = null; // local test
@@ -345,7 +347,6 @@ namespace RevokeMsgPatcher
                         lblUpdatePachJson.Text = "[ 软件内置补丁信息已经是最新 ]";
                         lblUpdatePachJson.ForeColor = Color.RoyalBlue;
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -364,6 +365,7 @@ namespace RevokeMsgPatcher
             {
                 tips += "【当前存在最新版本，点击确定进入软件主页下载最新版本。】" + Environment.NewLine + Environment.NewLine;
             }
+
             tips += "支持以下版本" + Environment.NewLine;
             tips += " ➯ 微信：" + wechatModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQ：" + qqModifier.Config.GetSupportVersionStr() + Environment.NewLine;
@@ -404,6 +406,7 @@ namespace RevokeMsgPatcher
             {
                 modifier = (QQLiteModifier)rbtQQLite.Tag;
             }
+
             EnableAllButton(true);
             // 触发了 txtPath_TextChanged 方法 已经调用了 InitEditorsAndUI(txtPath.Text);
             // 也就是说 重新计算显示是否能够备份还原、版本和功能
@@ -430,6 +433,7 @@ namespace RevokeMsgPatcher
             {
                 return "qqlite";
             }
+
             return "none";
         }
 
@@ -495,10 +499,12 @@ namespace RevokeMsgPatcher
             }
             else
             {
-                DialogResult dr = MessageBox.Show($"未在同级目录下找到“微信通用多开工具”，位置：{path}，点击“确定”访问微信通用多开工具的主页，你可以在主页上下载到这个工具。", "未找到程序", MessageBoxButtons.OKCancel);
+                DialogResult dr = MessageBox.Show($"未在同级目录下找到“微信通用多开工具”，位置：{path}，点击“确定”访问微信通用多开工具的主页，你可以在主页上下载到这个工具。",
+                    "未找到程序", MessageBoxButtons.OKCancel);
                 if (dr == DialogResult.OK)
                 {
-                    Process.Start("https://github.com/huiyadanli/RevokeMsgPatcher/tree/master/RevokeMsgPatcher.MultiInstance");
+                    Process.Start(
+                        "https://github.com/huiyadanli/RevokeMsgPatcher/tree/master/RevokeMsgPatcher.MultiInstance");
                 }
             }
         }
@@ -512,7 +518,9 @@ namespace RevokeMsgPatcher
             {
                 labelNotice.Text = b.Notice;
                 // 一行26个中文字 // TODO 这种计算方式并不精确，而且高dpi缩放问题会导致很多问题
-                int height = (int)((Encoding.Default.GetByteCount(b.Notice) / 2 - 26) * 20 * 1.0 / 26);
+                int lineNum = (int)Math.Ceiling(Encoding.Default.GetByteCount(b.Notice) / 2 * 1.0 / 26);
+                lineNum = lineNum < 1 ? 1 : lineNum;
+                int height = lineNum * 26;
                 labelNotice.Size = new Size(labelNotice.Size.Width, labelNotice.Size.Height + height);
                 panelNotice.Size = new Size(panelNotice.Size.Width, panelNotice.Size.Height + height);
                 this.Size = new Size(this.Size.Width, this.Size.Height + panelNotice.Size.Height + 20);
