@@ -22,17 +22,19 @@ namespace RevokeMsgPatcher.Utils
         /// https://huiyadanli.github.io/i/revokemsg/05.json
         /// 会自动跳转，没用了
         /// https://gitee.com/huiyadanli/RevokeMsgPatcher/raw/master/RevokeMsgPatcher.Assistant/Data/1.2/patch.json
-        /// 需要登录，没用了  // 又正常了
-        /// https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.5/patch.json
+        /// 需要登录，没用了
+        /// https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json
         /// </summary>
+
+        public static string PatchVersion { get; } = "1.6";
+
         private static readonly string[] urls = new string[]
         {
-            "https://hui-config.oss-cn-hangzhou.aliyuncs.com/1.6/patch.json",
-            "https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
-            "https://ghproxy.com/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
-            "https://raw.fastgit.org/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
-            "https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json",
-            "https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json"
+            $"https://hui-config.oss-cn-hangzhou.aliyuncs.com/{PatchVersion}/patch.json",
+            $"https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
+            $"https://ghproxy.com/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
+            $"https://raw.fgit.ml/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
+            $"https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json"
         };
 
         public static async Task<string> GetPatchJsonAsync()
