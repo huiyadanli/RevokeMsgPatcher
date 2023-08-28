@@ -40,7 +40,7 @@ jobs:
     runs-on: windows-2019
     strategy:
         matrix:
-          BUILD_CONFIGURATION: ['Release']
+          BUILD_CONFIGURATION: ['Debug', 'Release']
     steps:
     - uses: actions/checkout@v2
 
