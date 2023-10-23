@@ -16,8 +16,8 @@ namespace RevokeMsgPatcher
             return new Bag
             {
                 Apps = AppConfig(),
-                LatestVersion = "1.6",
-                PatchVersion = 20230711,
+                LatestVersion = "1.7",
+                PatchVersion = 20231024,
                 Notice = "",
                 NoticeUrl = "",
             };

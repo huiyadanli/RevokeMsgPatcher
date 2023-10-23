@@ -26,14 +26,24 @@ namespace RevokeMsgPatcher.Utils
         /// https://huiyadanli.coding.net/p/RevokeMsgPatcher/d/RevokeMsgPatcher/git/raw/master/RevokeMsgPatcher.Assistant/Data/1.6/patch.json
         /// </summary>
 
-        public static string PatchVersion { get; } = "1.6";
+        public static string PatchVersion
+        {
+            get
+            {
+                string currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                if (currentVersion.Length > 3)
+                {
+                    return currentVersion.Substring(0, 3);
+                }
+
+                return "1.6";
+            }
+        }
 
         private static readonly string[] urls = new string[]
         {
             $"https://hui-config.oss-cn-hangzhou.aliyuncs.com/{PatchVersion}/patch.json",
             $"https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
-            $"https://ghproxy.com/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
-            $"https://raw.fgit.ml/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
             $"https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json"
         };
 
