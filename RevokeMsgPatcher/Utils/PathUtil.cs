@@ -57,6 +57,30 @@ namespace RevokeMsgPatcher.Utils
             return null;
         }
 
+
+        public static string FindInstallPathFromRegistryWOW6432Node(string uninstallKeyName)
+        {
+            try
+            {
+                RegistryKey key = Registry.LocalMachine.OpenSubKey($@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{uninstallKeyName}");
+                if (key == null)
+                {
+                    return null;
+                }
+                object installLocation = key.GetValue("UninstallString");
+                key.Close();
+                if (installLocation != null && !string.IsNullOrEmpty(installLocation.ToString()))
+                {
+                    return installLocation.ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return null;
+        }
+
         /// <summary>
         /// 获取所有可能的默认安装路径
         /// </summary>

@@ -22,6 +22,7 @@ namespace RevokeMsgPatcher
         private QQModifier qqModifier = null;
         private TIMModifier timModifier = null;
         private QQLiteModifier qqLiteModifier = null;
+        private QQNTModifier qqntModifier = null;
 
         private string thisVersion;
         private bool needUpdate = false;
@@ -42,11 +43,13 @@ namespace RevokeMsgPatcher
             qqModifier = new QQModifier(bag.Apps["QQ"]);
             timModifier = new TIMModifier(bag.Apps["TIM"]);
             qqLiteModifier = new QQLiteModifier(bag.Apps["QQLite"]);
+            qqntModifier = new QQNTModifier(bag.Apps["QQNT"]);
 
             rbtWechat.Tag = wechatModifier;
             rbtQQ.Tag = qqModifier;
             rbtTIM.Tag = timModifier;
             rbtQQLite.Tag = qqLiteModifier;
+            rbtQQNT.Tag = qqntModifier;
 
             // 默认微信
             rbtWechat.Enabled = true;
@@ -368,6 +371,7 @@ namespace RevokeMsgPatcher
 
             tips += "支持以下版本" + Environment.NewLine;
             tips += " ➯ 微信：" + wechatModifier.Config.GetSupportVersionStr() + Environment.NewLine;
+            tips += " ➯ QQNT：" + qqntModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQ：" + qqModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQ轻聊版：" + qqLiteModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ TIM：" + timModifier.Config.GetSupportVersionStr() + Environment.NewLine;
@@ -406,6 +410,10 @@ namespace RevokeMsgPatcher
             {
                 modifier = (QQLiteModifier)rbtQQLite.Tag;
             }
+            else if (rbtQQNT.Checked)
+            {
+                modifier = (QQNTModifier)rbtQQNT.Tag;
+            }
 
             EnableAllButton(true);
             // 触发了 txtPath_TextChanged 方法 已经调用了 InitEditorsAndUI(txtPath.Text);
@@ -432,6 +440,10 @@ namespace RevokeMsgPatcher
             else if (rbtQQLite.Checked)
             {
                 return "qqlite";
+            }
+            else if (rbtQQNT.Checked)
+            {
+                return "qqnt";
             }
 
             return "none";
