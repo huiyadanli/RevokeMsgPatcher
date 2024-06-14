@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "1.7",
-                PatchVersion = 20240225,
+                PatchVersion = 20240614,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -118,8 +118,36 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.9.9.0",
+                                StartVersion="3.9.11.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("0F 1F 44 00 00 49 8B 50 08 48 85 D2 74 3F 48 C7 C1"),
+                                        Replace = ByteUtil.HexStringToByteArray("0F 1F 44 00 00 49 8B 50 08 48 85 D2 75 3F 48 C7 C1"),
+                                        Category = "防撤回(老)"
+                                    },
+                                    // 带撤回提示
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("4D 85 C0 0F 84 3F 3F 3F 3F EB BF 41 8B"),
+                                        Replace = ByteUtil.HexStringToByteArray("4D 85 C0 0F 84 3F 3F 3F 3F 90 90 41 8B"),
+                                        Category = "防撤回带提示(新)"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("45 32 F6 4C 8D 25 3F 3F 3F 3F 48 85 C0 0F 84"),
+                                        Replace = ByteUtil.HexStringToByteArray("45 32 F6 4C 8D 25 3F 3F 3F 3F 48 85 C0 90 E9"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.9.9.0",
+                                EndVersion="3.9.11.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
