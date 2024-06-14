@@ -106,7 +106,14 @@ namespace RevokeMsgPatcher.Modifier
             string content = File.ReadAllText(indexPath);
             // 正则 require\(String.raw`.*`\);
             string pattern = @"require\(String.raw`.*`\);";
-            string replacement = $"require(String.raw`{GetLiteLoaderPath()}`);";
+            string liteLoaderPath = GetLiteLoaderPath();
+            if (!File.Exists(liteLoaderPath))
+            {
+                MessageBox.Show("LiteLoaderQQNT文件夹不存在，仅安装QQNT去验证补丁", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string replacement = $"require(String.raw`{liteLoaderPath}`);";
             if (Regex.IsMatch(content, pattern))
             {
                 content = Regex.Replace(content, pattern, replacement);
