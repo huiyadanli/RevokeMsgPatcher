@@ -171,7 +171,7 @@ namespace RevokeMsgPatcher
                 {
                     DialogResult result = MessageBox.Show(@"防撤回(老) 和 防撤回带提示(新) 两个功能二选一即可！
 
-1. 防撤回(老) 没有提示；
+1. 防撤回(老) 没有提示，新版本会出现撤回自己消息不断转圈的情况(实际撤回成功)；
 
 2. 防撤回带提示(新) 有撤回提示 但是存在以下问题：
     a. 如果正在和对方聊天时，对方撤回了消息，那撤回提示依然不会显示，只有在左侧预览窗有显示撤回，需要切换到和别人的聊天窗再切回来才能看到撤回提示，如果是把聊天拉出单独窗口，一直不会有撤回提示。
@@ -221,7 +221,7 @@ namespace RevokeMsgPatcher
             {
                 modifier.Patch();
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "补丁安装成功");
-                MessageBox.Show("补丁安装成功！");
+                MessageBox.Show("补丁安装成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (BusinessException ex)
             {
@@ -280,7 +280,16 @@ namespace RevokeMsgPatcher
             EnableAllButton(false);
             try
             {
-                bool succ = modifier.Restore();
+                bool succ;
+                if (rbtQQNT.Checked)
+                {
+                    succ = qqntModifier.Restore();
+                }
+                else
+                {
+                    succ = modifier.Restore();
+                }
+
                 if (succ)
                 {
                     MessageBox.Show("还原成功！");

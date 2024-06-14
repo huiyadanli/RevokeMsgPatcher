@@ -134,6 +134,12 @@ namespace RevokeMsgPatcher.Modifier
             if (j == editors.Count)
             {
                 label.Text = version + "（支持特征防撤回）";
+                // QQNT 特殊处理
+                if (config.Name == "QQNT")
+                {
+                    label.Text = version + "（支持LiteLoader）";
+                }
+
                 label.ForeColor = Color.LimeGreen;
                 UIController.AddCategoryCheckBoxToPanel(panel, categories.ToArray(), installed.ToArray());
             }
@@ -256,6 +262,8 @@ namespace RevokeMsgPatcher.Modifier
         /// <param name="installPath">APP安装路径</param>
         public bool InitEditors(string installPath)
         {
+            InstallPath = null;
+
             // 初始化文件修改器
             editors = new List<FileHexEditor>();
             foreach (TargetInfo info in config.FileTargetInfos.Values)
@@ -274,6 +282,8 @@ namespace RevokeMsgPatcher.Modifier
                 MessageBox.Show("当前版本没有对应的文件修改信息，请确认补丁信息是否正常！");
                 return false;
             }
+
+            InstallPath = installPath;
 
             return true;
         }
@@ -413,6 +423,8 @@ namespace RevokeMsgPatcher.Modifier
                         done.Add(editor);
                     }
                 }
+
+                AfterPatchSuccess();
             }
             catch (Exception ex)
             {
@@ -422,6 +434,7 @@ namespace RevokeMsgPatcher.Modifier
                     editor.Restore();
                 }
 
+                AfterPatchFail();
                 throw ex;
             }
 
@@ -478,5 +491,9 @@ namespace RevokeMsgPatcher.Modifier
                 throw new Exception("备份文件不存在，还原失败！");
             }
         }
+
+        public abstract void  AfterPatchSuccess();
+
+        public abstract void AfterPatchFail();
     }
 }
