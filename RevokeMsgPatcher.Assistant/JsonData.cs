@@ -16,8 +16,8 @@ namespace RevokeMsgPatcher
             return new Bag
             {
                 Apps = AppConfig(),
-                LatestVersion = "1.7",
-                PatchVersion = 20240614,
+                LatestVersion = "1.8",
+                PatchVersion = 20240615,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -36,7 +36,8 @@ namespace RevokeMsgPatcher
                 { "Wechat" , Wechat() },
                 { "QQ" , QQ() },
                 { "TIM" , TIM() },
-                { "QQLite" , QQLite() }
+                { "QQLite" , QQLite() },
+                { "QQNT" , QQNT() }
             };
         }
 
@@ -1336,6 +1337,50 @@ namespace RevokeMsgPatcher
                                     {
                                         Position = 0x000248B9,
                                         Content = new byte[] { 0xEB, 0x02, 0x90, 0x90 }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+
+        public App QQNT()
+        {
+            return new App
+            {
+                Name = "QQNT",
+                FileTargetInfos = new Dictionary<string, TargetInfo>
+                {
+                    {
+                        "QQ.exe",
+                        new TargetInfo
+                        {
+                            Name = "QQ.exe",
+                            RelativePath = "QQ.exe"
+                        }
+                    }
+                },
+                FileCommonModifyInfos = new Dictionary<string, List<CommonModifyInfo>>
+                {
+                    {
+                        "QQ.exe",
+                        new List<CommonModifyInfo>
+                        {
+                            new CommonModifyInfo
+                            {
+                                Name="QQ.exe",
+                                StartVersion="9.9.10.00000",
+                                EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 E8 3F 3F 3F 3F"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 B8 01 00 00 00"),
+                                        Category = "LiteLoaderQQNT+插件列表+防撤回"
                                     }
                                 }
                             }

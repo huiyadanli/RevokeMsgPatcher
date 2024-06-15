@@ -22,7 +22,11 @@ namespace RevokeMsgPatcher.Modifier
     {
         protected App config;
 
-        public App Config { set { config = value; } get { return config; } }
+        public App Config
+        {
+            set { config = value; }
+            get { return config; }
+        }
 
         protected List<FileHexEditor> editors;
 
@@ -56,18 +60,22 @@ namespace RevokeMsgPatcher.Modifier
             foreach (FileHexEditor editor in editors) // 多种文件
             {
                 // 精确版本匹配
-                bool haven = false;
-                foreach (ModifyInfo modifyInfo in config.FileModifyInfos[editor.FileName]) // 多个版本信息
+                if (config.FileModifyInfos != null && config.FileModifyInfos.Count > 0)
                 {
-                    if (editor.FileVersion == modifyInfo.Version)
+                    bool haven = false;
+                    foreach (ModifyInfo modifyInfo in config.FileModifyInfos[editor.FileName]) // 多个版本信息
                     {
-                        haven = true;
-                        break;
+                        if (editor.FileVersion == modifyInfo.Version)
+                        {
+                            haven = true;
+                            break;
+                        }
                     }
-                }
-                if (haven)
-                {
-                    i++;
+
+                    if (haven)
+                    {
+                        i++;
+                    }
                 }
             }
 
@@ -102,16 +110,19 @@ namespace RevokeMsgPatcher.Modifier
                                     categories.Add(c);
                                 }
                             }
+
                             // 获取已经安装过的功能类型
                             SortedSet<string> replaced = ModifyFinder.FindReplacedFunction(editor.FilePath, commonModifyInfo.ReplacePatterns);
                             foreach (string c in replaced)
                             {
                                 installed.Add(c);
                             }
+
                             inRange = true;
                             break;
                         }
                     }
+
                     if (inRange)
                     {
                         j++;
@@ -123,6 +134,12 @@ namespace RevokeMsgPatcher.Modifier
             if (j == editors.Count)
             {
                 label.Text = version + "（支持特征防撤回）";
+                // QQNT 特殊处理
+                if (config.Name == "QQNT")
+                {
+                    label.Text = version + "（支持LiteLoader）";
+                }
+
                 label.ForeColor = Color.LimeGreen;
                 UIController.AddCategoryCheckBoxToPanel(panel, categories.ToArray(), installed.ToArray());
             }
@@ -132,7 +149,6 @@ namespace RevokeMsgPatcher.Modifier
                 label.ForeColor = Color.Red;
                 UIController.AddMsgToPanel(panel, "无功能选项");
             }
-
         }
 
         /// <summary>
@@ -146,6 +162,7 @@ namespace RevokeMsgPatcher.Modifier
             {
                 return false;
             }
+
             int success = 0, count = 0;
             foreach (TargetInfo info in config.FileTargetInfos.Values)
             {
@@ -159,6 +176,7 @@ namespace RevokeMsgPatcher.Modifier
                     }
                 }
             }
+
             if (success == count && success >= 1)
             {
                 return true;
@@ -189,6 +207,7 @@ namespace RevokeMsgPatcher.Modifier
             {
                 Console.WriteLine("判断版本范围时出错：" + e.Message);
             }
+
             return false;
         }
 
@@ -207,6 +226,7 @@ namespace RevokeMsgPatcher.Modifier
                     return commonModifyInfo;
                 }
             }
+
             return null;
         }
 
@@ -225,6 +245,7 @@ namespace RevokeMsgPatcher.Modifier
                     break;
                 }
             }
+
             if (i == editors.Count)
             {
                 return true;
@@ -241,6 +262,8 @@ namespace RevokeMsgPatcher.Modifier
         /// <param name="installPath">APP安装路径</param>
         public bool InitEditors(string installPath)
         {
+            InstallPath = null;
+
             // 初始化文件修改器
             editors = new List<FileHexEditor>();
             foreach (TargetInfo info in config.FileTargetInfos.Values)
@@ -253,11 +276,15 @@ namespace RevokeMsgPatcher.Modifier
                     editors.Add(editor);
                 }
             }
+
             if (editors.Count == 0)
             {
                 MessageBox.Show("当前版本没有对应的文件修改信息，请确认补丁信息是否正常！");
                 return false;
             }
+
+            InstallPath = installPath;
+
             return true;
         }
 
@@ -272,25 +299,29 @@ namespace RevokeMsgPatcher.Modifier
             {
                 // 通过SHA1和文件版本判断是否可以打补丁 根据不同结果返回不同的提示
                 ModifyInfo matchingSHA1Before = null, matchingSHA1After = null, matchingVersion = null;
-                foreach (ModifyInfo modifyInfo in config.FileModifyInfos[editor.FileName]) // 多个版本信息
+                if (config.FileModifyInfos != null && config.FileModifyInfos.Count > 0)
                 {
-                    if (modifyInfo.Name == editor.FileName) // 保险用的无用判断
+                    foreach (ModifyInfo modifyInfo in config.FileModifyInfos[editor.FileName]) // 多个版本信息
                     {
-                        if (editor.FileSHA1 == modifyInfo.SHA1After)
+                        if (modifyInfo.Name == editor.FileName) // 保险用的无用判断
                         {
-                            matchingSHA1After = modifyInfo;
-                        }
-                        else if (editor.FileSHA1 == modifyInfo.SHA1Before)
-                        {
-                            matchingSHA1Before = modifyInfo;
-                        }
+                            if (editor.FileSHA1 == modifyInfo.SHA1After)
+                            {
+                                matchingSHA1After = modifyInfo;
+                            }
+                            else if (editor.FileSHA1 == modifyInfo.SHA1Before)
+                            {
+                                matchingSHA1Before = modifyInfo;
+                            }
 
-                        if (editor.FileVersion == modifyInfo.Version)
-                        {
-                            matchingVersion = modifyInfo;
+                            if (editor.FileVersion == modifyInfo.Version)
+                            {
+                                matchingVersion = modifyInfo;
+                            }
                         }
                     }
                 }
+
 
                 // 补丁前SHA1匹配上，肯定是正确的dll
                 if (matchingSHA1Before != null)
@@ -299,6 +330,7 @@ namespace RevokeMsgPatcher.Modifier
                     editor.TargetChanges = matchingSHA1Before.Changes;
                     continue;
                 }
+
                 // 补丁后SHA1匹配上，肯定已经打过补丁
                 if (matchingSHA1After != null)
                 {
@@ -324,6 +356,7 @@ namespace RevokeMsgPatcher.Modifier
                         {
                             replacePatterns = editor.FileCommonModifyInfo.ReplacePatterns.Where(info => categories.Contains(info.Category)).ToList();
                         }
+
                         // 如果能顺利得到 TargetChanges 不报错则可以使用特征替换方式
                         editor.TargetChanges = ModifyFinder.FindChanges(editor.FilePath, replacePatterns);
                         continue;
@@ -335,6 +368,7 @@ namespace RevokeMsgPatcher.Modifier
                         {
                             throw new BusinessException("not_support", $"不支持的文件：名称 {editor.FileName} 版本 {editor.FileVersion}！");
                         }
+
                         // SHA1不匹配，但是版本匹配，可能dll已经被其他补丁程序修改过
                         if (matchingVersion != null)
                         {
@@ -357,6 +391,7 @@ namespace RevokeMsgPatcher.Modifier
             {
                 throw new Exception("补丁安装失败，原因：无对应的文件修改器");
             }
+
             foreach (FileHexEditor editor in editors)
             {
                 if (editor == null)
@@ -364,11 +399,13 @@ namespace RevokeMsgPatcher.Modifier
                     throw new Exception("补丁安装失败，原因：文件修改器初始化失败！");
                 }
             }
+
             // 再备份所有文件
             foreach (FileHexEditor editor in editors)
             {
                 editor.Backup();
             }
+
             // 打补丁！
             List<FileHexEditor> done = new List<FileHexEditor>(); // 已经打上补丁的
             try
@@ -386,6 +423,8 @@ namespace RevokeMsgPatcher.Modifier
                         done.Add(editor);
                     }
                 }
+
+                AfterPatchSuccess();
             }
             catch (Exception ex)
             {
@@ -394,8 +433,11 @@ namespace RevokeMsgPatcher.Modifier
                 {
                     editor.Restore();
                 }
+
+                AfterPatchFail();
                 throw ex;
             }
+
             return true;
         }
 
@@ -408,6 +450,7 @@ namespace RevokeMsgPatcher.Modifier
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -440,6 +483,7 @@ namespace RevokeMsgPatcher.Modifier
                         editor.Restore();
                     }
                 }
+
                 return true;
             }
             else
@@ -447,5 +491,9 @@ namespace RevokeMsgPatcher.Modifier
                 throw new Exception("备份文件不存在，还原失败！");
             }
         }
+
+        public abstract void  AfterPatchSuccess();
+
+        public abstract void AfterPatchFail();
     }
 }

@@ -14,6 +14,14 @@ namespace RevokeMsgPatcher.Modifier
             this.config = config;
         }
 
+        public override void AfterPatchSuccess()
+        {
+        }
+
+        public override void AfterPatchFail()
+        {
+        }
+
         /// <summary>
         /// 自动寻找获取微信安装路径
         /// </summary>
