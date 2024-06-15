@@ -43,12 +43,10 @@ namespace RevokeMsgPatcher.Utils
         private static readonly string[] urls = new string[]
         {
             $"https://hui-config.oss-cn-hangzhou.aliyuncs.com/{PatchVersion}/patch.json",
-            $"https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
-            $"https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
-            $"https://raw.fgit.cf/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
             $"https://mirror.ghproxy.com/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
             $"https://raw.gitmirror.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
-            $"https://gh.con.sh/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json"
+            $"https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
+            $"https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
         };
 
         public static async Task<string> GetPatchJsonAsync()
