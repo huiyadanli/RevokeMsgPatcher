@@ -107,7 +107,7 @@ namespace RevokeMsgPatcher.Modifier
             // 正则 require\(String.raw`.*`\);
             string pattern = @"require\(String.raw`.*`\);";
             string liteLoaderPath = GetLiteLoaderPath();
-            if (!File.Exists(liteLoaderPath))
+            if (!Directory.Exists(liteLoaderPath))
             {
                 MessageBox.Show("LiteLoaderQQNT文件夹不存在，仅安装QQNT去验证补丁", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
