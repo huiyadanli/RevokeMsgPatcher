@@ -31,14 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLiteLoaderQQNT));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnChoose = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnCheckUpdateAll = new System.Windows.Forms.Button();
             this.btnPath = new System.Windows.Forms.Button();
             this.btnRestore = new System.Windows.Forms.Button();
             this.txtQQNTPath = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnChoose = new System.Windows.Forms.Button();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.cboGithubProxy = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -59,6 +61,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.cboGithubProxy);
             this.splitContainer1.Panel2.Controls.Add(this.btnChoose);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.btnCheckUpdateAll);
@@ -66,8 +69,9 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnRestore);
             this.splitContainer1.Panel2.Controls.Add(this.txtQQNTPath);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Size = new System.Drawing.Size(446, 280);
-            this.splitContainer1.SplitterDistance = 161;
+            this.splitContainer1.Panel2.Controls.Add(this.label3);
+            this.splitContainer1.Size = new System.Drawing.Size(446, 297);
+            this.splitContainer1.SplitterDistance = 157;
             this.splitContainer1.TabIndex = 0;
             // 
             // dataGridView1
@@ -82,13 +86,32 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(446, 161);
+            this.dataGridView1.Size = new System.Drawing.Size(446, 157);
             this.dataGridView1.TabIndex = 2;
+            // 
+            // btnChoose
+            // 
+            this.btnChoose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnChoose.Location = new System.Drawing.Point(394, 74);
+            this.btnChoose.Name = "btnChoose";
+            this.btnChoose.Size = new System.Drawing.Size(38, 23);
+            this.btnChoose.TabIndex = 6;
+            this.btnChoose.Text = "...";
+            this.btnChoose.UseVisualStyleBackColor = true;
+            this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(12, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(424, 26);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "这只是一个安装器，所有功能都来自于 LiteLoaderQQNT 和其相关插件。";
             // 
             // btnCheckUpdateAll
             // 
-            this.btnCheckUpdateAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCheckUpdateAll.Location = new System.Drawing.Point(12, 80);
+            this.btnCheckUpdateAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCheckUpdateAll.Location = new System.Drawing.Point(357, 45);
             this.btnCheckUpdateAll.Name = "btnCheckUpdateAll";
             this.btnCheckUpdateAll.Size = new System.Drawing.Size(75, 23);
             this.btnCheckUpdateAll.TabIndex = 4;
@@ -99,7 +122,7 @@
             // btnPath
             // 
             this.btnPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPath.Location = new System.Drawing.Point(359, 80);
+            this.btnPath.Location = new System.Drawing.Point(359, 101);
             this.btnPath.Name = "btnPath";
             this.btnPath.Size = new System.Drawing.Size(75, 23);
             this.btnPath.TabIndex = 3;
@@ -110,7 +133,7 @@
             // btnRestore
             // 
             this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRestore.Location = new System.Drawing.Point(278, 80);
+            this.btnRestore.Location = new System.Drawing.Point(278, 101);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(75, 23);
             this.btnRestore.TabIndex = 2;
@@ -122,7 +145,7 @@
             // 
             this.txtQQNTPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtQQNTPath.Location = new System.Drawing.Point(97, 53);
+            this.txtQQNTPath.Location = new System.Drawing.Point(95, 74);
             this.txtQQNTPath.Name = "txtQQNTPath";
             this.txtQQNTPath.Size = new System.Drawing.Size(293, 21);
             this.txtQQNTPath.TabIndex = 1;
@@ -130,44 +153,44 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 56);
+            this.label1.Location = new System.Drawing.Point(10, 77);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "QQNT安装路径：";
             // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(12, 11);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(424, 26);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "这只是一个安装器，所有功能都来自于 LiteLoaderQQNT 和其相关插件。";
-            // 
-            // btnChoose
-            // 
-            this.btnChoose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChoose.Location = new System.Drawing.Point(396, 53);
-            this.btnChoose.Name = "btnChoose";
-            this.btnChoose.Size = new System.Drawing.Size(38, 23);
-            this.btnChoose.TabIndex = 6;
-            this.btnChoose.Text = "...";
-            this.btnChoose.UseVisualStyleBackColor = true;
-            this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
-            // 
             // splitter1
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 280);
+            this.splitter1.Size = new System.Drawing.Size(3, 297);
             this.splitter1.TabIndex = 1;
             this.splitter1.TabStop = false;
+            // 
+            // cboGithubProxy
+            // 
+            this.cboGithubProxy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboGithubProxy.FormattingEnabled = true;
+            this.cboGithubProxy.Location = new System.Drawing.Point(95, 48);
+            this.cboGithubProxy.Name = "cboGithubProxy";
+            this.cboGithubProxy.Size = new System.Drawing.Size(256, 20);
+            this.cboGithubProxy.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 51);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "更新代理：";
             // 
             // FormLiteLoaderQQNT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 280);
+            this.ClientSize = new System.Drawing.Size(446, 297);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -196,5 +219,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnChoose;
         private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.ComboBox cboGithubProxy;
+        private System.Windows.Forms.Label label3;
     }
 }

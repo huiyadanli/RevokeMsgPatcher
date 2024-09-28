@@ -127,11 +127,12 @@ namespace RevokeMsgPatcher.Model
             }
         }
 
-        public async Task<string> GetRemoteVersion()
+        public async Task<string> GetRemoteVersion(string proxyUrl = null)
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync(VersionJsonUrl);
+                var url = string.IsNullOrEmpty(proxyUrl) ? VersionJsonUrl : proxyUrl + "/" + VersionJsonUrl;
+                var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
@@ -143,7 +144,7 @@ namespace RevokeMsgPatcher.Model
             }
         }
 
-        public async Task CheckAndUpdate()
+        public async Task CheckAndUpdate(string proxyUrl = null)
         {
             try
             {
@@ -153,13 +154,15 @@ namespace RevokeMsgPatcher.Model
                 }
 
                 string localVersion = GetLocalVersion();
-                string remoteVersion = await GetRemoteVersion();
+                string remoteVersion = await GetRemoteVersion(proxyUrl);
 
                 if (localVersion == null || new Version(remoteVersion) > new Version(localVersion))
                 {
                     UpdateStatus($"存在新版本{remoteVersion}，正在下载...");
                     Debug.WriteLine("发现新版本，正在下载...");
-                    string downloadedFilePath = await DownloadLatestPackage(DownloadUrl.Replace("#{version}", remoteVersion), Path.Combine(Application.StartupPath, "Public/Download"));
+                    var url = DownloadUrl.Replace("#{version}", remoteVersion);
+                    url = string.IsNullOrEmpty(proxyUrl) ? url : proxyUrl + "/" + url;
+                    string downloadedFilePath = await DownloadLatestPackage(url, Path.Combine(Application.StartupPath, "Public/Download"));
                     Debug.WriteLine("下载到：" + downloadedFilePath);
                     UpdateStatus($"下载成功，解压中...");
 
@@ -170,6 +173,7 @@ namespace RevokeMsgPatcher.Model
                     {
                         Directory.Delete(extractPath, true);
                     }
+
                     Directory.CreateDirectory(extractPath);
                     ZipFile.ExtractToDirectory(downloadedFilePath, extractPath);
 
@@ -190,10 +194,12 @@ namespace RevokeMsgPatcher.Model
                     {
                         File.Delete(downloadedFilePath);
                     }
+
                     if (Directory.Exists(extractPath))
                     {
                         Directory.Delete(extractPath, true);
                     }
+
                     Debug.WriteLine("清理完成。");
                     UpdateStatus($"{remoteVersion}更新完成");
                 }
@@ -208,7 +214,6 @@ namespace RevokeMsgPatcher.Model
                 Debug.WriteLine(e.ToString());
                 UpdateStatus(Status + " 后发生异常：" + e.Message);
             }
-
         }
 
         private string FindDirectoryWithJson(string extractPath, int maxDepth = 2)

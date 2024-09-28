@@ -1,19 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Utils;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using Newtonsoft.Json;
-using RevokeMsgPatcher.Model;
-using RevokeMsgPatcher.Modifier;
-using RevokeMsgPatcher.Utils;
 
 namespace RevokeMsgPatcher.Forms
 {
@@ -26,6 +22,28 @@ namespace RevokeMsgPatcher.Forms
             InitializeComponent();
             InitializeDataGridView();
             txtQQNTPath.Text = FindInstallPath();
+
+            InitCboProxyList();
+        }
+
+        private void InitCboProxyList()
+        {
+            // 添加代理 URL 到下拉菜单
+            foreach (var proxy in ProxySpeedTester.ProxyUrls)
+            {
+                cboGithubProxy.Items.Add(proxy);
+            }
+
+            // 异步测试代理速度并设置默认选项
+            Task.Run(async () =>
+            {
+                var fastestProxy = await ProxySpeedTester.GetFastestProxyAsync();
+                Debug.WriteLine(fastestProxy);
+                if (!string.IsNullOrEmpty(fastestProxy))
+                {
+                    cboGithubProxy.Invoke(new Action(() => cboGithubProxy.SelectedItem = fastestProxy));
+                }
+            });
         }
 
 
@@ -150,7 +168,8 @@ namespace RevokeMsgPatcher.Forms
                     }
 
                     data[e.RowIndex].Row.Cells["StatusColumn"].Value = "正在更新";
-                    Task.Run(() => data[e.RowIndex].CheckAndUpdate());
+                    var proxyUrl = cboGithubProxy.Text;
+                    Task.Run(() => data[e.RowIndex].CheckAndUpdate(proxyUrl));
                 }
                 else if (e.ColumnIndex == dataGridView1.Columns["NameColumn"].Index || e.ColumnIndex == dataGridView1.Columns["AuthorColumn"].Index)
                 {
@@ -162,9 +181,10 @@ namespace RevokeMsgPatcher.Forms
 
         private void btnCheckUpdateAll_Click(object sender, EventArgs e)
         {
+            var proxyUrl = cboGithubProxy.Text;
             foreach (var item in data)
             {
-                Task.Run(() => item.CheckAndUpdate());
+                Task.Run(() => item.CheckAndUpdate(proxyUrl));
             }
         }
 
@@ -176,6 +196,7 @@ namespace RevokeMsgPatcher.Forms
                 MessageBox.Show("请选择正确的QQNT安装路径!");
                 return;
             }
+
             try
             {
                 string appPath = GetAppPath(installPath);
