@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2016
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher", "RevokeMsgPatcher\RevokeMsgPatcher.csproj", "{977BF781-CED8-4389-9404-0FA08FDF21DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher.Assistant", "RevokeMsgPatcher.Assistant\RevokeMsgPatcher.Assistant.csproj", "{6992004F-17E6-45BF-8D72-180A31E9C23C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher.MultiInstance", "RevokeMsgPatcher.MultiInstance\RevokeMsgPatcher.MultiInstance.csproj", "{73043CA8-AF54-4591-9174-40FB6E0A3D36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevokeMsgPatcher.Launcher", "RevokeMsgPatcher.Launcher\RevokeMsgPatcher.Launcher.csproj", "{B1D05208-E291-406B-A8B4-F673EC784B1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{73043CA8-AF54-4591-9174-40FB6E0A3D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73043CA8-AF54-4591-9174-40FB6E0A3D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73043CA8-AF54-4591-9174-40FB6E0A3D36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D05208-E291-406B-A8B4-F673EC784B1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D05208-E291-406B-A8B4-F673EC784B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D05208-E291-406B-A8B4-F673EC784B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D05208-E291-406B-A8B4-F673EC784B1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
