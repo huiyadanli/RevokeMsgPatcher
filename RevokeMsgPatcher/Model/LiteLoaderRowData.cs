@@ -116,7 +116,14 @@ namespace RevokeMsgPatcher.Model
             }
             else
             {
-                UpdateStatus("未检查");
+                if (NameLink.Contains("QQNTFileVerifyPatch"))
+                {
+                    UpdateStatus("无需更新");
+                }
+                else
+                {
+                    UpdateStatus("未检查");
+                }
             }
         }
 
@@ -125,7 +132,6 @@ namespace RevokeMsgPatcher.Model
             using (var client = new HttpClient())
             {
                 var response = await client.GetAsync(VersionJsonUrl);
-                Debug.WriteLine(response.Content);
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();

@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "1.8",
-                PatchVersion = 20240615,
+                PatchVersion = 20240928,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1373,7 +1373,7 @@ namespace RevokeMsgPatcher
                             {
                                 Name="QQ.exe",
                                 StartVersion="9.9.10.00000",
-                                EndVersion="",
+                                EndVersion="9.9.15.00000",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern

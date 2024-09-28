@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Modifier;
+using RevokeMsgPatcher.Utils;
 
 namespace RevokeMsgPatcher.Forms
 {
@@ -20,6 +25,7 @@ namespace RevokeMsgPatcher.Forms
         {
             InitializeComponent();
             InitializeDataGridView();
+            txtQQNTPath.Text = FindInstallPath();
         }
 
 
@@ -164,12 +170,276 @@ namespace RevokeMsgPatcher.Forms
 
         private void btnRestore_Click(object sender, EventArgs e)
         {
-
+            string installPath = txtQQNTPath.Text;
+            if (!IsAllFilesExist(installPath))
+            {
+                MessageBox.Show("请选择正确的QQNT安装路径!");
+                return;
+            }
+            try
+            {
+                string appPath = GetAppPath(installPath);
+                RestoreDll(installPath);
+                RestorePackageJson(appPath);
+                MessageBox.Show("LiteLoaderQQNT 还原成功！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $@"
+                     还原时出现异常：{ex.Source}
+                     --
+                     {ex.StackTrace}
+                     --
+                     {ex.Message}
+                     "
+                );
+            }
         }
 
+        private void RestoreDll(string installPath)
+        {
+            string destPath = Path.Combine(installPath, "dbghelp.dll");
+            if (File.Exists(destPath))
+            {
+                File.Delete(destPath);
+            }
+        }
+
+        private void RestorePackageJson(string appPath)
+        {
+            string packageJsonPath = Path.Combine(appPath, "package.json");
+            string backupPath = Path.Combine(appPath, "package.json.h.bak");
+            if (File.Exists(backupPath))
+            {
+                File.Copy(backupPath, packageJsonPath, true);
+            }
+            else
+            {
+                throw new Exception($"在路径{appPath}下，未找到package.json.h.bak备份文件，请确认是否通过本软件安装过 LiteLoaderQQNT");
+            }
+        }
+
+        /// <summary>
+        /// 打补丁
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPath_Click(object sender, EventArgs e)
         {
+            string installPath = txtQQNTPath.Text;
+            if (!IsAllFilesExist(installPath))
+            {
+                MessageBox.Show("请选择正确的QQNT安装路径!");
+                return;
+            }
 
+            try
+            {
+                string appPath = GetAppPath(installPath);
+                MoveDll(installPath);
+                CreateLauncherFile(appPath);
+                ModifyPackageJson(appPath);
+                MessageBox.Show("LiteLoaderQQNT 安装成功！");
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(
+                    $@"
+请以管理员权限启动本程序，并确认 QQNT 处于关闭状态。
+                     安装 LiteLoaderQQNT 时出现异常：{ex.Source}
+                     --
+                     {ex.StackTrace}
+                     --
+                     {ex.Message}
+                     "
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $@"
+                     安装 LiteLoaderQQNT 时出现异常：{ex.Source}
+                     --
+                     {ex.StackTrace}
+                     --
+                     {ex.Message}
+                     "
+                );
+            }
+        }
+
+
+        private void MoveDll(string installPath)
+        {
+            string fileName = "dbghelp.dll";
+            string destPath = Path.Combine(installPath, fileName);
+            if (File.Exists(destPath))
+            {
+                File.Delete(destPath);
+            }
+
+            File.Copy(Path.Combine(Application.StartupPath, "Public", fileName), destPath);
+        }
+
+        /// <summary>
+        /// 查看 QQNT 根目录(txtQQNTPath.Text)，是否存在 versions 文件夹 是，则路径为 QQNT\versions\版本号\resources\app 否，则路径为 QQNT\resources\app 
+        /// </summary>
+        /// <param name="installPath"></param>
+        /// <returns></returns>
+        private string GetAppPath(string installPath)
+        {
+            string versionsPath = Path.Combine(installPath, "versions");
+            if (Directory.Exists(versionsPath))
+            {
+                var versionDirectories = Directory.GetDirectories(versionsPath);
+                if (versionDirectories.Length > 0)
+                {
+                    // 选择最新的版本
+                    string latestVersion = versionDirectories
+                        .Select(Path.GetFileName)
+                        .OrderByDescending(v => new
+                        {
+                            MainVersion = new Version(v.Split('-')[0]),
+                            SubVersion = int.Parse(v.Split('-')[1])
+                        })
+                        .FirstOrDefault();
+
+                    if (latestVersion != null)
+                    {
+                        return Path.Combine(versionsPath, latestVersion, "resources", "app");
+                    }
+                }
+            }
+
+            return Path.Combine(installPath, "resources", "app");
+        }
+
+        /// <summary>
+        /// 创建 app/app_launcher/liteloader.h.js 文件，写入 require(String.raw*) 其中 * 为 LiteLoaderQQNT 的路径
+        /// </summary>
+        /// <param name="appPath"></param>
+        /// <exception cref="Exception"></exception>
+        private void CreateLauncherFile(string appPath)
+        {
+            string launcherDir = Path.Combine(appPath, "app_launcher");
+            if (!Directory.Exists(launcherDir))
+            {
+                throw new Exception($"在路径{appPath}下，未找到app_launcher文件夹");
+            }
+
+            string launcherFilePath = Path.Combine(launcherDir, "liteloader.h.js");
+            // if (File.Exists(launcherFilePath))
+            // {
+            //     Debug.WriteLine("已经创建过liteloader.h.js文件");
+            //     return;
+            // }
+
+            string liteLoaderPath = Path.Combine(Application.StartupPath, "LiteLoaderQQNT");
+            string content = $"require(String.raw`{liteLoaderPath}`);";
+
+            File.WriteAllText(launcherFilePath, content, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 修改 app/package.json 文件，将 main 后面的路径改为 ./app_launcher/liteloader.h.js
+        /// </summary>
+        /// <param name="appPath"></param>
+        /// <exception cref="Exception"></exception>
+        private void ModifyPackageJson(string appPath)
+        {
+            string packageJsonPath = Path.Combine(appPath, "package.json");
+            if (File.Exists(packageJsonPath))
+            {
+                string json = File.ReadAllText(packageJsonPath);
+                dynamic jsonObj = JsonConvert.DeserializeObject(json);
+                if (jsonObj.main != null)
+                {
+                    var s = (string)jsonObj.main;
+                    if (s.Contains("liteloader.h.js"))
+                    {
+                        Debug.WriteLine("已经修改过package.json文件");
+                        return;
+                    }
+                }
+
+                // 备份
+                File.Copy(packageJsonPath, Path.Combine(appPath, "package.json.h.bak"), true);
+
+                // 修改
+                jsonObj.main = "./app_launcher/liteloader.h.js";
+                string output = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
+                File.WriteAllText(packageJsonPath, output);
+            }
+            else
+            {
+                throw new Exception($"在路径{appPath}下，未找到package.json文件");
+            }
+        }
+
+        private void btnChoose_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "请选择安装路径";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                if (string.IsNullOrEmpty(dialog.SelectedPath) || !IsAllFilesExist(dialog.SelectedPath))
+                {
+                    MessageBox.Show("无法找到此应用的关键文件，请选择正确的安装路径!");
+                }
+                else
+                {
+                    txtQQNTPath.Text = dialog.SelectedPath;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 自动寻找获取QQNT安装路径
+        /// </summary>
+        /// <returns></returns>
+        public string FindInstallPath()
+        {
+            try
+            {
+                string installPath = PathUtil.FindInstallPathFromRegistryWOW6432Node("QQ");
+                if (!string.IsNullOrEmpty(installPath))
+                {
+                    installPath = Path.GetDirectoryName(installPath);
+                    if (IsAllFilesExist(installPath))
+                    {
+                        return installPath;
+                    }
+                }
+
+                installPath = PathUtil.FindInstallPathFromRegistry("QQNT");
+                if (!IsAllFilesExist(installPath))
+                {
+                    List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\QQNT");
+                    foreach (string defaultPath in defaultPathList)
+                    {
+                        if (IsAllFilesExist(defaultPath))
+                        {
+                            return defaultPath;
+                        }
+                    }
+                }
+                else
+                {
+                    return installPath;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return null;
+        }
+
+        private bool IsAllFilesExist(string installPath)
+        {
+            return File.Exists(Path.Combine(installPath, "QQ.exe"));
         }
     }
 }

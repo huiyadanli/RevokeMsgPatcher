@@ -22,41 +22,42 @@ namespace RevokeMsgPatcher.Modifier
         /// <returns></returns>
         public override string FindInstallPath()
         {
-            try
-            {
-                string installPath = PathUtil.FindInstallPathFromRegistryWOW6432Node("QQ");
-                if (!string.IsNullOrEmpty(installPath))
-                {
-                    installPath = Path.GetDirectoryName(installPath);
-                    if (IsAllFilesExist(installPath))
-                    {
-                        return installPath;
-                    }
-                }
-
-                installPath = PathUtil.FindInstallPathFromRegistry("QQNT");
-                if (!IsAllFilesExist(installPath))
-                {
-                    List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\QQNT");
-                    foreach (string defaultPath in defaultPathList)
-                    {
-                        if (IsAllFilesExist(defaultPath))
-                        {
-                            return defaultPath;
-                        }
-                    }
-                }
-                else
-                {
-                    return installPath;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return null;
+            return "请在新弹出的窗口内进行 LiteLoaderQQNT 的安装与更新！";
+            // try
+            // {
+            //     string installPath = PathUtil.FindInstallPathFromRegistryWOW6432Node("QQ");
+            //     if (!string.IsNullOrEmpty(installPath))
+            //     {
+            //         installPath = Path.GetDirectoryName(installPath);
+            //         if (IsAllFilesExist(installPath))
+            //         {
+            //             return installPath;
+            //         }
+            //     }
+            //
+            //     installPath = PathUtil.FindInstallPathFromRegistry("QQNT");
+            //     if (!IsAllFilesExist(installPath))
+            //     {
+            //         List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\QQNT");
+            //         foreach (string defaultPath in defaultPathList)
+            //         {
+            //             if (IsAllFilesExist(defaultPath))
+            //             {
+            //                 return defaultPath;
+            //             }
+            //         }
+            //     }
+            //     else
+            //     {
+            //         return installPath;
+            //     }
+            // }
+            // catch (Exception e)
+            // {
+            //     Console.WriteLine(e.Message);
+            // }
+            //
+            // return null;
         }
 
         /// <summary>
