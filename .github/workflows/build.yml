@@ -58,7 +58,7 @@ jobs:
       run: msbuild /m /p:Configuration=${{matrix.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: RevokeMsgPatcher-${{matrix.BUILD_CONFIGURATION}}
         path: |
