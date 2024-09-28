@@ -1380,7 +1380,7 @@ namespace RevokeMsgPatcher
                                     {
                                         Search = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 E8 3F 3F 3F 3F"),
                                         Replace = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 B8 01 00 00 00"),
-                                        Category = "LiteLoaderQQNT+插件列表+防撤回"
+                                        Category = "请在新窗口内安装LiteLoaderQQNT"
                                     }
                                 }
                             }
