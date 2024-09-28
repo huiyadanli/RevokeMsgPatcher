@@ -183,6 +183,8 @@ namespace RevokeMsgPatcher
 点击确定继续，点击取消重新选择！", "功能选择提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result != DialogResult.Yes)
                     {
+                        EnableAllButton(true);
+                        btnRestore.Enabled = modifier.BackupExists();
                         return;
                     }
                 }
