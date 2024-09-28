@@ -20,8 +20,8 @@
 <img width="180px" src="https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/Images/revoke.jpg"/>
 
 下载地址：
-**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/1.7/RevokeMsgPatcher.v1.7.zip)** |
-[☁备用下载-蓝奏云](https://wwmy.lanzouq.com/iKtq71coivli)  密码:coco| 
+**[⚡️点我下载最新版本](https://github.com/huiyadanli/RevokeMsgPatcher/releases/download/1.9/RevokeMsgPatcher.v1.9.zip)** |
+[☁备用下载-蓝奏云](https://wwmy.lanzouq.com/b0fot7dpe)  密码:coco| 
 [☁备用下载-百度云](https://pan.baidu.com/s/15ilr78t8F1-VW8eUZSkr_Q?pwd=3rrj) 
 
 相关文档：
@@ -59,12 +59,17 @@
 
 ## 💡致谢
 
-本项目早期内容源自 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke) 项目
+本项目早期内容源自 [wechat_anti_revoke](https://github.com/36huo/wechat_anti_revoke) 项目。
+
+QQNT 防撤回依赖于 [LiteLoaderQQNT](https://github.com/LiteLoaderQQNT/LiteLoaderQQNT)，修补依赖于 [DLLHijackMethod](https://github.com/LiteLoaderQQNT/QQNTFileVerifyPatch/tree/DLLHijackMethod) 并集成了以下插件：
+
+* [插件列表查看 LL-plugin-list-viewer](https://github.com/ltxhhz/LL-plugin-list-viewer)
+* [防撤回 LiteLoaderQQNT-Anti-Recall](https://github.com/xh321/LiteLoaderQQNT-Anti-Recall)
 
 ## ❤️投喂
 
 觉的好用的话，可以支持作者哟ヾ(･ω･`｡) 
-* [⚡爱发电](https://afdian.net/@huiyadanli)
+* [⚡爱发电](https://afdian.com/@huiyadanli)
 * [🍚微信赞赏](https://github.com/huiyadanli/huiyadanli/blob/master/DONATE.md)
 
 ## 📄License
