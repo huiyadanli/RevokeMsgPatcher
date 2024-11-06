@@ -16,8 +16,8 @@ namespace RevokeMsgPatcher
             return new Bag
             {
                 Apps = AppConfig(),
-                LatestVersion = "1.9",
-                PatchVersion = 20240929,
+                LatestVersion = "2.0",
+                PatchVersion = 20241106,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -34,6 +34,7 @@ namespace RevokeMsgPatcher
             return new Dictionary<string, App>
             {
                 { "Wechat" , Wechat() },
+                { "Weixin" , Weixin() },
                 { "QQ" , QQ() },
                 { "TIM" , TIM() },
                 { "QQLite" , QQLite() },
@@ -1381,6 +1382,50 @@ namespace RevokeMsgPatcher
                                         Search = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 E8 3F 3F 3F 3F"),
                                         Replace = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 B8 01 00 00 00"),
                                         Category = "请在新窗口内安装LiteLoaderQQNT"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        public App Weixin()
+        {
+            return new App
+            {
+                Name = "Weixin",
+                FileTargetInfos = new Dictionary<string, TargetInfo>
+                {
+                    {
+                        "Weixin.dll",
+                        new TargetInfo
+                        {
+                            Name = "Weixin.dll",
+                            RelativePath = "Weixin.dll",
+                            StartVersion = "1.0.0.0"
+                        }
+                    }
+                },
+                FileCommonModifyInfos = new Dictionary<string, List<CommonModifyInfo>>
+                {
+                    {
+                        "Weixin.dll",
+                        new List<CommonModifyInfo>
+                        {
+                            new CommonModifyInfo
+                            {
+                                Name="Weixin.dll",
+                                StartVersion="4.0.0.0",
+                                EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("57 53 48 83 EC 20 48 89 CE 80 3D D1 F7 DC 05 00 75 21 48 B8"),
+                                        Replace = ByteUtil.HexStringToByteArray("57 53 48 83 EC 20 48 89 CE 80 3D D1 F7 DC 05 00 EB 21 48 B8"),
+                                        Category = "防撤回"
                                     }
                                 }
                             }

@@ -21,6 +21,7 @@ namespace RevokeMsgPatcher.Utils
                 Console.WriteLine(keyName + " , " + programKey.GetValue("DisplayName") + " , " + programKey.GetValue("InstallLocation"));
                 programKey.Close();
             }
+
             uninstallKey.Close();
         }
 
@@ -43,6 +44,7 @@ namespace RevokeMsgPatcher.Utils
                 {
                     return null;
                 }
+
                 object installLocation = key.GetValue("InstallLocation");
                 key.Close();
                 if (installLocation != null && !string.IsNullOrEmpty(installLocation.ToString()))
@@ -54,6 +56,7 @@ namespace RevokeMsgPatcher.Utils
             {
                 Console.WriteLine(e.Message);
             }
+
             return null;
         }
 
@@ -67,17 +70,19 @@ namespace RevokeMsgPatcher.Utils
                 {
                     return null;
                 }
+
                 object installLocation = key.GetValue("UninstallString");
                 key.Close();
                 if (installLocation != null && !string.IsNullOrEmpty(installLocation.ToString()))
                 {
-                    return installLocation.ToString();
+                    return installLocation.ToString().Replace("\"","");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+
             return null;
         }
 
@@ -98,7 +103,16 @@ namespace RevokeMsgPatcher.Utils
                 {
                     list.Add(path);
                 }
+                else
+                {
+                    path = Path.Combine(d, $@"Program Files\{relativePath}");
+                    if (Directory.Exists(path))
+                    {
+                        list.Add(path);
+                    }
+                }
             }
+
             return list;
         }
 
@@ -108,8 +122,7 @@ namespace RevokeMsgPatcher.Utils
         /// <param name="dirs"></param>
         public static void SortByLastWriteTimeDesc(ref DirectoryInfo[] dirs)
         {
-            Array.Sort(dirs, delegate (DirectoryInfo x, DirectoryInfo y) { return y.LastWriteTime.CompareTo(x.LastWriteTime); });
+            Array.Sort(dirs, delegate(DirectoryInfo x, DirectoryInfo y) { return y.LastWriteTime.CompareTo(x.LastWriteTime); });
         }
-
     }
 }

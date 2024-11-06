@@ -6,10 +6,10 @@ using System.IO;
 
 namespace RevokeMsgPatcher.Modifier
 {
-    class WechatModifier : AppModifier
+    class WeixinModifier : AppModifier
     {
 
-        public WechatModifier(App config)
+        public WeixinModifier(App config)
         {
             this.config = config;
         }
@@ -30,11 +30,16 @@ namespace RevokeMsgPatcher.Modifier
         {
             try
             {
-                string installPath = PathUtil.FindInstallPathFromRegistry("Wechat");
-                string realPath = GetRealInstallPath(installPath);
+                string installPath = PathUtil.FindInstallPathFromRegistryWOW6432Node("Weixin");
+                string realPath = null;
+                if (!string.IsNullOrEmpty(installPath))
+                {
+                    installPath = Path.GetDirectoryName(installPath);
+                    realPath = GetRealInstallPath(installPath);
+                }
                 if (string.IsNullOrEmpty(realPath))
                 {
-                    List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\Wechat");
+                    List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\Weixin");
                     foreach (string defaultPath in defaultPathList)
                     {
                         realPath = GetRealInstallPath(defaultPath);
@@ -57,7 +62,7 @@ namespace RevokeMsgPatcher.Modifier
         }
 
         /// <summary>
-        /// 微信 3.5.0.4 改变了目录结构
+        /// 微信目录结构
         /// </summary>
         /// <param name="basePath"></param>
         /// <returns></returns>
@@ -66,10 +71,6 @@ namespace RevokeMsgPatcher.Modifier
             if (basePath == null)
             {
                 return null;
-            }
-            if (IsAllFilesExist(basePath))
-            {
-                return basePath;
             }
             DirectoryInfo[] directories = new DirectoryInfo(basePath).GetDirectories();
             PathUtil.SortByLastWriteTimeDesc(ref directories); // 按修改时间倒序
@@ -94,7 +95,7 @@ namespace RevokeMsgPatcher.Modifier
             {
                 foreach (FileHexEditor editor in editors)
                 {
-                    if (editor.FileName == "WeChatWin.dll")
+                    if (editor.FileName == "Weixin.dll")
                     {
                         return editor.FileVersion;
                     }

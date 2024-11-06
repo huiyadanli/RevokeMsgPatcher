@@ -19,6 +19,7 @@ namespace RevokeMsgPatcher
         private AppModifier modifier = null;
 
         private WechatModifier wechatModifier = null;
+        private WeixinModifier weixinModifier = null;
         private QQModifier qqModifier = null;
         private TIMModifier timModifier = null;
         private QQLiteModifier qqLiteModifier = null;
@@ -42,12 +43,14 @@ namespace RevokeMsgPatcher
 
             // 初始化每个应用对应的修改者
             wechatModifier = new WechatModifier(bag.Apps["Wechat"]);
+            weixinModifier = new WeixinModifier(bag.Apps["Weixin"]);
             qqModifier = new QQModifier(bag.Apps["QQ"]);
             timModifier = new TIMModifier(bag.Apps["TIM"]);
             qqLiteModifier = new QQLiteModifier(bag.Apps["QQLite"]);
             qqntModifier = new QQNTModifier(bag.Apps["QQNT"]);
 
             rbtWechat.Tag = wechatModifier;
+            rbtWeixin.Tag = weixinModifier;
             rbtQQ.Tag = qqModifier;
             rbtTIM.Tag = timModifier;
             rbtQQLite.Tag = qqLiteModifier;
@@ -347,6 +350,7 @@ namespace RevokeMsgPatcher
                         lblUpdatePachJson.ForeColor = Color.RoyalBlue;
 
                         wechatModifier.Config = newBag.Apps["Wechat"];
+                        weixinModifier.Config = newBag.Apps["Weixin"];
                         qqModifier.Config = newBag.Apps["QQ"];
                         timModifier.Config = newBag.Apps["TIM"];
                         qqLiteModifier.Config = newBag.Apps["QQLite"];
@@ -384,6 +388,7 @@ namespace RevokeMsgPatcher
 
             tips += "支持以下版本" + Environment.NewLine;
             tips += " ➯ 微信：" + wechatModifier.Config.GetSupportVersionStr() + Environment.NewLine;
+            tips += " ➯ 微信4.0：" + weixinModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQNT：" + qqntModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQ：" + qqModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQ轻聊版：" + qqLiteModifier.Config.GetSupportVersionStr() + Environment.NewLine;
@@ -410,6 +415,10 @@ namespace RevokeMsgPatcher
             if (rbtWechat.Checked)
             {
                 modifier = (WechatModifier)rbtWechat.Tag;
+            }
+            else if (rbtWeixin.Checked)
+            {
+                modifier = (WeixinModifier)rbtWeixin.Tag;
             }
             else if (rbtQQ.Checked)
             {

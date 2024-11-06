@@ -64,6 +64,7 @@
             this.panelNotice = new System.Windows.Forms.Panel();
             this.labelNotice = new System.Windows.Forms.Label();
             this.rbtQQNT = new System.Windows.Forms.RadioButton();
+            this.rbtWeixin = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.panelNotice.SuspendLayout();
             this.SuspendLayout();
@@ -178,7 +179,6 @@
             this.rbtWechat.Name = "rbtWechat";
             this.rbtWechat.Size = new System.Drawing.Size(47, 16);
             this.rbtWechat.TabIndex = 12;
-            this.rbtWechat.TabStop = true;
             this.rbtWechat.Text = "微信";
             this.rbtWechat.UseVisualStyleBackColor = true;
             this.rbtWechat.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
@@ -186,7 +186,7 @@
             // rbtQQ
             // 
             this.rbtQQ.AutoSize = true;
-            this.rbtQQ.Location = new System.Drawing.Point(190, 36);
+            this.rbtQQ.Location = new System.Drawing.Point(254, 36);
             this.rbtQQ.Name = "rbtQQ";
             this.rbtQQ.Size = new System.Drawing.Size(35, 16);
             this.rbtQQ.TabIndex = 13;
@@ -197,7 +197,7 @@
             // rbtTIM
             // 
             this.rbtTIM.AutoSize = true;
-            this.rbtTIM.Location = new System.Drawing.Point(236, 36);
+            this.rbtTIM.Location = new System.Drawing.Point(300, 36);
             this.rbtTIM.Name = "rbtTIM";
             this.rbtTIM.Size = new System.Drawing.Size(41, 16);
             this.rbtTIM.TabIndex = 14;
@@ -217,7 +217,7 @@
             // rbtQQLite
             // 
             this.rbtQQLite.AutoSize = true;
-            this.rbtQQLite.Location = new System.Drawing.Point(285, 36);
+            this.rbtQQLite.Location = new System.Drawing.Point(349, 36);
             this.rbtQQLite.Name = "rbtQQLite";
             this.rbtQQLite.Size = new System.Drawing.Size(71, 16);
             this.rbtQQLite.TabIndex = 18;
@@ -376,13 +376,24 @@
             // rbtQQNT
             // 
             this.rbtQQNT.AutoSize = true;
-            this.rbtQQNT.Location = new System.Drawing.Point(135, 36);
+            this.rbtQQNT.Location = new System.Drawing.Point(199, 36);
             this.rbtQQNT.Name = "rbtQQNT";
             this.rbtQQNT.Size = new System.Drawing.Size(47, 16);
             this.rbtQQNT.TabIndex = 24;
             this.rbtQQNT.Text = "QQNT";
             this.rbtQQNT.UseVisualStyleBackColor = true;
             this.rbtQQNT.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
+            // 
+            // rbtWeixin
+            // 
+            this.rbtWeixin.AutoSize = true;
+            this.rbtWeixin.Location = new System.Drawing.Point(134, 36);
+            this.rbtWeixin.Name = "rbtWeixin";
+            this.rbtWeixin.Size = new System.Drawing.Size(65, 16);
+            this.rbtWeixin.TabIndex = 25;
+            this.rbtWeixin.Text = "微信4.0";
+            this.rbtWeixin.UseVisualStyleBackColor = true;
+            this.rbtWeixin.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
             // 
             // FormMain
             // 
@@ -409,6 +420,7 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.rbtWeixin);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(504, 144);
@@ -459,6 +471,7 @@
         private System.Windows.Forms.Panel panelNotice;
         private System.Windows.Forms.Label labelNotice;
         private System.Windows.Forms.RadioButton rbtQQNT;
+        private System.Windows.Forms.RadioButton rbtWeixin;
     }
 }
 
