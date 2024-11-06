@@ -31,17 +31,17 @@ namespace RevokeMsgPatcher.Forms
             // 添加代理 URL 到下拉菜单
             foreach (var proxy in ProxySpeedTester.ProxyUrls)
             {
-                cboGithubProxy.Items.Add(proxy);
+                cboGithubProxy.Items.Add(proxy.Replace("{0}",""));
             }
 
             // 异步测试代理速度并设置默认选项
             Task.Run(async () =>
             {
-                var fastestProxy = await ProxySpeedTester.GetFastestProxyAsync();
-                Debug.WriteLine(fastestProxy);
-                if (!string.IsNullOrEmpty(fastestProxy))
+                var fastestProxy = await ProxySpeedTester.GetFastestProxyAsync(ProxySpeedTester.TargetUrl);
+                Debug.WriteLine(fastestProxy.Item1);
+                if (!string.IsNullOrEmpty(fastestProxy.Item1))
                 {
-                    cboGithubProxy.Invoke(new Action(() => cboGithubProxy.SelectedItem = fastestProxy));
+                    cboGithubProxy.Invoke(new Action(() => cboGithubProxy.SelectedItem = fastestProxy.Item1));
                 }
             });
         }

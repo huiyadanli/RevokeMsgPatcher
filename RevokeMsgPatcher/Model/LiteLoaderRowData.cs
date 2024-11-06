@@ -127,11 +127,11 @@ namespace RevokeMsgPatcher.Model
             }
         }
 
-        public async Task<string> GetRemoteVersion(string proxyUrl = null)
+        public async Task<string> GetRemoteVersion(string proxyUrl)
         {
             using (var client = new HttpClient())
             {
-                var url = string.IsNullOrEmpty(proxyUrl) ? VersionJsonUrl : proxyUrl + "/" + VersionJsonUrl;
+                var url = FormatUrl(proxyUrl, VersionJsonUrl);
                 var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
@@ -141,6 +141,30 @@ namespace RevokeMsgPatcher.Model
                 }
 
                 return null;
+            }
+        }
+
+        private string FormatUrl(string proxyUrl, string target)
+        {
+            if (string.IsNullOrEmpty(proxyUrl))
+            {
+                return target;
+            }
+            else
+            {
+                if (proxyUrl.Contains("{0}"))
+                {
+                    return string.Format(proxyUrl, target);
+                }
+                else
+                {
+                    if (!proxyUrl.EndsWith("/"))
+                    {
+                        proxyUrl += "/";
+                    }
+
+                    return proxyUrl + target;
+                }
             }
         }
 
@@ -161,7 +185,7 @@ namespace RevokeMsgPatcher.Model
                     UpdateStatus($"存在新版本{remoteVersion}，正在下载...");
                     Debug.WriteLine("发现新版本，正在下载...");
                     var url = DownloadUrl.Replace("#{version}", remoteVersion);
-                    url = string.IsNullOrEmpty(proxyUrl) ? url : proxyUrl + "/" + url;
+                    url = FormatUrl(proxyUrl, url);
                     string downloadedFilePath = await DownloadLatestPackage(url, Path.Combine(Application.StartupPath, "Public/Download"));
                     Debug.WriteLine("下载到：" + downloadedFilePath);
                     UpdateStatus($"下载成功，解压中...");
