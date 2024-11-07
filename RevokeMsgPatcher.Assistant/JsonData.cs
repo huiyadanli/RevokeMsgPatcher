@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "2.0",
-                PatchVersion = 20241106,
+                PatchVersion = 20241107,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1423,10 +1423,16 @@ namespace RevokeMsgPatcher
                                 {
                                     new ReplacePattern
                                     {
-                                        Search = ByteUtil.HexStringToByteArray("57 53 48 83 EC 20 48 89 CE 80 3D D1 F7 DC 05 00 75 21 48 B8"),
-                                        Replace = ByteUtil.HexStringToByteArray("57 53 48 83 EC 20 48 89 CE 80 3D D1 F7 DC 05 00 EB 21 48 B8"),
+                                        Search = ByteUtil.HexStringToByteArray("57 53 48 83 EC 20 48 89 CE 80 3D 3F 3F 3F 3F 00 75 21 48 B8"),
+                                        Replace = ByteUtil.HexStringToByteArray("57 53 48 83 EC 20 48 89 CE 80 3D 3F 3F 3F 3F 00 EB 21 48 B8"),
                                         Category = "防撤回"
-                                    }
+                                    },
+                                    // new ReplacePattern
+                                    // {
+                                    //     Search = ByteUtil.HexStringToByteArray("BA 01 00 00 00 E8 3F 3F 3F 00 85 C0 0F 84 3F 03 00"),
+                                    //     Replace = ByteUtil.HexStringToByteArray("BA 01 00 00 00 E8 3F 3F 3F 00 85 C0 E9 50 03 00 00"),
+                                    //     Category = "多开"
+                                    // }
                                 }
                             }
                         }
