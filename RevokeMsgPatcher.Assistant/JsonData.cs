@@ -120,8 +120,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="WeChatWin.dll",
-                                StartVersion="3.9.11.0",
+                                StartVersion="4.0.3.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("75 21 48 B8 72 65 76 6F 6B 65 6D 73 48 89 05 3F 3F 3F 3F 66 C7 05 3F 3F 3F 3F 67 00 C6 05 3F 3F 3F 3F 01 48 8D"),
+                                        Replace = ByteUtil.HexStringToByteArray("EB 21 48 B8 72 65 76 6F 6B 65 6D 73 48 89 05 3F 3F 3F 3F 66 C7 05 3F 3F 3F 3F 67 00 C6 05 3F 3F 3F 3F 01 48 8D"),
+                                        Category = "防撤回"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("55 56 57 53 48 81 EC 3F 3F 3F 3F 48 8D AC 24 3F 3F 3F 3F 48 C7 85 3F 3F 3F 3F FE FF FF FF 48 C7 85 3F 3F 3F 3F 00 00 00 00 B9 60 00 00 00"),
+                                        Replace = ByteUtil.HexStringToByteArray("C3 56 57 53 48 81 EC 3F 3F 3F 3F 48 8D AC 24 3F 3F 3F 3F 48 C7 85 3F 3F 3F 3F FE FF FF FF 48 C7 85 3F 3F 3F 3F 00 00 00 00 B9 60 00 00 00"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="WeChatWin.dll",
+                                StartVersion="3.9.11.0",
+                                EndVersion="4.0.3.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
@@ -1417,8 +1438,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="Weixin.dll",
-                                StartVersion="4.0.0.0",
+                                StartVersion="4.0.3.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("75 21 48 B8 72 65 76 6F 6B 65 6D 73 48 89 05 3F 3F 3F 3F 66 C7 05 3F 3F 3F 3F 67 00 C6 05 3F 3F 3F 3F 01 48 8D"),
+                                        Replace = ByteUtil.HexStringToByteArray("EB 21 48 B8 72 65 76 6F 6B 65 6D 73 48 89 05 3F 3F 3F 3F 66 C7 05 3F 3F 3F 3F 67 00 C6 05 3F 3F 3F 3F 01 48 8D"),
+                                        Category = "防撤回"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("55 56 57 53 48 81 EC 3F 3F 3F 3F 48 8D AC 24 3F 3F 3F 3F 48 C7 85 3F 3F 3F 3F FE FF FF FF 48 C7 85 3F 3F 3F 3F 00 00 00 00 B9 60 00 00 00"),
+                                        Replace = ByteUtil.HexStringToByteArray("C3 56 57 53 48 81 EC 3F 3F 3F 3F 48 8D AC 24 3F 3F 3F 3F 48 C7 85 3F 3F 3F 3F FE FF FF FF 48 C7 85 3F 3F 3F 3F 00 00 00 00 B9 60 00 00 00"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="Weixin.dll",
+                                StartVersion="4.0.0.0",
+                                EndVersion="4.0.3.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
