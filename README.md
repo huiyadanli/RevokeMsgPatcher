@@ -66,6 +66,8 @@ QQNT 防撤回依赖于 [LiteLoaderQQNT](https://github.com/LiteLoaderQQNT/LiteL
 * [插件列表查看 LL-plugin-list-viewer](https://github.com/ltxhhz/LL-plugin-list-viewer)
 * [防撤回 LiteLoaderQQNT-Anti-Recall](https://github.com/xh321/LiteLoaderQQNT-Anti-Recall)
 
+微信4.0版本后的防撤回特征来自于 [BetterWX](https://github.com/zetaloop/BetterWX)
+
 ## ❤️投喂
 
 觉的好用的话，可以支持作者哟ヾ(･ω･`｡) 
