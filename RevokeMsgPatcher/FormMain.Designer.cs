@@ -179,6 +179,7 @@
             this.rbtWechat.Name = "rbtWechat";
             this.rbtWechat.Size = new System.Drawing.Size(47, 16);
             this.rbtWechat.TabIndex = 12;
+            this.rbtWechat.TabStop = true;
             this.rbtWechat.Text = "微信";
             this.rbtWechat.UseVisualStyleBackColor = true;
             this.rbtWechat.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
@@ -186,7 +187,7 @@
             // rbtQQ
             // 
             this.rbtQQ.AutoSize = true;
-            this.rbtQQ.Location = new System.Drawing.Point(254, 36);
+            this.rbtQQ.Location = new System.Drawing.Point(261, 36);
             this.rbtQQ.Name = "rbtQQ";
             this.rbtQQ.Size = new System.Drawing.Size(35, 16);
             this.rbtQQ.TabIndex = 13;
@@ -197,7 +198,7 @@
             // rbtTIM
             // 
             this.rbtTIM.AutoSize = true;
-            this.rbtTIM.Location = new System.Drawing.Point(300, 36);
+            this.rbtTIM.Location = new System.Drawing.Point(302, 36);
             this.rbtTIM.Name = "rbtTIM";
             this.rbtTIM.Size = new System.Drawing.Size(41, 16);
             this.rbtTIM.TabIndex = 14;
@@ -376,7 +377,7 @@
             // rbtQQNT
             // 
             this.rbtQQNT.AutoSize = true;
-            this.rbtQQNT.Location = new System.Drawing.Point(199, 36);
+            this.rbtQQNT.Location = new System.Drawing.Point(208, 36);
             this.rbtQQNT.Name = "rbtQQNT";
             this.rbtQQNT.Size = new System.Drawing.Size(47, 16);
             this.rbtQQNT.TabIndex = 24;
@@ -387,7 +388,7 @@
             // rbtWeixin
             // 
             this.rbtWeixin.AutoSize = true;
-            this.rbtWeixin.Location = new System.Drawing.Point(134, 36);
+            this.rbtWeixin.Location = new System.Drawing.Point(137, 36);
             this.rbtWeixin.Name = "rbtWeixin";
             this.rbtWeixin.Size = new System.Drawing.Size(65, 16);
             this.rbtWeixin.TabIndex = 25;
