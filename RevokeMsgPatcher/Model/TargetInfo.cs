@@ -47,7 +47,7 @@ namespace RevokeMsgPatcher.Model
 
                 if (!Directory.Exists(searchDirectory))
                 {
-                    throw new DirectoryNotFoundException($"Directory not found: {searchDirectory}");
+                    return "";
                 }
 
                 // 获取所有子目录
