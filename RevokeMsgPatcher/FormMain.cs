@@ -435,7 +435,7 @@ namespace RevokeMsgPatcher
             else if (rbtQQNT.Checked)
             {
                 modifier = (QQNTModifier)rbtQQNT.Tag;
-                ShowOrFocusFormLiteLoaderQQNT();
+                // ShowOrFocusFormLiteLoaderQQNT();
             }
 
             EnableAllButton(true);

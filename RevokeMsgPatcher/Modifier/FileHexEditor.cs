@@ -20,6 +20,7 @@ namespace RevokeMsgPatcher.Modifier
         {
             get
             {
+                // version 可能被构造函数初始化，请注意！
                 if (version == null)
                 {
                     version = FileUtil.GetFileVersion(FilePath);
@@ -70,9 +71,13 @@ namespace RevokeMsgPatcher.Modifier
         {
             FileTargetInfo = target.Clone();
             FileName = FileTargetInfo.Name;
-            FilePath = Path.Combine(installPath, FileTargetInfo.RelativePath);
+            FilePath = FileTargetInfo.GetAbsolutePath(installPath);
             FileBakPath = FilePath + ".h.bak";
             fileReplacedPath = FilePath + ".h.process";
+            // if (target.RelativePathForVersion != null)
+            // {
+            //     version = FileUtil.GetFileVersion(Path.Combine(installPath, target.RelativePathForVersion));
+            // }
         }
 
         /// <summary>

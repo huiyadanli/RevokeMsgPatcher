@@ -16,8 +16,8 @@ namespace RevokeMsgPatcher
             return new Bag
             {
                 Apps = AppConfig(),
-                LatestVersion = "2.0",
-                PatchVersion = 20241107,
+                LatestVersion = "2.1",
+                PatchVersion = 20250803,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1377,32 +1377,33 @@ namespace RevokeMsgPatcher
                 FileTargetInfos = new Dictionary<string, TargetInfo>
                 {
                     {
-                        "QQ.exe",
+                        "wrapper.node",
                         new TargetInfo
                         {
-                            Name = "QQ.exe",
-                            RelativePath = "QQ.exe"
+                            Name = "wrapper.node",
+                            RelativePath = @"versions\{version}\resources\app\wrapper.node",
+                            RelativePathForVersion = "QQ.exe"
                         }
                     }
                 },
                 FileCommonModifyInfos = new Dictionary<string, List<CommonModifyInfo>>
                 {
                     {
-                        "QQ.exe",
+                        "wrapper.node",
                         new List<CommonModifyInfo>
                         {
                             new CommonModifyInfo
                             {
-                                Name="QQ.exe",
-                                StartVersion="9.9.10.00000",
-                                EndVersion="9.9.15.00000",
+                                Name="wrapper.node",
+                                StartVersion="9.8.0.19000",
+                                EndVersion="",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
                                     {
-                                        Search = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 E8 3F 3F 3F 3F"),
-                                        Replace = ByteUtil.HexStringToByteArray("48 89 CE 48 8B 11 4C 8B 41 08 49 29 D0 48 8B 49 18 B8 01 00 00 00"),
-                                        Category = "请在新窗口内安装LiteLoaderQQNT"
+                                        Search = ByteUtil.HexStringToByteArray("48 8B 95 3F 3F 3F 3F 4C 8B 85 3F 3F 3F 3F 4C 89 C0 48 29 D0 48 83 F8 07 0F 87"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 8B 95 3F 3F 3F 3F 4C 8B 85 3F 3F 3F 3F 4C 89 C0 48 29 D0 48 83 F8 07 0F 86"),
+                                        Category = "群聊防撤回"
                                     }
                                 }
                             }

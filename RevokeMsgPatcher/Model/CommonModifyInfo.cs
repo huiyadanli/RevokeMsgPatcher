@@ -17,6 +17,7 @@ namespace RevokeMsgPatcher.Model
 
         public List<ReplacePattern> ReplacePatterns { get; set; }
 
+
         public CommonModifyInfo Clone()
         {
             CommonModifyInfo o = new CommonModifyInfo();

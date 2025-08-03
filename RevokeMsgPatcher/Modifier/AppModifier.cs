@@ -134,11 +134,11 @@ namespace RevokeMsgPatcher.Modifier
             if (j == editors.Count)
             {
                 label.Text = version + "（支持特征防撤回）";
-                // QQNT 特殊处理
-                if (config.Name == "QQNT")
-                {
-                    label.Text = version + "（支持LiteLoader）";
-                }
+                // // QQNT 特殊处理
+                // if (config.Name == "QQNT")
+                // {
+                //     label.Text = version + "（支持LiteLoader）";
+                // }
 
                 label.ForeColor = Color.LimeGreen;
                 UIController.AddCategoryCheckBoxToPanel(panel, categories.ToArray(), installed.ToArray());
@@ -166,7 +166,7 @@ namespace RevokeMsgPatcher.Modifier
             int success = 0, count = 0;
             foreach (TargetInfo info in config.FileTargetInfos.Values)
             {
-                string filePath = Path.Combine(installPath, info.RelativePath);
+                string filePath = info.GetAbsolutePath(installPath);
                 if (info.Name != "WeChat.exe")
                 {
                     count++;
