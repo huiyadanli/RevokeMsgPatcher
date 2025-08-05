@@ -9,12 +9,11 @@ using System.Windows.Forms;
 
 namespace RevokeMsgPatcher.Modifier
 {
-    class QQNTModifier : AppModifier
+    class QQNTModifier : BaseAppModifier
     {
-        public QQNTModifier(App config)
-        {
-            this.config = config;
-        }
+        public override string VersionFileName => "wrapper.node";
+
+        public QQNTModifier(App config) : base(config) { }
 
         /// <summary>
         /// 自动寻找获取微信安装路径
@@ -59,38 +58,9 @@ namespace RevokeMsgPatcher.Modifier
             return null;
         }
 
-        /// <summary>
-        /// 获取整个APP的当前版本
-        /// </summary>
-        /// <returns></returns>
-        public override string GetVersion()
-        {
-            if (editors != null && editors.Count > 0)
-            {
-                foreach (FileHexEditor editor in editors)
-                {
-                    if (editor.FileName == "wrapper.node")
-                    {
-                        return editor.FileVersion;
-                    }
-                }
-            }
-            return "";
-        }
-
-        public override void AfterPatchSuccess()
-        {
-
-        }
-
-        public override void AfterPatchFail()
-        {
-
-        }
-
         public new bool Restore()
         {
-            AfterPatchFail();
+            base.AfterPatchFail();
             return base.Restore();
         }
     }

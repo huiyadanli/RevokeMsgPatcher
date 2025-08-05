@@ -5,20 +5,11 @@ using System.Collections.Generic;
 
 namespace RevokeMsgPatcher.Modifier
 {
-    class QQModifier : AppModifier
+    class QQModifier : BaseAppModifier
     {
-        public QQModifier(App config)
-        {
-            this.config = config;
-        }
+        public override string VersionFileName => "IM.dll";
 
-        public override void AfterPatchSuccess()
-        {
-        }
-
-        public override void AfterPatchFail()
-        {
-        }
+        public QQModifier(App config) : base(config) { }
 
         /// <summary>
         /// 自动寻找获取微信安装路径
@@ -50,25 +41,6 @@ namespace RevokeMsgPatcher.Modifier
                 Console.WriteLine(e.Message);
             }
             return null;
-        }
-
-        /// <summary>
-        /// 获取整个APP的当前版本
-        /// </summary>
-        /// <returns></returns>
-        public override string GetVersion()
-        {
-            if (editors != null && editors.Count > 0)
-            {
-                foreach (FileHexEditor editor in editors)
-                {
-                    if (editor.FileName == "IM.dll")
-                    {
-                        return editor.FileVersion;
-                    }
-                }
-            }
-            return "";
         }
     }
 }

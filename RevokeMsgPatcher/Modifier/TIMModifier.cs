@@ -3,21 +3,11 @@ using RevokeMsgPatcher.Utils;
 
 namespace RevokeMsgPatcher.Modifier
 {
-    class TIMModifier : AppModifier
+    class TIMModifier : BaseAppModifier
     {
+        public override string VersionFileName => "IM.dll";
 
-        public TIMModifier(App config)
-        {
-            this.config = config;
-        }
-
-        public override void AfterPatchSuccess()
-        {
-        }
-
-        public override void AfterPatchFail()
-        {
-        }
+        public TIMModifier(App config) : base(config) { }
 
         /// <summary>
         /// 自动寻找获取微信安装路径
@@ -41,25 +31,6 @@ namespace RevokeMsgPatcher.Modifier
                 return installPath;
             }
             return null;
-        }
-
-        /// <summary>
-        /// 获取整个APP的当前版本
-        /// </summary>
-        /// <returns></returns>
-        public override string GetVersion()
-        {
-            if (editors != null && editors.Count > 0)
-            {
-                foreach (FileHexEditor editor in editors)
-                {
-                    if (editor.FileName == "IM.dll")
-                    {
-                        return editor.FileVersion;
-                    }
-                }
-            }
-            return "";
         }
     }
 }

@@ -16,14 +16,7 @@ namespace RevokeMsgPatcher
     public partial class FormMain : Form
     {
         // 当前使用的修改者
-        private AppModifier modifier = null;
-
-        private WechatModifier wechatModifier = null;
-        private WeixinModifier weixinModifier = null;
-        private QQModifier qqModifier = null;
-        private TIMModifier timModifier = null;
-        private QQLiteModifier qqLiteModifier = null;
-        private QQNTModifier qqntModifier = null;
+        private IAppModifier modifier = null;
 
         private string thisVersion;
         private bool needUpdate = false;
@@ -41,24 +34,9 @@ namespace RevokeMsgPatcher
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             bag = serializer.Deserialize<Bag>(Properties.Resources.PatchJson);
 
-            // 初始化每个应用对应的修改者
-            wechatModifier = new WechatModifier(bag.Apps["Wechat"]);
-            weixinModifier = new WeixinModifier(bag.Apps["Weixin"]);
-            qqModifier = new QQModifier(bag.Apps["QQ"]);
-            timModifier = new TIMModifier(bag.Apps["TIM"]);
-            qqLiteModifier = new QQLiteModifier(bag.Apps["QQLite"]);
-            qqntModifier = new QQNTModifier(bag.Apps["QQNT"]);
-
-            rbtWechat.Tag = wechatModifier;
-            rbtWeixin.Tag = weixinModifier;
-            rbtQQ.Tag = qqModifier;
-            rbtTIM.Tag = timModifier;
-            rbtQQLite.Tag = qqLiteModifier;
-            rbtQQNT.Tag = qqntModifier;
-
             // 默认微信
             rbtWechat.Enabled = true;
-            modifier = wechatModifier;
+            modifier = ModifierFactory.CreateModifier("WeChat", bag.Apps["WeChat"]);
         }
 
         public FormMain()
@@ -349,11 +327,7 @@ namespace RevokeMsgPatcher
                         lblUpdatePachJson.Text = "[ 获取成功，点击查看更多信息 ]";
                         lblUpdatePachJson.ForeColor = Color.RoyalBlue;
 
-                        wechatModifier.Config = newBag.Apps["Wechat"];
-                        weixinModifier.Config = newBag.Apps["Weixin"];
-                        qqModifier.Config = newBag.Apps["QQ"];
-                        timModifier.Config = newBag.Apps["TIM"];
-                        qqLiteModifier.Config = newBag.Apps["QQLite"];
+                        modifier.Config = newBag.Apps[modifier.Config.Name];
 
                         getPatchJsonStatus = "SUCCESS";
                         bag = newBag;
@@ -412,31 +386,8 @@ namespace RevokeMsgPatcher
             EnableAllButton(false);
 
             // 切换使用不同的防撤回对象
-            if (rbtWechat.Checked)
-            {
-                modifier = (WechatModifier)rbtWechat.Tag;
-            }
-            else if (rbtWeixin.Checked)
-            {
-                modifier = (WeixinModifier)rbtWeixin.Tag;
-            }
-            else if (rbtQQ.Checked)
-            {
-                modifier = (QQModifier)rbtQQ.Tag;
-            }
-            else if (rbtTIM.Checked)
-            {
-                modifier = (TIMModifier)rbtTIM.Tag;
-            }
-            else if (rbtQQLite.Checked)
-            {
-                modifier = (QQLiteModifier)rbtQQLite.Tag;
-            }
-            else if (rbtQQNT.Checked)
-            {
-                modifier = (QQNTModifier)rbtQQNT.Tag;
-                // ShowOrFocusFormLiteLoaderQQNT();
-            }
+            string appName = GetCheckedRadioButtonNameEn();
+            modifier = ModifierFactory.CreateModifier(appName, bag.Apps[appName]);
 
             EnableAllButton(true);
             // 触发了 txtPath_TextChanged 方法 已经调用了 InitEditorsAndUI(txtPath.Text);
@@ -466,27 +417,13 @@ namespace RevokeMsgPatcher
 
         private string GetCheckedRadioButtonNameEn()
         {
-            if (rbtWechat.Checked)
+            foreach (Control control in this.panelAppSelect.Controls)
             {
-                return "wechat";
+                if (control is RadioButton radioButton && radioButton.Checked)
+                {
+                    return radioButton.Text;
+                }
             }
-            else if (rbtQQ.Checked)
-            {
-                return "qq";
-            }
-            else if (rbtTIM.Checked)
-            {
-                return "tim";
-            }
-            else if (rbtQQLite.Checked)
-            {
-                return "qqlite";
-            }
-            else if (rbtQQNT.Checked)
-            {
-                return "qqnt";
-            }
-
             return "none";
         }
 
