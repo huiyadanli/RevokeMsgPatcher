@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "2.1",
-                PatchVersion = 20250803,
+                PatchVersion = 20250815,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1439,8 +1439,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="Weixin.dll",
-                                StartVersion="4.0.3.0",
+                                StartVersion="4.1.0.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("48 8D 8D 20 04 00 00 E8 CD 3F 3F 3F 84 C0 0F 84 3F 3F 3F 3F 48 8D 8D"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 8D 8D 20 04 00 00 E8 CD 3F 3F 3F 84 C0 90 E9 3F 3F 3F 3F 48 8D 8D"),
+                                        Category = "防撤回"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("5F C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC 55 41 56 56 57 53"),
+                                        Replace = ByteUtil.HexStringToByteArray("5F C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC C3 41 56 56 57 53"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="Weixin.dll",
+                                StartVersion="4.0.3.0",
+                                EndVersion="4.1.0.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
