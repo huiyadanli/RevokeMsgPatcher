@@ -4,64 +4,52 @@ on:
   workflow_dispatch:
     inputs:
       Reason:
-        description: 'Reasons for temporary build'     
+        description: 'Reasons for temporary build'
         required: true
-        default: 'No reason.Just do it.'
+        default: 'No reason. Just do it.'
   push:
-        branches:
-          - master
-        paths-ignore:
-          - '**/*.md'
-          - .gitignore
-          - .editorconfig
-          - appveyor.yml
+    branches:
+      - master
+    paths-ignore:
+      - '**/*.md'
+      - .gitignore
+      - .editorconfig
+      - appveyor.yml
 
   pull_request:
-          branches:
-            - master
-          paths-ignore:
-            - '**/*.md'
-            - .gitignore
-            - .editorconfig
-            - appveyor.yml
-
-env:
-  # Path to the solution file relative to the root of the project.
-  SOLUTION_FILE_PATH: .
-
-  # Configuration type to build.
-  # You can convert this to a build matrix if you need coverage of multiple configuration types.
-  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-  #BUILD_CONFIGURATION: [Debug , Release]
+    branches:
+      - master
+    paths-ignore:
+      - '**/*.md'
+      - .gitignore
+      - .editorconfig
+      - appveyor.yml
 
 jobs:
   build:
-    name: ${{matrix.BUILD_CONFIGURATION}}
-    runs-on: windows-lastest
+    name: Build (${{ matrix.BUILD_CONFIGURATION }})
+    runs-on: windows-latest
     strategy:
-        matrix:
-          BUILD_CONFIGURATION: ['Debug', 'Release']
+      matrix:
+        BUILD_CONFIGURATION: [Debug, Release]
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
 
-    - name: Restore NuGet packages
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+      - name: Restore NuGet packages
+        run: nuget restore
 
-    - name: Build ${{matrix.BUILD_CONFIGURATION}}
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{matrix.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      - name: Build Solution
+        run: msbuild /m /p:Configuration=${{ matrix.BUILD_CONFIGURATION }}
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: RevokeMsgPatcher-${{matrix.BUILD_CONFIGURATION}}
-        path: |
-          .\RevokeMsgPatcher\bin
-          !.\RevokeMsgPatcher\bin\**\RevokeMsgPatcher.exe.config
-          !.\RevokeMsgPatcher\bin\**\RevokeMsgPatcher.pdb
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RevokeMsgPatcher-${{ matrix.BUILD_CONFIGURATION }}
+          path: |
+            .\RevokeMsgPatcher\bin
+            !.\RevokeMsgPatcher\bin\**\RevokeMsgPatcher.exe.config
+            !.\RevokeMsgPatcher\bin\**\RevokeMsgPatcher.pdb
