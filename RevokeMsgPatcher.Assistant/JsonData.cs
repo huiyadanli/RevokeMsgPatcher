@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "2.1",
-                PatchVersion = 20250824,
+                PatchVersion = 20260109,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1439,8 +1439,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="Weixin.dll",
-                                StartVersion="4.1.0.17",
+                                StartVersion="4.1.6.0",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("CC 56 48 83 EC 30 4C 89 C0 48 89 D6 C6 44 24 20 00 4D 89 C8 49 89 C1 E8"),
+                                        Replace = ByteUtil.HexStringToByteArray("CC 56 48 83 EC 30 4C 89 C0 48 89 D6 C6 44 24 20 01 4D 89 C8 49 89 C1 E8"),
+                                        Category = "防撤回"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("84 C0 75 1B E8 76 E5 F7 FF 84 C0 75 12 E8"),
+                                        Replace = ByteUtil.HexStringToByteArray("84 C0 EB 3F E8 3F 3F 3F FF 84 C0 75 3F E8"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="Weixin.dll",
+                                StartVersion="4.1.0.17",
+                                EndVersion="4.1.6.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
