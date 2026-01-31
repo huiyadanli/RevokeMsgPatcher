@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "2.1",
-                PatchVersion = 20260113,
+                PatchVersion = 20260131,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1439,8 +1439,29 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="Weixin.dll",
-                                StartVersion="4.1.6.0",
+                                StartVersion="4.1.7.1",
                                 EndVersion="",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("90 48 89 86 A8 01 00 00"),
+                                        Replace = ByteUtil.HexStringToByteArray("90 48 29 86 A8 01 00 00"),
+                                        Category = "防撤回"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("81 FF B7 00 00 00 0F 85"),
+                                        Replace = ByteUtil.HexStringToByteArray("81 FF B7 00 00 00 90 E9"),
+                                        Category = "多开"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="Weixin.dll",
+                                StartVersion="4.1.6.15",
+                                EndVersion="4.1.7.0",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
