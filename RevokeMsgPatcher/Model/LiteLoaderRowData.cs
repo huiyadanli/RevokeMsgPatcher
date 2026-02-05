@@ -193,6 +193,16 @@ namespace RevokeMsgPatcher.Model
                     // 解压
                     string zipFileName = Path.GetFileNameWithoutExtension(downloadedFilePath);
                     string extractPath = Path.Combine(Application.StartupPath, "Public/Extracted", zipFileName);
+                    
+                    // Validate extractPath is within expected directory
+                    string normalizedExtractPath = Path.GetFullPath(extractPath);
+                    string normalizedBaseExtractPath = Path.GetFullPath(Path.Combine(Application.StartupPath, "Public/Extracted"));
+                    
+                    if (!normalizedExtractPath.StartsWith(normalizedBaseExtractPath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new System.Security.SecurityException("Invalid extract path detected. Path traversal attempt blocked.");
+                    }
+                    
                     if (Directory.Exists(extractPath))
                     {
                         Directory.Delete(extractPath, true);
@@ -214,6 +224,15 @@ namespace RevokeMsgPatcher.Model
 
 
                     // 清理
+                    // Validate downloadedFilePath is within expected directory
+                    string normalizedDownloadPath = Path.GetFullPath(downloadedFilePath);
+                    string normalizedBaseDownloadPath = Path.GetFullPath(Path.Combine(Application.StartupPath, "Public/Download"));
+                    
+                    if (!normalizedDownloadPath.StartsWith(normalizedBaseDownloadPath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new System.Security.SecurityException("Invalid download path detected. Path traversal attempt blocked.");
+                    }
+                    
                     if (File.Exists(downloadedFilePath))
                     {
                         File.Delete(downloadedFilePath);

@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -221,6 +222,16 @@ namespace RevokeMsgPatcher.Forms
         private void RestoreDll(string installPath)
         {
             string destPath = Path.Combine(installPath, "dbghelp.dll");
+            
+            // Validate that the path is safe and within expected directory
+            string normalizedDestPath = Path.GetFullPath(destPath);
+            string normalizedInstallPath = Path.GetFullPath(installPath);
+            
+            if (!normalizedDestPath.StartsWith(normalizedInstallPath, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new SecurityException("Invalid file path detected. Path traversal attempt blocked.");
+            }
+            
             if (File.Exists(destPath))
             {
                 File.Delete(destPath);
@@ -295,6 +306,16 @@ namespace RevokeMsgPatcher.Forms
         {
             string fileName = "dbghelp.dll";
             string destPath = Path.Combine(installPath, fileName);
+            
+            // Validate that the path is safe and within expected directory
+            string normalizedDestPath = Path.GetFullPath(destPath);
+            string normalizedInstallPath = Path.GetFullPath(installPath);
+            
+            if (!normalizedDestPath.StartsWith(normalizedInstallPath, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new SecurityException("Invalid file path detected. Path traversal attempt blocked.");
+            }
+            
             if (File.Exists(destPath))
             {
                 File.Delete(destPath);
