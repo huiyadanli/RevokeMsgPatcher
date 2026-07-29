@@ -28,7 +28,7 @@ on:
 jobs:
   build:
     name: Build (${{ matrix.BUILD_CONFIGURATION }})
-    runs-on: windows-latest
+    runs-on: windows-2022
     strategy:
       matrix:
         BUILD_CONFIGURATION: [Debug, Release]
@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Restore NuGet packages
         run: nuget restore
