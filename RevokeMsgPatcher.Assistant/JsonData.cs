@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "2.1",
-                PatchVersion = 20260729,
+                PatchVersion = 20260809,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1395,8 +1395,52 @@ namespace RevokeMsgPatcher
                             new CommonModifyInfo
                             {
                                 Name="wrapper.node",
+                                StartVersion="9.8.0.19306",
+                                EndVersion="9.8.0.19307",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("48 8B 95 3F 3F 3F 3F 4C 8B 85 3F 3F 3F 3F 4C 89 C0 48 29 D0 48 83 F8 07 0F 87"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 8B 95 3F 3F 3F 3F 4C 8B 85 3F 3F 3F 3F 4C 89 C0 48 29 D0 48 83 F8 07 0F 86"),
+                                        Category = "防撤回",
+                                        Tips = "QQNT更新后重新定位 msg_recall_worker.cc 的 HandleRecallSysMsg kBytesMsgContent 长度分支，再确认 0F 87/0F 86 特征。"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("48 8B 8D 08 02 00 00 48 8D 55 48 E8 EE 05 00 00 48 8D 8D E8 01 00 00 E8"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 8B 8D 08 02 00 00 48 8D 55 48 90 90 90 90 90 48 8D 8D E8 01 00 00 E8"),
+                                        Category = "防撤回",
+                                        Tips = "跳过 msg_recall_worker.cc 私聊被动撤回通知的 HandleRecallMsgNotify 分发；QQNT更新后搜 [Msg] on c2c recall nfy!，再确认日志后的 sub_181EBFA7A 调用。"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("4C 89 E3 85 FF 74 1A 4C 89 E9 48 89 DA 41 89 F8 4C 8B 8D 28 01 00 00 E8 04 FC FF FF E9 1C 01 00 00"),
+                                        Replace = ByteUtil.HexStringToByteArray("4C 89 E3 85 FF 90 90 4C 89 E9 48 89 DA 41 89 F8 4C 8B 8D 28 01 00 00 E8 04 FC FF FF E9 1C 01 00 00"),
+                                        Category = "防撤回",
+                                        Tips = "跳过 OnDeleteMsgs 成功后的本地撤回替换路径；QQNT更新后需重新确认 msg_recall_mgr.cc 的 OnDeleteMsgs 回调。"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("4C 89 7C 24 30 48 8D 45 20 48 89 44 24 28 4C 89 64 24 20 48 89 F1 B2 02 49 89 D8 4D 89 F1 E8 E5 05 00 00 48 8D 4D 08 E8"),
+                                        Replace = ByteUtil.HexStringToByteArray("4C 89 7C 24 30 48 8D 45 20 48 89 44 24 28 4C 89 64 24 20 48 89 F1 B2 02 49 89 D8 4D 89 F1 90 90 90 90 90 48 8D 4D 08 E8"),
+                                        Category = "防撤回",
+                                        Tips = "跳过 InternalDeleteGroupMsgWithSendNoSeq 的本地撤回替换调用；QQNT更新后需重新确认 send-no-seq 群撤回路径。"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("8A 57 30 48 83 C7 18 48 89 5C 24 30 48 8D 85 A8 00 00 00 48 89 44 24 28 4C 89 74 24 20 4C 8D 4D 70 48 89 F1 49 89 F8 E8 56 82 FE FF 48 8D 75 E8 48 8D 95 90 00 00 00"),
+                                        Replace = ByteUtil.HexStringToByteArray("8A 57 30 48 83 C7 18 48 89 5C 24 30 48 8D 85 A8 00 00 00 48 89 44 24 28 4C 89 74 24 20 4C 8D 4D 70 48 89 F1 49 89 F8 90 90 90 90 90 48 8D 75 E8 48 8D 95 90 00 00 00"),
+                                        Category = "防撤回",
+                                        Tips = "跳过 paiyipai recall 分支的本地撤回替换调用；QQNT更新后需重新确认 msg_recall_mgr.cc 的 paiyipai recall operator。"
+                                    }
+                                }
+                            },
+                            new CommonModifyInfo
+                            {
+                                Name="wrapper.node",
                                 StartVersion="9.8.0.19000",
-                                EndVersion="",
+                                EndVersion="9.8.0.19306",
                                 ReplacePatterns = new List<ReplacePattern>
                                 {
                                     new ReplacePattern
