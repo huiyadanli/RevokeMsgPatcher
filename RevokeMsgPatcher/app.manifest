@@ -15,7 +15,7 @@
             如果你的应用程序需要此虚拟化来实现向后兼容性，则删除此
             元素。
         -->
-        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
       </requestedPrivileges>
     </security>
   </trustInfo>
