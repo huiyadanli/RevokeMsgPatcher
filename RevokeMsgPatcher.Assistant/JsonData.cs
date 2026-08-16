@@ -1489,8 +1489,8 @@ namespace RevokeMsgPatcher
                                 {
                                     new ReplacePattern
                                     {
-                                        Search = ByteUtil.HexStringToByteArray("90 48 89 86 00 02 00 00 4C 89 AD 08 02 00 00 4C 8D 05"),
-                                        Replace = ByteUtil.HexStringToByteArray("90 48 29 86 00 02 00 00 4C 89 AD 08 02 00 00 4C 8D 05"),
+                                        Search = ByteUtil.HexStringToByteArray("48 89 86 3F 3F 3F 3F 4C 89 AD 08 02 00 00 4C 8D 05"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 29 86 3F 3F 3F 3F 4C 89 AD 08 02 00 00 4C 8D 05"),
                                         Category = "防撤回"
                                     },
                                     new ReplacePattern
