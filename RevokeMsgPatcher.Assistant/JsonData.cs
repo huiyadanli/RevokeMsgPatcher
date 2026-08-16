@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "2.1",
-                PatchVersion = 20260809,
+                PatchVersion = 20260816,
                 Notice = "",
                 NoticeUrl = "",
             };
