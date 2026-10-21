@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,76 @@ namespace RevokeMsgPatcher.Utils
 {
     public class PathUtil
     {
+        public static string NormalizeInstallPath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return null;
+            path = Environment.ExpandEnvironmentVariables(path.Trim());
+            if (path.StartsWith("\""))
+            {
+                int end = path.IndexOf('"', 1);
+                if (end < 0) return null;
+                path = path.Substring(1, end - 1);
+            }
+            else if (!Directory.Exists(path))
+            {
+                int end = path.IndexOf(".exe", StringComparison.OrdinalIgnoreCase);
+                if (end >= 0) path = path.Substring(0, end + 4);
+            }
+            if (File.Exists(path)) path = Path.GetDirectoryName(path);
+            return Directory.Exists(path) ? Path.GetFullPath(path) : null;
+        }
+
+        public static IEnumerable<string> GetVersionDirectories(string path)
+        {
+            if (!Directory.Exists(path)) return new string[0];
+            return Directory.GetDirectories(path)
+                .Select(p => new { Path = p, Version = ParseDirectoryVersion(p) })
+                .Where(p => p.Version != null).OrderByDescending(p => p.Version).Select(p => p.Path);
+        }
+
+        private static Version ParseDirectoryVersion(string path)
+        {
+            Version version;
+            return Version.TryParse(Path.GetFileName(path).Replace('-', '.'), out version) ? version : null;
+        }
+
+        public static IEnumerable<string> FindModernInstallPaths(string keyName, string relativePath, string processName)
+        {
+            var candidates = new List<string>();
+            foreach (RegistryHive hive in new[] { RegistryHive.CurrentUser, RegistryHive.LocalMachine })
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+            {
+                try
+                {
+                    using (var root = RegistryKey.OpenBaseKey(hive, view))
+                    using (var key = root.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + keyName))
+                    {
+                        if (key == null) continue;
+                        foreach (string value in new[] { "InstallLocation", "UninstallString", "DisplayIcon" })
+                        {
+                            string candidate = NormalizeInstallPath(key.GetValue(value) as string);
+                            if (candidate != null) candidates.Add(candidate);
+                        }
+                    }
+                }
+                catch (System.Security.SecurityException ex) { Debug.WriteLine(ex.Message); }
+                catch (UnauthorizedAccessException ex) { Debug.WriteLine(ex.Message); }
+            }
+            foreach (var process in Process.GetProcessesByName(processName))
+            using (process)
+            {
+                try
+                {
+                    string candidate = NormalizeInstallPath(process.MainModule.FileName);
+                    if (candidate != null) candidates.Add(candidate);
+                }
+                catch (System.ComponentModel.Win32Exception ex) { Debug.WriteLine(ex.Message); }
+                catch (InvalidOperationException ex) { Debug.WriteLine(ex.Message); }
+            }
+            candidates.AddRange(GetDefaultInstallPaths(relativePath));
+            return candidates.Distinct(StringComparer.OrdinalIgnoreCase);
+        }
+
         public static void DisplayAllProgram()
         {
             RegistryKey uninstallKey, programKey;
@@ -98,18 +169,10 @@ namespace RevokeMsgPatcher.Utils
             string[] drives = Environment.GetLogicalDrives(); //获取当前计算机逻辑磁盘名称列表
             foreach (string d in drives)
             {
-                string path = Path.Combine(d, $@"Program Files (x86)\{relativePath}");
-                if (Directory.Exists(path))
+                foreach (string folder in new[] { "Program Files (x86)", "Program Files", "app" })
                 {
-                    list.Add(path);
-                }
-                else
-                {
-                    path = Path.Combine(d, $@"Program Files\{relativePath}");
-                    if (Directory.Exists(path))
-                    {
-                        list.Add(path);
-                    }
+                    string path = Path.Combine(d, folder, relativePath);
+                    if (Directory.Exists(path)) list.Add(path);
                 }
             }
 

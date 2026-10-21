@@ -116,10 +116,7 @@ namespace RevokeMsgPatcher
                 btnRestore.Enabled = modifier.BackupExists();
 
                 List<string> categories = UIController.GetCategoriesFromPanel(panelCategories);
-                if (categories != null && categories.Count == 0)
-                {
-                    btnPatch.Enabled = false;
-                }
+                btnPatch.Enabled = categories != null ? categories.Count > 0 : lblVersion.ForeColor == Color.Green;
             }
         }
 
@@ -354,6 +351,7 @@ namespace RevokeMsgPatcher
                         qqModifier.Config = newBag.Apps["QQ"];
                         timModifier.Config = newBag.Apps["TIM"];
                         qqLiteModifier.Config = newBag.Apps["QQLite"];
+                        qqntModifier.Config = newBag.Apps["QQNT"];
 
                         getPatchJsonStatus = "SUCCESS";
                         bag = newBag;

@@ -2,6 +2,7 @@
 using RevokeMsgPatcher.Utils;
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 namespace RevokeMsgPatcher.Modifier
 {
@@ -106,12 +107,29 @@ namespace RevokeMsgPatcher.Modifier
         /// <returns></returns>
         public bool Patch()
         {
-            if (TargetChanges == null)
+            if (TargetChanges == null || TargetChanges.Count == 0)
             {
                 throw new BusinessException("change_null", "在安装补丁时，变更的内容为空！");
             }
 
-            FileUtil.EditMultiHex(FilePath, TargetChanges);
+            if (sha1 == null || FileUtil.ComputeFileSHA1(FilePath) != sha1)
+                throw new BusinessException("file_changed", "文件在验证后发生变化，请重新检测后再安装。");
+
+            // Stage changes beside the target so replacement is atomic on the same volume.
+            // A locked client file or failed write leaves the original intact.
+            string stagedPath = fileReplacedPath + "." + Guid.NewGuid().ToString("N");
+            try
+            {
+                File.Copy(FilePath, stagedPath);
+                FileUtil.EditMultiHex(stagedPath, TargetChanges);
+                if (FileUtil.ComputeFileSHA1(FilePath) != sha1)
+                    throw new BusinessException("file_changed", "文件在安装过程中发生变化，已停止替换。");
+                File.Replace(stagedPath, FilePath, null);
+            }
+            finally
+            {
+                if (File.Exists(stagedPath)) File.Delete(stagedPath);
+            }
             return true;
         }
 
@@ -120,7 +138,16 @@ namespace RevokeMsgPatcher.Modifier
         /// </summary>
         public void Restore()
         {
-            File.Copy(FileBakPath, FilePath, true);
+            string stagedPath = fileReplacedPath + "." + Guid.NewGuid().ToString("N");
+            try
+            {
+                File.Copy(FileBakPath, stagedPath);
+                File.Replace(stagedPath, FilePath, null);
+            }
+            finally
+            {
+                if (File.Exists(stagedPath)) File.Delete(stagedPath);
+            }
         }
     }
 }

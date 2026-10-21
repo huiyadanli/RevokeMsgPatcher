@@ -23,4 +23,5 @@ bld/
 # Mine
 Temp/
 /packages/
+/artifacts/
 .idea

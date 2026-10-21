@@ -1,97 +1,38 @@
-﻿using RevokeMsgPatcher.Model;
+using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Utils;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+using System.Linq;
 
 namespace RevokeMsgPatcher.Modifier
 {
     class QQNTModifier : AppModifier
     {
-        public QQNTModifier(App config)
-        {
-            this.config = config;
-        }
+        public QQNTModifier(App config) { this.config = config; }
 
-        /// <summary>
-        /// 自动寻找获取微信安装路径
-        /// </summary>
-        /// <returns></returns>
         public override string FindInstallPath()
         {
-            try
-            {
-                string installPath = PathUtil.FindInstallPathFromRegistryWOW6432Node("QQ");
-                if (!string.IsNullOrEmpty(installPath))
-                {
-                    installPath = Path.GetDirectoryName(installPath);
-                    if (IsAllFilesExist(installPath))
-                    {
-                        return installPath;
-                    }
-                }
-            
-                installPath = PathUtil.FindInstallPathFromRegistry("QQNT");
-                if (!IsAllFilesExist(installPath))
-                {
-                    List<string> defaultPathList = PathUtil.GetDefaultInstallPaths(@"Tencent\QQNT");
-                    foreach (string defaultPath in defaultPathList)
-                    {
-                        if (IsAllFilesExist(defaultPath))
-                        {
-                            return defaultPath;
-                        }
-                    }
-                }
-                else
-                {
-                    return installPath;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
+            foreach (string key in new[] { "QQ", "QQNT" })
+                foreach (string candidate in PathUtil.FindModernInstallPaths(key, @"Tencent\QQNT", "QQ"))
+                    if (IsAllFilesExist(candidate)) return candidate;
             return null;
         }
 
-        /// <summary>
-        /// 获取整个APP的当前版本
-        /// </summary>
-        /// <returns></returns>
         public override string GetVersion()
         {
-            if (editors != null && editors.Count > 0)
-            {
-                foreach (FileHexEditor editor in editors)
-                {
-                    if (editor.FileName == "wrapper.node")
-                    {
-                        return editor.FileVersion;
-                    }
-                }
-            }
-            return "";
+            var editor = editors?.FirstOrDefault(e => e.FileName == "wrapper.node");
+            if (editor == null) return "";
+            // wrapper.node has an internal version unrelated to the QQ.exe launcher version.
+            // Display both while still matching patches against the actual module version.
+            var appDirectory = new DirectoryInfo(Path.GetDirectoryName(editor.FilePath));
+            var versionDirectory = appDirectory.Parent?.Parent;
+            Version version;
+            if (versionDirectory != null && Version.TryParse(versionDirectory.Name.Replace('-', '.'), out version))
+                return versionDirectory.Name + "（模块 " + editor.FileVersion + "）";
+            return editor.FileVersion;
         }
 
-        public override void AfterPatchSuccess()
-        {
-
-        }
-
-        public override void AfterPatchFail()
-        {
-
-        }
-
-        public new bool Restore()
-        {
-            AfterPatchFail();
-            return base.Restore();
-        }
+        public override void AfterPatchSuccess() { }
+        public override void AfterPatchFail() { }
     }
 }

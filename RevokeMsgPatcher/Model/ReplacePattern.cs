@@ -10,6 +10,9 @@ namespace RevokeMsgPatcher.Model
 
         public string Category { get; set; }
 
+        // Zero retains the legacy rule allowing one or more occurrences.
+        public int ExpectedMatches { get; set; }
+
         /// <summary>
         /// 悬浮气泡提示
         /// </summary>
@@ -30,6 +33,11 @@ namespace RevokeMsgPatcher.Model
             ReplacePattern o = new ReplacePattern();
             o.Search = Search;
             o.Replace = Replace;
+            o.Category = Category;
+            o.ExpectedMatches = ExpectedMatches;
+            o.Tips = Tips;
+            o.SimilarCategories = SimilarCategories;
+            o.ChooseSimilarCategoriesMsg = ChooseSimilarCategoriesMsg;
             return o;
         }
     }

@@ -45,6 +45,12 @@ jobs:
       - name: Build Solution
         run: msbuild /m /p:Configuration=${{ matrix.BUILD_CONFIGURATION }}
 
+      - name: Build regression checks
+        run: msbuild .\RevokeMsgPatcher.Tests\RevokeMsgPatcher.Tests.csproj /p:Configuration=${{ matrix.BUILD_CONFIGURATION }}
+
+      - name: Run regression checks
+        run: .\RevokeMsgPatcher.Tests\bin\${{ matrix.BUILD_CONFIGURATION }}\RevokeMsgPatcher.Tests.exe
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:

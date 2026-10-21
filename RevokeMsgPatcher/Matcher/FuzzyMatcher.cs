@@ -19,6 +19,9 @@ namespace RevokeMsgPatcher.Matcher
         /// <returns></returns>
         public static int[] MatchAll(byte[] content, byte[] pattern)
         {
+            if (content == null) throw new ArgumentNullException(nameof(content));
+            if (pattern == null || pattern.Length == 0) throw new ArgumentException("特征码不能为空", nameof(pattern));
+            if (pattern.Length > content.Length) return new int[0];
             byte[] head = GetHead(pattern);
             int[] indexs = BoyerMooreMatcher.MatchAll(content, head);
             // 头串和查找串相同则直接返回，不同则继续判断是否符合查询串
@@ -108,6 +111,7 @@ namespace RevokeMsgPatcher.Matcher
         /// <returns></returns>
         public static bool IsEqual(byte[] content, int start, byte[] whole)
         {
+            if (content == null || whole == null || start < 0 || start > content.Length - whole.Length) return false;
             int i = 0;
             for (i = 0; i < whole.Length; i++)
             {

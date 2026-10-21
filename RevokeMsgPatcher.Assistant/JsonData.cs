@@ -17,7 +17,7 @@ namespace RevokeMsgPatcher
             {
                 Apps = AppConfig(),
                 LatestVersion = "2.1",
-                PatchVersion = 20260816,
+                PatchVersion = 20261021,
                 Notice = "",
                 NoticeUrl = "",
             };
@@ -1392,6 +1392,33 @@ namespace RevokeMsgPatcher
                         "wrapper.node",
                         new List<CommonModifyInfo>
                         {
+                            // QQ 9.9.33-51802 x64; wrapper.node has its own version.
+                            // Static verification only; see README for runtime acceptance steps.
+                            new CommonModifyInfo
+                            {
+                                Name = "wrapper.node",
+                                StartVersion = "9.8.0.23848",
+                                EndVersion = "9.8.0.23849",
+                                ReplacePatterns = new List<ReplacePattern>
+                                {
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("48 8B 95 48 01 00 00 4C 8B 85 50 01 00 00 4C 89 C0 48 29 D0 48 83 F8 07 0F 87 3C 01 00 00"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 8B 95 48 01 00 00 4C 8B 85 50 01 00 00 4C 89 C0 48 29 D0 48 83 F8 07 0F 86 3C 01 00 00"),
+                                        Category = "防撤回",
+                                        ExpectedMatches = 1,
+                                        Tips = "9.9.33-51802 x64 群聊撤回长度分支；文件偏移 0x2618B5E。"
+                                    },
+                                    new ReplacePattern
+                                    {
+                                        Search = ByteUtil.HexStringToByteArray("48 8B 8D 20 02 00 00 48 8D 95 A0 00 00 00 E8 F8 08 00 00 48 8D 8D F8 01 00 00 E8 34 12 14 FE"),
+                                        Replace = ByteUtil.HexStringToByteArray("48 8B 8D 20 02 00 00 48 8D 95 A0 00 00 00 90 90 90 90 90 48 8D 8D F8 01 00 00 E8 34 12 14 FE"),
+                                        Category = "防撤回",
+                                        ExpectedMatches = 1,
+                                        Tips = "9.9.33-51802 x64 私聊被动撤回通知分发；文件偏移 0x2615CED，保留参数析构。"
+                                    }
+                                }
+                            },
                             new CommonModifyInfo
                             {
                                 Name="wrapper.node",
@@ -1491,13 +1518,15 @@ namespace RevokeMsgPatcher
                                     {
                                         Search = ByteUtil.HexStringToByteArray("48 89 86 3F 3F 3F 3F 4C 89 AD 08 02 00 00 4C 8D 05"),
                                         Replace = ByteUtil.HexStringToByteArray("48 29 86 3F 3F 3F 3F 4C 89 AD 08 02 00 00 4C 8D 05"),
-                                        Category = "防撤回"
+                                        Category = "防撤回",
+                                        ExpectedMatches = 1
                                     },
                                     new ReplacePattern
                                     {
                                         Search = ByteUtil.HexStringToByteArray("89 C7 B9 02 00 00 00 E8 3F 3F 3F 3F 81 FF B7 00 00 00 0F 85"),
                                         Replace = ByteUtil.HexStringToByteArray("89 C7 B9 02 00 00 00 E8 3F 3F 3F 3F 81 FF B7 00 00 00 90 E9"),
-                                        Category = "多开"
+                                        Category = "多开",
+                                        ExpectedMatches = 1
                                     }
                                 }
                             },

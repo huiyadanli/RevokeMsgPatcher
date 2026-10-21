@@ -30,11 +30,15 @@ namespace RevokeMsgPatcher.Model
             o.Name = Name;
             o.RelativePath = RelativePath;
             o.Memo = Memo;
+            o.StartVersion = StartVersion;
+            o.EndVersion = EndVersion;
+            o.RelativePathForVersion = RelativePathForVersion;
             return o;
         }
 
         public string GetAbsolutePath(string installPath)
         {
+            if (string.IsNullOrWhiteSpace(installPath)) return "";
             if (RelativePath.Contains("{version}"))
             {
                 // 获取{version}之前的路径部分
@@ -42,16 +46,11 @@ namespace RevokeMsgPatcher.Model
                 var prefixPath = RelativePath.Substring(0, versionIndex);
                 var suffixPath = RelativePath.Substring(versionIndex + "{version}".Length);
 
-                // 构建搜索目录路径
+                // Prefer versioned modules over files left behind by older QQ installations.
                 var searchDirectory = Path.Combine(installPath, prefixPath);
 
-                if (!Directory.Exists(searchDirectory))
-                {
-                    return "";
-                }
-
                 // 获取所有子目录
-                var directories = Directory.GetDirectories(searchDirectory);
+                var directories = Directory.Exists(searchDirectory) ? Directory.GetDirectories(searchDirectory) : new string[0];
 
                 // 筛选包含至少三个点的目录名，并解析为版本号
                 var validVersions = new List<Tuple<string, Version>>();
@@ -66,14 +65,21 @@ namespace RevokeMsgPatcher.Model
                         // 尝试解析为版本号
                         if (Version.TryParse(dirName.Replace("-","."), out Version version))
                         {
-                            validVersions.Add(new Tuple<string, Version>(dirName, version));
+                            string candidate = Path.Combine(installPath, RelativePath.Replace("{version}", dirName));
+                            if (File.Exists(candidate)) validVersions.Add(new Tuple<string, Version>(dirName, version));
                         }
                     }
                 }
 
                 if (validVersions.Count == 0)
                 {
-                    throw new InvalidOperationException($"No valid version directories found in: {searchDirectory}");
+                    // Also accept a version directory or the directory containing the target.
+                    foreach (string relative in new[] { suffixPath.TrimStart('\\', '/'), Name })
+                    {
+                        string directPath = Path.Combine(installPath, relative);
+                        if (File.Exists(directPath)) return directPath;
+                    }
+                    return "";
                 }
 
                 // 找到版本号最大的目录
