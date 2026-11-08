@@ -80,7 +80,7 @@ namespace RevokeMsgPatcher
             // 
             this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPatch.Location = new System.Drawing.Point(567, 162);
-            this.btnPatch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPatch.Margin = new System.Windows.Forms.Padding(4);
             this.btnPatch.Name = "btnPatch";
             this.btnPatch.Size = new System.Drawing.Size(147, 34);
             this.btnPatch.TabIndex = 3;
@@ -93,7 +93,7 @@ namespace RevokeMsgPatcher
             this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPath.Location = new System.Drawing.Point(126, 87);
-            this.txtPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(526, 28);
             this.txtPath.TabIndex = 4;
@@ -103,7 +103,7 @@ namespace RevokeMsgPatcher
             // 
             this.btnChoosePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChoosePath.Location = new System.Drawing.Point(663, 84);
-            this.btnChoosePath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnChoosePath.Margin = new System.Windows.Forms.Padding(4);
             this.btnChoosePath.Name = "btnChoosePath";
             this.btnChoosePath.Size = new System.Drawing.Size(51, 34);
             this.btnChoosePath.TabIndex = 5;
@@ -137,7 +137,7 @@ namespace RevokeMsgPatcher
             // 
             this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRestore.Location = new System.Drawing.Point(435, 162);
-            this.btnRestore.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRestore.Margin = new System.Windows.Forms.Padding(4);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(123, 34);
             this.btnRestore.TabIndex = 8;
@@ -181,12 +181,12 @@ namespace RevokeMsgPatcher
             // rbtWechat
             // 
             this.rbtWechat.AutoSize = true;
-            this.rbtWechat.Location = new System.Drawing.Point(235, 53);
-            this.rbtWechat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtWechat.Location = new System.Drawing.Point(240, 53);
+            this.rbtWechat.Margin = new System.Windows.Forms.Padding(4);
             this.rbtWechat.Name = "rbtWechat";
-            this.rbtWechat.Size = new System.Drawing.Size(69, 22);
+            this.rbtWechat.Size = new System.Drawing.Size(141, 22);
             this.rbtWechat.TabIndex = 12;
-            this.rbtWechat.Text = "微信";
+            this.rbtWechat.Text = "微信 3.9 x86";
             this.rbtWechat.UseVisualStyleBackColor = true;
             this.rbtWechat.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
             // 
@@ -210,7 +210,6 @@ namespace RevokeMsgPatcher
             this.关于ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip1.Size = new System.Drawing.Size(735, 32);
             this.menuStrip1.TabIndex = 19;
@@ -325,7 +324,7 @@ namespace RevokeMsgPatcher
             // 
             this.panelCategories.AutoSize = true;
             this.panelCategories.Location = new System.Drawing.Point(124, 128);
-            this.panelCategories.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelCategories.Margin = new System.Windows.Forms.Padding(4);
             this.panelCategories.Name = "panelCategories";
             this.panelCategories.Size = new System.Drawing.Size(590, 27);
             this.panelCategories.TabIndex = 22;
@@ -352,8 +351,8 @@ namespace RevokeMsgPatcher
             // rbtQQNT
             // 
             this.rbtQQNT.AutoSize = true;
-            this.rbtQQNT.Location = new System.Drawing.Point(312, 54);
-            this.rbtQQNT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtQQNT.Location = new System.Drawing.Point(390, 53);
+            this.rbtQQNT.Margin = new System.Windows.Forms.Padding(4);
             this.rbtQQNT.Name = "rbtQQNT";
             this.rbtQQNT.Size = new System.Drawing.Size(69, 22);
             this.rbtQQNT.TabIndex = 24;
@@ -366,12 +365,12 @@ namespace RevokeMsgPatcher
             this.rbtWeixin.AutoSize = true;
             this.rbtWeixin.Checked = true;
             this.rbtWeixin.Location = new System.Drawing.Point(127, 53);
-            this.rbtWeixin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtWeixin.Margin = new System.Windows.Forms.Padding(4);
             this.rbtWeixin.Name = "rbtWeixin";
-            this.rbtWeixin.Size = new System.Drawing.Size(96, 22);
+            this.rbtWeixin.Size = new System.Drawing.Size(105, 22);
             this.rbtWeixin.TabIndex = 11;
             this.rbtWeixin.TabStop = true;
-            this.rbtWeixin.Text = "微信4.0";
+            this.rbtWeixin.Text = "微信 4.0";
             this.rbtWeixin.UseVisualStyleBackColor = true;
             this.rbtWeixin.CheckedChanged += new System.EventHandler(this.radioButtons_CheckedChanged);
             // 
@@ -400,7 +399,7 @@ namespace RevokeMsgPatcher
             this.Controls.Add(this.rbtWeixin);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(745, 188);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
