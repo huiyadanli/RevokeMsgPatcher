@@ -1,4 +1,7 @@
-﻿namespace RevokeMsgPatcher.Matcher
+using System;
+using System.Collections.Generic;
+
+namespace RevokeMsgPatcher.Matcher
 {
     public class BoyerMooreMatcher
     {
@@ -99,9 +102,14 @@
 
         public static bool TryMatch(byte[] text, byte[] pattern, out int firstShift)
         {
+            ValidateArguments(text, pattern);
             firstShift = -1;
             int n = text.Length;
             int m = pattern.Length;
+            if (m > n)
+            {
+                return false;
+            }
             int s = 0; // s is shift of the pattern with respect to text
             int j = 0;
 
@@ -147,18 +155,27 @@
 
         public static int[] MatchAll(byte[] text, byte[] pattern)
         {
-            int n = text.Length;
+            ValidateArguments(text, pattern);
+            // 仅保存实际命中的位置，避免按文件大小分配 int 数组。
+            return new List<int>(EnumerateMatches(text, pattern, 0, text.Length - pattern.Length)).ToArray();
+        }
+
+        // 按需返回指定范围内的匹配，供通配符查找边扫描边校验，无需暂存候选位置。
+        internal static IEnumerable<int> EnumerateMatches(byte[] text, byte[] pattern, int start, int lastStart)
+        {
+            if (start > lastStart)
+            {
+                yield break;
+            }
             int m = pattern.Length;
-            int s = 0; // s is shift of the pattern with respect to text
+            int s = start; // s is shift of the pattern with respect to text
             int j = 0;
-            int[] shiftIndexes = new int[n - m + 1];
-            int c = 0;
 
             // fill the bad character and good suffix array by preprocessing
             int[] badCharShifts = PreprocessToBuildBadCharactorHeuristic(pattern);
             int[] goodSuffixShifts = PreprocessToBuildGoodSuffixHeuristic(pattern);
 
-            while (s <= (n - m))
+            while (s <= lastStart)
             {
                 // starts matching from the last character of the pattern
                 j = m - 1;
@@ -174,8 +191,7 @@
                 // will become -1 after the above loop
                 if (j < 0)
                 {
-                    shiftIndexes[c] = s;
-                    c++;
+                    yield return s;
 
                     // shift the pattern so that the next character in text
                     // aligns with the last occurrence of it in pattern.
@@ -197,14 +213,22 @@
                     s += Max(goodSuffixShifts[j], badCharShifts[(int)text[s + j]] - (m - 1) + j);
                 }
             }
+        }
 
-            int[] shifts = new int[c];
-            for (int y = 0; y < c; y++)
+        private static void ValidateArguments(byte[] text, byte[] pattern)
+        {
+            if (text == null)
             {
-                shifts[y] = shiftIndexes[y];
+                throw new ArgumentNullException("text");
             }
-
-            return shifts;
+            if (pattern == null)
+            {
+                throw new ArgumentNullException("pattern");
+            }
+            if (pattern.Length == 0)
+            {
+                throw new ArgumentException("查找串不能为空。", "pattern");
+            }
         }
     }
 }

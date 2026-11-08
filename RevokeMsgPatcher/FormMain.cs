@@ -1,4 +1,4 @@
-﻿using RevokeMsgPatcher.Forms;
+using RevokeMsgPatcher.Forms;
 using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Modifier;
 using RevokeMsgPatcher.Utils;
@@ -20,9 +20,6 @@ namespace RevokeMsgPatcher
 
         private WechatModifier wechatModifier = null;
         private WeixinModifier weixinModifier = null;
-        private QQModifier qqModifier = null;
-        private TIMModifier timModifier = null;
-        private QQLiteModifier qqLiteModifier = null;
         private QQNTModifier qqntModifier = null;
 
         private string thisVersion;
@@ -44,21 +41,15 @@ namespace RevokeMsgPatcher
             // 初始化每个应用对应的修改者
             wechatModifier = new WechatModifier(bag.Apps["Wechat"]);
             weixinModifier = new WeixinModifier(bag.Apps["Weixin"]);
-            qqModifier = new QQModifier(bag.Apps["QQ"]);
-            timModifier = new TIMModifier(bag.Apps["TIM"]);
-            qqLiteModifier = new QQLiteModifier(bag.Apps["QQLite"]);
             qqntModifier = new QQNTModifier(bag.Apps["QQNT"]);
 
             rbtWechat.Tag = wechatModifier;
             rbtWeixin.Tag = weixinModifier;
-            rbtQQ.Tag = qqModifier;
-            rbtTIM.Tag = timModifier;
-            rbtQQLite.Tag = qqLiteModifier;
             rbtQQNT.Tag = qqntModifier;
 
-            // 默认微信
-            rbtWechat.Enabled = true;
-            modifier = wechatModifier;
+            // 默认微信4.0
+            rbtWeixin.Enabled = true;
+            modifier = weixinModifier;
         }
 
         public FormMain()
@@ -351,9 +342,6 @@ namespace RevokeMsgPatcher
 
                         wechatModifier.Config = newBag.Apps["Wechat"];
                         weixinModifier.Config = newBag.Apps["Weixin"];
-                        qqModifier.Config = newBag.Apps["QQ"];
-                        timModifier.Config = newBag.Apps["TIM"];
-                        qqLiteModifier.Config = newBag.Apps["QQLite"];
 
                         getPatchJsonStatus = "SUCCESS";
                         bag = newBag;
@@ -390,9 +378,6 @@ namespace RevokeMsgPatcher
             tips += " ➯ 微信：" + wechatModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ 微信4.0：" + weixinModifier.Config.GetSupportVersionStr() + Environment.NewLine;
             tips += " ➯ QQNT：" + qqntModifier.Config.GetSupportVersionStr() + Environment.NewLine;
-            tips += " ➯ QQ：" + qqModifier.Config.GetSupportVersionStr() + Environment.NewLine;
-            tips += " ➯ QQ轻聊版：" + qqLiteModifier.Config.GetSupportVersionStr() + Environment.NewLine;
-            tips += " ➯ TIM：" + timModifier.Config.GetSupportVersionStr() + Environment.NewLine;
 
             DialogResult dr = MessageBox.Show(tips, "当前支持防撤回的版本", MessageBoxButtons.OKCancel);
             if (dr == DialogResult.OK && needUpdate)
@@ -419,18 +404,6 @@ namespace RevokeMsgPatcher
             else if (rbtWeixin.Checked)
             {
                 modifier = (WeixinModifier)rbtWeixin.Tag;
-            }
-            else if (rbtQQ.Checked)
-            {
-                modifier = (QQModifier)rbtQQ.Tag;
-            }
-            else if (rbtTIM.Checked)
-            {
-                modifier = (TIMModifier)rbtTIM.Tag;
-            }
-            else if (rbtQQLite.Checked)
-            {
-                modifier = (QQLiteModifier)rbtQQLite.Tag;
             }
             else if (rbtQQNT.Checked)
             {
@@ -470,17 +443,9 @@ namespace RevokeMsgPatcher
             {
                 return "wechat";
             }
-            else if (rbtQQ.Checked)
+            else if (rbtWeixin.Checked)
             {
-                return "qq";
-            }
-            else if (rbtTIM.Checked)
-            {
-                return "tim";
-            }
-            else if (rbtQQLite.Checked)
-            {
-                return "qqlite";
+                return "weixin";
             }
             else if (rbtQQNT.Checked)
             {

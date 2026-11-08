@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Matcher.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\RevokeMsgPatcher\Matcher\BoyerMooreMatcher.cs"><Link>BoyerMooreMatcher.cs</Link></Compile>
+    <Compile Include="..\..\RevokeMsgPatcher\Matcher\FuzzyMatcher.cs"><Link>FuzzyMatcher.cs</Link></Compile>
+    <Compile Include="..\..\RevokeMsgPatcher\Matcher\ModifyFinder.cs"><Link>ModifyFinder.cs</Link></Compile>
+    <Compile Include="..\..\RevokeMsgPatcher\Model\Change.cs"><Link>Change.cs</Link></Compile>
+    <Compile Include="..\..\RevokeMsgPatcher\Model\ReplacePattern.cs"><Link>ReplacePattern.cs</Link></Compile>
+    <Compile Include="..\..\RevokeMsgPatcher\BusinessException.cs"><Link>BusinessException.cs</Link></Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

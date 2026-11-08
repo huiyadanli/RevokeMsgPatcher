@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RevokeMsgPatcher.Matcher
 {
@@ -19,24 +18,41 @@ namespace RevokeMsgPatcher.Matcher
         /// <returns></returns>
         public static int[] MatchAll(byte[] content, byte[] pattern)
         {
-            byte[] head = GetHead(pattern);
-            int[] indexs = BoyerMooreMatcher.MatchAll(content, head);
-            // 头串和查找串相同则直接返回，不同则继续判断是否符合查询串
-            if (head.Length == pattern.Length)
+            return new List<int>(EnumerateMatches(content, pattern)).ToArray();
+        }
+
+        /// <summary>
+        /// 仅查找首个匹配位置，适用于判断特征是否存在。
+        /// </summary>
+        public static bool TryMatch(byte[] content, byte[] pattern, out int firstShift)
+        {
+            foreach (int index in EnumerateMatches(content, pattern))
             {
-                return indexs;
+                firstShift = index;
+                return true;
             }
-            else
+            firstShift = -1;
+            return false;
+        }
+
+        private static IEnumerable<int> EnumerateMatches(byte[] content, byte[] pattern)
+        {
+            if (content == null)
             {
-                List<int> res = new List<int>();
-                foreach (int index in indexs)
+                throw new ArgumentNullException("content");
+            }
+            int headOffset;
+            byte[] head = GetHead(pattern, out headOffset);
+            // 只扫描能够容纳完整查找串的范围，排除文件尾部的不完整候选。
+            int lastStart = content.Length - pattern.Length;
+            // 头串和查找串相同则直接返回，不同则继续判断是否符合查询串
+            foreach (int headIndex in BoyerMooreMatcher.EnumerateMatches(content, head, headOffset, lastStart + headOffset))
+            {
+                int index = headIndex - headOffset;
+                if (head.Length == pattern.Length || IsEqual(content, index, pattern))
                 {
-                    if (IsEqual(content, index, pattern))
-                    {
-                        res.Add(index);
-                    }
+                    yield return index;
                 }
-                return res.ToArray();
             }
         }
 
@@ -49,24 +65,15 @@ namespace RevokeMsgPatcher.Matcher
         /// <returns></returns>
         public static int[] MatchNotReplaced(byte[] content, byte[] searchBytes, byte[] replaceBytes)
         {
-            byte[] head = GetHead(searchBytes);
-            int[] indexs = BoyerMooreMatcher.MatchAll(content, head);
-            // 头串和查找串相同则直接返回，不同则继续判断是否符合查询串
-            List<int> res = new List<int>();
-            if (head.Length != searchBytes.Length)
+            if (replaceBytes == null)
             {
-                foreach (int index in indexs)
-                {
-                    if (IsEqual(content, index, searchBytes))
-                    {
-                        res.Add(index);
-                    }
-                }
-                indexs = res.ToArray();
+                throw new ArgumentNullException("replaceBytes");
             }
+            // 头串和查找串相同则直接返回，不同则继续判断是否符合查询串
+            // 完整查找串的校验由枚举器完成，不再创建中间候选数组。
+            List<int> res = new List<int>();
             // 判断是否与替换串相同
-            res = new List<int>();
-            foreach (int index in indexs)
+            foreach (int index in EnumerateMatches(content, searchBytes))
             {
                 if (!IsEqual(content, index, replaceBytes))
                 {
@@ -77,26 +84,48 @@ namespace RevokeMsgPatcher.Matcher
         }
 
         /// <summary>
-        /// 获取头串
+        /// 获取头串（选用最长连续固定片段作为定位串）
         /// </summary>
         /// <param name="whole">完整查找串</param>
+        /// <param name="offset">定位串在完整查找串内的偏移</param>
         /// <returns></returns>
-        private static byte[] GetHead(byte[] whole)
+        private static byte[] GetHead(byte[] whole, out int offset)
         {
-            int len = whole.Length;
+            if (whole == null)
+            {
+                throw new ArgumentNullException("whole");
+            }
+            if (whole.Length == 0)
+            {
+                throw new ArgumentException("查找串不能为空。", "whole");
+            }
+            if (whole[0] == wildcard)
+            {
+                throw new ArgumentException("不正确的通配符位置!", "whole");
+            }
+            // 原先只使用首个通配符前的头串；现在选取最长连续固定片段，减少候选数量。
+            offset = 0;
+            int len = 0;
+            int runStart = 0;
             for (int i = 0; i < whole.Length; i++)
             {
                 if (whole[i] == wildcard)
                 {
-                    len = i;
-                    break;
+                    runStart = i + 1;
+                }
+                else if (i - runStart + 1 > len)
+                {
+                    offset = runStart;
+                    len = i - runStart + 1;
                 }
             }
-            if (len == 0)
+            if (len == whole.Length)
             {
-                throw new Exception("不正确的通配符位置!");
+                return whole;
             }
-            return whole.Take(len).ToArray();
+            byte[] head = new byte[len];
+            Buffer.BlockCopy(whole, offset, head, 0, len);
+            return head;
         }
 
         /// <summary>
@@ -108,6 +137,18 @@ namespace RevokeMsgPatcher.Matcher
         /// <returns></returns>
         public static bool IsEqual(byte[] content, int start, byte[] whole)
         {
+            if (content == null)
+            {
+                throw new ArgumentNullException("content");
+            }
+            if (whole == null)
+            {
+                throw new ArgumentNullException("whole");
+            }
+            if (start < 0 || start > content.Length - whole.Length)
+            {
+                return false;
+            }
             int i = 0;
             for (i = 0; i < whole.Length; i++)
             {
