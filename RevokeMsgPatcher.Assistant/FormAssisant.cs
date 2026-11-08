@@ -1,11 +1,13 @@
-﻿using RevokeMsgPatcher.Matcher;
+using RevokeMsgPatcher.Matcher;
 using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace RevokeMsgPatcher.Assistant
 {
@@ -31,6 +33,63 @@ namespace RevokeMsgPatcher.Assistant
             File.WriteAllText(path, json);
 
             txtInfo.AppendText("生成完毕！位置:" + path + Environment.NewLine);
+
+            try
+            {
+                string resourcePath = FindPatchResourcePath(AppDomain.CurrentDomain.BaseDirectory)
+                    ?? FindPatchResourcePath(Environment.CurrentDirectory);
+                if (resourcePath == null)
+                {
+                    txtInfo.AppendText("未找到 RevokeMsgPatcher 项目，跳过 Resources.PatchJson 同步。" + Environment.NewLine);
+                    return;
+                }
+
+                UpdatePatchResource(resourcePath, json);
+                txtInfo.AppendText("Resources.PatchJson 同步完毕！位置:" + resourcePath + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                txtInfo.AppendText("Resources.PatchJson 同步失败:" + ex.Message + Environment.NewLine);
+            }
+        }
+
+        private static string FindPatchResourcePath(string startDirectory)
+        {
+            // 从启动位置逐级向上查找，兼容 bin/Debug、bin/Release 和解决方案目录。
+            for (DirectoryInfo directory = new DirectoryInfo(startDirectory); directory != null; directory = directory.Parent)
+            {
+                string projectDirectory = Path.Combine(directory.FullName, "RevokeMsgPatcher");
+                string resourcePath = Path.Combine(projectDirectory, "Properties", "Resources.resx");
+                if (File.Exists(Path.Combine(projectDirectory, "RevokeMsgPatcher.csproj")) && File.Exists(resourcePath))
+                {
+                    return resourcePath;
+                }
+            }
+
+            return null;
+        }
+
+        private static void UpdatePatchResource(string resourcePath, string json)
+        {
+            // 仅更新 PatchJson 的值，保留资源文件中的其他资源、注释和空白。
+            XmlDocument document = new XmlDocument { PreserveWhitespace = true };
+            document.Load(resourcePath);
+            XmlNode value = document.SelectSingleNode("/root/data[@name='PatchJson']/value");
+            if (value == null)
+            {
+                throw new InvalidOperationException("Resources.resx 中未找到 PatchJson 资源项。");
+            }
+
+            value.InnerText = json;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                Encoding = new UTF8Encoding(false),
+                Indent = false
+            };
+            using (XmlWriter writer = XmlWriter.Create(resourcePath, settings))
+            {
+                document.Save(writer);
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
