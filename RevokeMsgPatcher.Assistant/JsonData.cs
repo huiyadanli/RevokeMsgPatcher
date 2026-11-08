@@ -130,8 +130,8 @@ namespace RevokeMsgPatcher
                         "wrapper.node",
                         new List<CommonModifyInfo>
                         {
-                            // QQNT 9.9.36-53644 x64，用户已实测群聊、私聊防撤回正常。
-                            // 匹配器使用 wrapper.node 的 PE 文件版本 9.8.0.24541；版本范围左开右闭。
+                            // QQNT 9.9.36-53644、9.9.37-54395 x64，用户已反馈本防撤回方案测试正常。
+                            // 匹配器使用 wrapper.node 的 PE 文件版本（分别为 9.8.0.24541、9.8.0.24704）；版本范围左开右闭。
                             // 3F 为通配符；保留栈偏移、相对地址，群聊固定走错误清理分支，私聊固定跳到空集合清理分支。
                             new CommonModifyInfo
                             {

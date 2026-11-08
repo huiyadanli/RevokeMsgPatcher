@@ -30,8 +30,6 @@ namespace RevokeMsgPatcher
 
         Bag bag = null;
 
-        FormLiteLoaderQQNT formLiteLoader = null;
-
         public void InitModifier()
         {
             // 从配置文件中读取配置
@@ -408,7 +406,6 @@ namespace RevokeMsgPatcher
             else if (rbtQQNT.Checked)
             {
                 modifier = (QQNTModifier)rbtQQNT.Tag;
-                // ShowOrFocusFormLiteLoaderQQNT();
             }
 
             EnableAllButton(true);
@@ -417,24 +414,6 @@ namespace RevokeMsgPatcher
             txtPath.Text = modifier.FindInstallPath();
 
             ga.RequestPageView($"{GetCheckedRadioButtonNameEn()}/{lblVersion.Text}/switch", "切换标签页");
-        }
-
-        private void ShowOrFocusFormLiteLoaderQQNT()
-        {
-            if (formLiteLoader == null || formLiteLoader.IsDisposed)
-            {
-                formLiteLoader = new FormLiteLoaderQQNT();
-                formLiteLoader.Show();
-            }
-            else
-            {
-                if (formLiteLoader.WindowState == FormWindowState.Minimized)
-                {
-                    formLiteLoader.WindowState = FormWindowState.Normal;
-                }
-                formLiteLoader.BringToFront();
-                formLiteLoader.Focus();
-            }
         }
 
         private string GetCheckedRadioButtonNameEn()

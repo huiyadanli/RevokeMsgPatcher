@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -42,7 +42,7 @@ namespace RevokeMsgPatcher.Utils
 
         private static readonly string[] urls = new string[]
         {
-            $"https://hui-config.oss-cn-hangzhou.aliyuncs.com/{PatchVersion}/patch.json",
+            $"https://revoke-msg.oss-cn-hangzhou.aliyuncs.com/{PatchVersion}/patch.json",
             $"https://mirror.ghproxy.com/https://raw.githubusercontent.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
             $"https://raw.gitmirror.com/huiyadanli/RevokeMsgPatcher/master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",
             $"https://cdn.jsdelivr.net/gh/huiyadanli/RevokeMsgPatcher@master/RevokeMsgPatcher.Assistant/Data/{PatchVersion}/patch.json",

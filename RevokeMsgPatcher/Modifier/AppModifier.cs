@@ -1,4 +1,4 @@
-﻿using RevokeMsgPatcher.Forms;
+using RevokeMsgPatcher.Forms;
 using RevokeMsgPatcher.Matcher;
 using RevokeMsgPatcher.Model;
 using RevokeMsgPatcher.Utils;
@@ -134,11 +134,6 @@ namespace RevokeMsgPatcher.Modifier
             if (j == editors.Count)
             {
                 label.Text = version + "（支持特征防撤回）";
-                // // QQNT 特殊处理
-                // if (config.Name == "QQNT")
-                // {
-                //     label.Text = version + "（支持LiteLoader）";
-                // }
 
                 label.ForeColor = Color.LimeGreen;
                 UIController.AddCategoryCheckBoxToPanel(panel, categories.ToArray(), installed.ToArray());

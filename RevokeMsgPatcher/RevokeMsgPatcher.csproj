@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -39,12 +39,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -65,12 +61,6 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormLiteLoaderQQNT.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormLiteLoaderQQNT.Designer.cs">
-      <DependentUpon>FormLiteLoaderQQNT.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\FormPatchInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,10 +76,6 @@
     <Compile Include="Model\Change.cs" />
     <Compile Include="Model\CommonModifyInfo.cs" />
     <Compile Include="Model\Json\ReleaseApiRes.cs" />
-    <Compile Include="Model\Json\VersionJson.cs" />
-    <Compile Include="Model\Json\LiteLoaderPackage.cs" />
-    <Compile Include="Model\Json\LiteLoaderPluginsManifest.cs" />
-    <Compile Include="Model\LiteLoaderRowData.cs" />
     <Compile Include="Model\ModifyInfo.cs" />
     <Compile Include="Model\ReplacePattern.cs" />
     <Compile Include="Model\TargetInfo.cs" />
@@ -109,13 +95,9 @@
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\ProxySpeedTester.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormLiteLoaderQQNT.resx">
-      <DependentUpon>FormLiteLoaderQQNT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPatchInfo.resx">
       <DependentUpon>FormPatchInfo.cs</DependentUpon>
@@ -131,7 +113,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
