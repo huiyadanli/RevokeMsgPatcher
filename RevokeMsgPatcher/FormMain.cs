@@ -215,9 +215,10 @@ namespace RevokeMsgPatcher
             // d.打补丁
             try
             {
+                if (rbtQQNT.Checked && !EnsureQQNTStopped()) return;
                 modifier.Patch();
                 ga.RequestPageView($"{enName}/{version}/patch/succ", "补丁安装成功");
-                MessageBox.Show("补丁安装成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(rbtQQNT.Checked ? "补丁安装成功！请重新启动 QQ。" : "补丁安装成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (BusinessException ex)
             {
@@ -271,6 +272,19 @@ namespace RevokeMsgPatcher
             }
         }
 
+        private bool EnsureQQNTStopped()
+        {
+            if (!qqntModifier.IsQQRunning()) return true;
+            DialogResult closeResult = MessageBox.Show(
+                "检测到 QQ 正在运行。写入文件前必须关闭全部 QQ 进程。\n\n是否立即关闭 QQ 并继续？",
+                "需要关闭 QQ",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+            if (closeResult != DialogResult.Yes) return false;
+            qqntModifier.StopQQProcesses();
+            return true;
+        }
+
         private void btnRestore_Click(object sender, EventArgs e)
         {
             EnableAllButton(false);
@@ -279,6 +293,11 @@ namespace RevokeMsgPatcher
                 bool succ;
                 if (rbtQQNT.Checked)
                 {
+                    if (!EnsureQQNTStopped())
+                    {
+                        EnableAllButton(true);
+                        return;
+                    }
                     succ = qqntModifier.Restore();
                 }
                 else
@@ -340,6 +359,7 @@ namespace RevokeMsgPatcher
 
                         wechatModifier.Config = newBag.Apps["Wechat"];
                         weixinModifier.Config = newBag.Apps["Weixin"];
+                        qqntModifier.Config = newBag.Apps["QQNT"];
 
                         getPatchJsonStatus = "SUCCESS";
                         bag = newBag;

@@ -71,6 +71,7 @@
     <Compile Include="Matcher\BoyerMooreMatcher.cs" />
     <Compile Include="Matcher\FuzzyMatcher.cs" />
     <Compile Include="Matcher\ModifyFinder.cs" />
+    <Compile Include="Matcher\QQNTAdaptiveLocator.cs" />
     <Compile Include="Model\App.cs" />
     <Compile Include="Model\Bag.cs" />
     <Compile Include="Model\Change.cs" />
