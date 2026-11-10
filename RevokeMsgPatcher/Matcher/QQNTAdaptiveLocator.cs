@@ -103,7 +103,7 @@ namespace RevokeMsgPatcher.Matcher
                 throw new BusinessException("adaptive_xref_missing", "自动分析失败：未找到撤回逻辑！");
 
             BranchCandidate group = FindUniqueGroupBranch(image, groupReferences);
-            BranchCandidate privateBranch = FindUniquePrivateBranch(image, privateReferences);
+            BranchCandidate privateBranch = FindUniquePrivatePatch(image, privateReferences);
             if (group.Patched != privateBranch.Patched)
                 throw new BusinessException("adaptive_partial_patch", "补丁状态异常，请先还原！");
             if (!ReplayGroupBranch() || !ReplayPrivateBranch())
@@ -179,6 +179,8 @@ namespace RevokeMsgPatcher.Matcher
         {
             List<int> preferredGroup = new List<int>();
             List<int> genericGroup = new List<int>();
+            List<int> preferredPrivate = new List<int>();
+            List<int> genericPrivate = new List<int>();
             group = new List<int>();
             privateStrings = new List<int>();
             foreach (Section section in image.Sections.Where(item => !item.Executable))
@@ -205,11 +207,18 @@ namespace RevokeMsgPatcher.Matcher
                             && text.IndexOf("pai yi pai", StringComparison.Ordinal) < 0)
                             preferredGroup.Add(rva);
                     }
-                    if (text.IndexOf("c2c", StringComparison.Ordinal) >= 0 || text.IndexOf("private", StringComparison.Ordinal) >= 0) privateStrings.Add(rva);
+                    if (text.IndexOf("c2c", StringComparison.Ordinal) >= 0 || text.IndexOf("private", StringComparison.Ordinal) >= 0)
+                    {
+                        genericPrivate.Add(rva);
+                        if (text.IndexOf("c2c recall nfy", StringComparison.Ordinal) >= 0
+                            && text.IndexOf("paiyipai", StringComparison.Ordinal) < 0
+                            && text.IndexOf("pai yi pai", StringComparison.Ordinal) < 0)
+                            preferredPrivate.Add(rva);
+                    }
                 }
             }
             group = (preferredGroup.Count > 0 ? preferredGroup : genericGroup).Distinct().ToList();
-            privateStrings = privateStrings.Distinct().ToList();
+            privateStrings = (preferredPrivate.Count > 0 ? preferredPrivate : genericPrivate).Distinct().ToList();
         }
 
         private static List<int> FindRipReferences(Image image, HashSet<int> targets)
@@ -273,7 +282,18 @@ namespace RevokeMsgPatcher.Matcher
             return RequireUnique(candidates.Values.ToList(), "群聊");
         }
 
-        private static BranchCandidate FindUniquePrivateBranch(Image image, List<int> references)
+        private static BranchCandidate FindUniquePrivatePatch(Image image, List<int> references)
+        {
+            BranchCandidate modern = FindModernPrivateBranch(image, references);
+            BranchCandidate dispatch = FindPrivateDispatchCall(image, references);
+            if (modern != null && modern.Patched) return modern;
+            if (dispatch != null && dispatch.Patched) return dispatch;
+            if (modern != null) return modern;
+            if (dispatch != null) return dispatch;
+            throw new BusinessException("adaptive_missing", "自动分析失败：未找到私聊撤回逻辑！");
+        }
+
+        private static BranchCandidate FindModernPrivateBranch(Image image, List<int> references)
         {
             Dictionary<int, BranchCandidate> candidates = new Dictionary<int, BranchCandidate>();
             foreach (Section section in image.Sections.Where(item => item.Executable))
@@ -312,14 +332,63 @@ namespace RevokeMsgPatcher.Matcher
                     };
                 }
             }
-            return RequireUnique(candidates.Values.ToList(), "私聊");
+            return TryRequireUnique(candidates.Values.ToList(), "私聊");
+        }
+
+        private static BranchCandidate FindPrivateDispatchCall(Image image, List<int> references)
+        {
+            Dictionary<int, BranchCandidate> candidates = new Dictionary<int, BranchCandidate>();
+            foreach (int reference in references)
+            {
+                int referenceOffset = image.RvaToOffset(reference);
+                if (referenceOffset < 0) continue;
+                int end = Math.Min(image.Bytes.Length, referenceOffset + 0x90);
+                for (int callOffset = referenceOffset + 7; callOffset + 5 <= end; callOffset++)
+                {
+                    bool patched = IsNops(image.Bytes, callOffset, 5);
+                    bool original = image.Bytes[callOffset] == 0xE8;
+                    if (!patched && !original) continue;
+
+                    int leaOffset;
+                    RegMemInstruction lea;
+                    if (!FindRegMemEndingAt(image.Bytes, Math.Max(referenceOffset, callOffset - 12), callOffset, 0x8D, out leaOffset, out lea)) continue;
+                    if (lea.Register != 2) continue;
+                    int movOffset;
+                    RegMemInstruction mov;
+                    if (!FindRegMemEndingAt(image.Bytes, Math.Max(referenceOffset, leaOffset - 12), leaOffset, 0x8B, out movOffset, out mov)) continue;
+                    if (mov.Register != 1) continue;
+                    if (CountDirectCalls(image.Bytes, callOffset + 5, Math.Min(image.Bytes.Length, callOffset + 70)) < 3) continue;
+
+                    int callRva = image.OffsetToRva(callOffset);
+                    if (original)
+                    {
+                        int targetRva = callRva + 5 + ReadInt32(image.Bytes, callOffset + 1);
+                        if (!image.IsExecutableRva(targetRva)) continue;
+                    }
+                    candidates[callOffset] = new BranchCandidate
+                    {
+                        Offset = callOffset,
+                        Patched = patched,
+                        Replacement = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90 },
+                        Score = 120 - Math.Min(Math.Abs(callRva - reference) / 4, 90)
+                    };
+                }
+            }
+            return TryRequireUnique(candidates.Values.ToList(), "私聊");
         }
 
         private static BranchCandidate RequireUnique(List<BranchCandidate> candidates, string kind)
         {
-            List<BranchCandidate> ordered = candidates.OrderByDescending(item => item.Score).ThenBy(item => item.Offset).ToList();
-            if (ordered.Count == 0)
+            BranchCandidate result = TryRequireUnique(candidates, kind);
+            if (result == null)
                 throw new BusinessException("adaptive_missing", "自动分析失败：未找到" + kind + "撤回逻辑！");
+            return result;
+        }
+
+        private static BranchCandidate TryRequireUnique(List<BranchCandidate> candidates, string kind)
+        {
+            List<BranchCandidate> ordered = candidates.OrderByDescending(item => item.Score).ThenBy(item => item.Offset).ToList();
+            if (ordered.Count == 0) return null;
             if (ordered.Count > 1 && ordered[0].Score - ordered[1].Score < 12)
                 throw new BusinessException("adaptive_ambiguous", "自动分析失败：" + kind + "撤回逻辑不唯一！");
             return ordered[0];
@@ -407,6 +476,16 @@ namespace RevokeMsgPatcher.Matcher
                 if (bytes[offset] == 0xFF && (((bytes[offset + 1] >> 3) & 7) == 2)) return true;
             }
             return false;
+        }
+
+        private static int CountDirectCalls(byte[] bytes, int start, int end)
+        {
+            int count = 0;
+            for (int offset = start; offset < end; offset++)
+            {
+                if (bytes[offset] == 0xE8) count++;
+            }
+            return count;
         }
 
         private static int DistanceToNearest(int value, List<int> references)

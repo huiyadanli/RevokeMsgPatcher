@@ -262,6 +262,12 @@ internal static class Program
             Assert(string.IsNullOrEmpty(expectedError), "adaptive expected an error");
             Assert(result.GroupBranchOffset > 0, "adaptive group location");
             Assert(result.PrivateBranchOffset > 0, "adaptive private location");
+            string expectedGroupOffset = Environment.GetEnvironmentVariable("QQNT_WRAPPER_EXPECT_GROUP_OFFSET");
+            string expectedPrivateOffset = Environment.GetEnvironmentVariable("QQNT_WRAPPER_EXPECT_PRIVATE_OFFSET");
+            if (!string.IsNullOrEmpty(expectedGroupOffset))
+                Assert(result.GroupBranchOffset == Convert.ToInt64(expectedGroupOffset, 16), "adaptive group offset");
+            if (!string.IsNullOrEmpty(expectedPrivateOffset))
+                Assert(result.PrivateBranchOffset == Convert.ToInt64(expectedPrivateOffset, 16), "adaptive private offset");
             Assert(result.IsPatched || result.Changes.Count == 2, "adaptive patch plan");
             string expectedPatched = Environment.GetEnvironmentVariable("QQNT_WRAPPER_EXPECT_PATCHED");
             if (!string.IsNullOrEmpty(expectedPatched))
