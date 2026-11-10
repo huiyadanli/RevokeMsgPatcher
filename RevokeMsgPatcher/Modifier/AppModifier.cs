@@ -30,6 +30,23 @@ namespace RevokeMsgPatcher.Modifier
 
         protected List<FileHexEditor> editors;
 
+        // 是否只使用自适应分析
+        protected virtual bool UseAdaptiveAnalysisOnly { get { return false; } }
+
+        protected virtual bool TryGetAdaptiveCategories(FileHexEditor editor, out string[] categories, out string[] installed, out string status)
+        {
+            categories = null;
+            installed = null;
+            status = null;
+            return false;
+        }
+
+        protected virtual bool TryFindAdaptiveChanges(FileHexEditor editor, List<string> categories, out List<Change> changes)
+        {
+            changes = null;
+            return false;
+        }
+
         public string InstallPath { get; set; }
 
         /// <summary>
@@ -53,6 +70,41 @@ namespace RevokeMsgPatcher.Modifier
         public void SetVersionLabelAndCategoryCategories(Label label, Panel panel)
         {
             string version = GetVersion();
+            // 自适应分析
+            if (UseAdaptiveAnalysisOnly)
+            {
+                SortedSet<string> adaptiveCategories = new SortedSet<string>();
+                SortedSet<string> adaptiveInstalled = new SortedSet<string>();
+                string adaptiveStatus = null;
+                bool supported = true;
+                foreach (FileHexEditor editor in editors)
+                {
+                    string[] currentCategories;
+                    string[] currentInstalled;
+                    string currentStatus;
+                    if (!TryGetAdaptiveCategories(editor, out currentCategories, out currentInstalled, out currentStatus))
+                    {
+                        supported = false;
+                        adaptiveStatus = currentStatus;
+                        break;
+                    }
+                    foreach (string category in currentCategories ?? new string[0]) adaptiveCategories.Add(category);
+                    foreach (string category in currentInstalled ?? new string[0]) adaptiveInstalled.Add(category);
+                }
+                if (supported)
+                {
+                    label.Text = version + "（自动分析可用）";
+                    label.ForeColor = Color.Green;
+                    UIController.AddCategoryCheckBoxToPanel(panel, adaptiveCategories.ToArray(), adaptiveInstalled.ToArray());
+                }
+                else
+                {
+                    label.Text = version + "（自动分析失败）";
+                    label.ForeColor = Color.Red;
+                    UIController.AddMsgToPanel(panel, string.IsNullOrEmpty(adaptiveStatus) ? "未找到唯一撤回逻辑" : adaptiveStatus);
+                }
+                return;
+            }
             // 补丁信息中是否都有对应的版本
             int i = 0, j = 0;
 
@@ -292,6 +344,15 @@ namespace RevokeMsgPatcher.Modifier
             // 寻找对应文件版本与SHA1的修改信息
             foreach (FileHexEditor editor in editors) // 多种文件
             {
+                // 自适应生成修改信息
+                if (UseAdaptiveAnalysisOnly)
+                {
+                    List<Change> adaptiveChanges;
+                    if (!TryFindAdaptiveChanges(editor, categories, out adaptiveChanges))
+                        throw new BusinessException("adaptive_not_support", "自动分析失败！");
+                    editor.TargetChanges = adaptiveChanges;
+                    continue;
+                }
                 // 通过SHA1和文件版本判断是否可以打补丁 根据不同结果返回不同的提示
                 ModifyInfo matchingSHA1Before = null, matchingSHA1After = null, matchingVersion = null;
                 if (config.FileModifyInfos != null && config.FileModifyInfos.Count > 0)

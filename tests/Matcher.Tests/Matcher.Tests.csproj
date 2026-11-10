@@ -18,6 +18,7 @@
     <Compile Include="..\..\RevokeMsgPatcher\Matcher\BoyerMooreMatcher.cs"><Link>BoyerMooreMatcher.cs</Link></Compile>
     <Compile Include="..\..\RevokeMsgPatcher\Matcher\FuzzyMatcher.cs"><Link>FuzzyMatcher.cs</Link></Compile>
     <Compile Include="..\..\RevokeMsgPatcher\Matcher\ModifyFinder.cs"><Link>ModifyFinder.cs</Link></Compile>
+    <Compile Include="..\..\RevokeMsgPatcher\Matcher\QQNTAdaptiveLocator.cs"><Link>QQNTAdaptiveLocator.cs</Link></Compile>
     <Compile Include="..\..\RevokeMsgPatcher\Model\Change.cs"><Link>Change.cs</Link></Compile>
     <Compile Include="..\..\RevokeMsgPatcher\Model\ReplacePattern.cs"><Link>ReplacePattern.cs</Link></Compile>
     <Compile Include="..\..\RevokeMsgPatcher\BusinessException.cs"><Link>BusinessException.cs</Link></Compile>
