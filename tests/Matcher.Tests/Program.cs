@@ -21,6 +21,7 @@ internal static class Program
             string root = args.Length > 0 ? args[0] : Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
             TestConfiguredPatterns(root);
             TestModifyFinder();
+            TestQqntAdaptiveLocator();
             TestAllocation();
             Console.WriteLine("PASS: {0} assertions (.NET Framework 4.5.2 target)", assertions);
             return 0;
@@ -234,6 +235,48 @@ internal static class Program
         Assert(matches.Length == 0, "large buffer without matches");
         // 大文件的无命中扫描不应再按文件大小分配结果数组或候选数组。
         Assert(allocated < 1024 * 1024, "allocation regression: " + allocated + " bytes");
+    }
+
+    private static void TestQqntAdaptiveLocator()
+    {
+        Assert(QQNTAdaptiveLocator.ReplayGroupBranch(), "adaptive group replay");
+        Assert(QQNTAdaptiveLocator.ReplayPrivateBranch(), "adaptive private replay");
+        string sample = Environment.GetEnvironmentVariable("QQNT_WRAPPER_TEST");
+        if (!string.IsNullOrEmpty(sample) && File.Exists(sample))
+        {
+            string expectedError = Environment.GetEnvironmentVariable("QQNT_WRAPPER_EXPECT_ERROR");
+            QQNTAdaptiveResult result = null;
+            try
+            {
+                result = QQNTAdaptiveLocator.Analyze(sample);
+            }
+            catch (BusinessException error)
+            {
+                if (!string.IsNullOrEmpty(expectedError))
+                {
+                    Assert(error.ErrorCode == expectedError, "adaptive expected error");
+                    return;
+                }
+                throw;
+            }
+            Assert(string.IsNullOrEmpty(expectedError), "adaptive expected an error");
+            Assert(result.GroupBranchOffset > 0, "adaptive group location");
+            Assert(result.PrivateBranchOffset > 0, "adaptive private location");
+            string expectedGroupOffset = Environment.GetEnvironmentVariable("QQNT_WRAPPER_EXPECT_GROUP_OFFSET");
+            string expectedPrivateOffset = Environment.GetEnvironmentVariable("QQNT_WRAPPER_EXPECT_PRIVATE_OFFSET");
+            if (!string.IsNullOrEmpty(expectedGroupOffset))
+                Assert(result.GroupBranchOffset == Convert.ToInt64(expectedGroupOffset, 16), "adaptive group offset");
+            if (!string.IsNullOrEmpty(expectedPrivateOffset))
+                Assert(result.PrivateBranchOffset == Convert.ToInt64(expectedPrivateOffset, 16), "adaptive private offset");
+            Assert(result.IsPatched || result.Changes.Count == 2, "adaptive patch plan");
+            string expectedPatched = Environment.GetEnvironmentVariable("QQNT_WRAPPER_EXPECT_PATCHED");
+            if (!string.IsNullOrEmpty(expectedPatched))
+            {
+                bool expected = expectedPatched == "1";
+                Assert(result.IsPatched == expected, "adaptive patched state");
+                Assert(!expected || result.Changes.Count == 0, "patched image has no pending changes");
+            }
+        }
     }
 
     private static void AssertThrows<T>(Action action) where T : Exception
